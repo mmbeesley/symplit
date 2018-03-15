@@ -45,10 +45,18 @@ module.exports = {
     makeAdmin: (req, res) => {
         const db = app.get('db');
         const { userId } = req.params;
-        const { adminTog } = req.body;
 
         db.create_admin([userId]).then((newAdmin) => {
             res.status(200).send(newAdmin)
+        })
+    },
+
+    removeAdmin: (req, res) => {
+        const db = app.get('db');
+        const { userId } = req.params;
+
+        db.remove_admin([userId]).then((user) => {
+            res.status(200).send(user);
         })
     },
 
@@ -63,7 +71,7 @@ module.exports = {
 
     getSearchUsers: (req, res) => {
         const db = app.get('db');
-        const search = req.query.toUpperCase();
+        const search = '%' + req.query.user.toUpperCase() + '%'
 
         db.get_searchusers([search]).then(users=>{
             res.status(200).send(users);
