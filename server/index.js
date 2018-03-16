@@ -136,22 +136,22 @@ app.put('/api/problems/:problemId', problemsController.updateProblem); //Update 
 app.delete('/api/problems/:problemId', problemsController.deleteProblem); //Delete problem based on problem id
 
 //Memberships Endpoints
-app.get('/api/memberships', membershipController.getMemberships)
+app.get('/api/memberships', membershipController.getMemberships) //Gets list of memberships available for purchase
 
 //Admin Memberships Endpoints
-app.get('/api/memberships/:membershipId', membershipController.getOneMembership)
-app.post('/api/memberships', membershipController.createMembership)
-app.put('/api/memberships/:membershipId', membershipController.updateMembership)
-app.delete('/api/memberships/:membershipId', membershipController.deleteMembership)
+app.get('/api/memberships/:membershipId', membershipController.getOneMembership) //Gets one membership based on membership id for admin view
+app.post('/api/memberships', membershipController.createMembership) //Req.body sends membership_title, membership_description, membership_price, membership_recurring, membership_period. Adds membership to memberships table
+app.put('/api/memberships/:membershipId', membershipController.updateMembership) //Update membership details based on membership id
+app.delete('/api/memberships/:membershipId', membershipController.deleteMembership) //Delete membership based on membership id
 
 //Offers Endpoints
-app.get('/api/offers', offerController.getOffers)
+app.get('/api/offers', offerController.getOffers) //Gets list of offers for comparison on checkout page
 
 //Admin Offers Endpoints
-app.get('/api/offers/:offerId', offerController.getOneOffer)
-app.post('/api/offers', offerController.createOffer)
-app.put('/api/offers/:offerId', offerController.updateOffer)
-app.delete('/api/offers/:offerId', offerController.deleteOffer)
+app.get('/api/offers/:offerId', offerController.getOneOffer) //Gets one offer for editing on admin view
+app.post('/api/offers', offerController.createOffer) //Req.body sends offer_title, offer_code, discount. Adds offer to offers table.
+app.put('/api/offers/:offerId', offerController.updateOffer) //Update offer details based on offer id
+app.delete('/api/offers/:offerId', offerController.deleteOffer) //Delete offer based on offer id
 
 //Hosting
 app.use( express.static( `${__dirname}/../build`) );
