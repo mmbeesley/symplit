@@ -14,6 +14,7 @@ import SingleChapter from './components/SingleChapter';
 import SingleSection from './components/SingleSection';
 import SingleVideo from './components/SingleVideo';
 import Account from './components/Account';
+import Problems from './components/Problems';
 
 
 export default (
@@ -29,6 +30,7 @@ export default (
         <Route exact distinct path='/book/:book/:chapter/' component={SingleChapter}/>
         <Route exact distinct path='/book/:book/:chapter/:section' component={SingleSection}/>
         <Route exact distince path='/book/:book/:chapter/:section' component={SingleVideo}/>
+        <Route path='/problems' component={Problems}/>
         <Route path='/account' component={Account}/>
     </Switch>
 )
