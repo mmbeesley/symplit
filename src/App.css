@@ -9,7 +9,7 @@
 
 /* header */
 .mainheader {
-    height: 15vh;
+    height: 10vh;
     width: 100%;
     box-shadow: 0px 0px 14px 3px gray;
     display: flex;
@@ -25,6 +25,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    font-size: 20px;
 }
 
 .headItem a {
@@ -36,7 +37,7 @@
 .navcontainer {
     background: var(--site-text);
     width: 225px;
-    height: 85vh;
+    height: 90vh;
     width: 20%;
 }
 
@@ -46,19 +47,23 @@
 }
 
 .navlink {
-    height: 60px;
-    border-bottom: solid;
-    border-color: var(--logo-white);
-    border-width: 1px;
+    height: 70px;
     display: flex;
+    transition: .5s;
+}
+
+.navlink:hover {
+    background: var(--logo-gray);
 }
 
 .navlinkicon {
-    height: 60px;
+    height: 70px;
     width: 60px;
-    border-right: solid;
-    border-color: var(--logo-white);
-    border-width: 1px;
+    padding: 5px;
+    padding-left: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .navlinkdesc {
@@ -69,7 +74,9 @@
     width: 165px;
 }
 
-
+.nav-icon {
+    width: 45px;
+}
 
 /* body */
 .belowHeader {
@@ -79,7 +86,7 @@
 
 .rightNav {
     width: 80%;
-    height: 85vh;
+    height: 90vh;
     overflow-y: scroll;
 }
 
@@ -128,4 +135,128 @@
 .footerlinks a {
     color: var(--logo-white);
     text-decoration: none;
+}
+
+/* home */
+.homebody {
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-image: url("images/home-back.png");
+}
+
+.homesplash {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 500px;
+    padding: 150px;
+    background: rgba(0,0,0,.25);
+}
+
+.hometitle {
+    color: var(--logo-light-blue);
+    font-weight: bold;
+    font-size: 40px;
+}
+
+.homesubtitle {
+    color: var(--logo-white);
+    font-size: 30px;
+}
+
+.testimonialcontainer {
+    background: var(--logo-dark-blue);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    height: 300px;
+    padding: 25px; 
+}
+
+.testimonialtitle {
+    color: white;
+    font-size: 20px;
+}
+
+.testimonialbody {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 80%;
+}
+
+.testimonialcarousel {
+    background: white;
+    height: 200px;
+    width: 500px;
+}
+
+.testimonialbutton {
+    background: white;
+    color: var(--logo-dark-blue);
+    font-weight: bold;
+    width: 150px;
+    height: 40px;
+    border-radius: 25px;
+    border: none;
+}
+
+.homemissioncontainer {
+    height: 150px;
+    background: white;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    color: var(--site-text);
+}
+
+.homemissioncontainer div{
+    font-size: 25px;
+    width: 70%;
+    text-align: center;
+}
+
+.homemissionaccent {
+    color: var(--logo-light-blue);
+}
+
+.howcontainer {
+    height: 300px;
+    display: flex;
+    background: var(--logo-dark-blue);
+}
+
+.howcontainer div {
+    width: 50%;
+}
+
+.howimage {
+    background-image: url("images/home-mid-1.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.howbody {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.howbody h1{
+    color: white;
+}
+
+.howbody ul{
+    color: white;
+    width: 60%;
+    list-style-type: disc;
+}
+
+.howbody ul li {
+    margin-top: 5px; 
 }
