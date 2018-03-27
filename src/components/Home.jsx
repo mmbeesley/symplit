@@ -1,8 +1,76 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import axios from 'axios';
+import Slider from 'react-slick';
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { Link } from 'react-router-dom';
 
 class Home extends Component {
+    constructor() {
+        super();
+
+        this.state = {
+            books: [],
+            testimonials: []
+        }
+    }
+
+    componentDidMount() {
+        axios.get('/api/books').then(books => {
+            this.setState({
+                books: books.data
+            })
+        })
+
+        axios.get('/api/testimonials').then(testimonials => {
+            this.setState({
+                testimonials: testimonials.data
+            })
+        })
+    }
+
     render() {
+
+        var settings = {
+            dots: true,
+            infinite: true,
+            speed: 500,
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            autoplay: true,
+            autoplaySpeed: 5000
+        };
+
+        var testimonialMap = this.state.testimonials.map((e, i) => {
+            return (
+                <div key={i} className="testimonialtext">
+                    <h3 className="testimonialauthor">{e.testimonial_author} said:</h3>
+                    <h3 className="testimonial">"{e.testimonial_text}"</h3>
+                </div>
+            )
+        });
+
+        var bookMap = this.state.books.map((e, i) => {
+            if(i<4){
+                var authorMap = e.author.length > 0 ? e.author.map((x, y) => {
+                    return <h3 className="homebookauthor">{x}</h3>
+                }) : null
+    
+                let imageUrl = `http://res.cloudinary.com/symplit/image/upload/${e.book_image}`;
+    
+                return (
+                    <Link to={`/book/${e.book_id}`} key={i} className="booktile">
+                        <div style={{backgroundImage: `url(${imageUrl})`}} className="booktilebook"></div>
+                        <h3>{e.book_title}</h3>
+                        <h3 className="booktilesubtitle">{e.book_subtitle}</h3>
+                        <div className="homeauthorlist">
+                            {authorMap}
+                        </div>
+                    </Link>
+                )
+            }
+        })
+
         return (
             <div className="homebody">
                 <div className="homesplash">
@@ -14,9 +82,9 @@ class Home extends Component {
                         Student Testimonials
                     </div>
                     <div className="testimonialbody">
-                        <div className='testimonialcarousel'>
-
-                        </div>
+                        <Slider {...settings} className="testimonialcarousel">
+                            {testimonialMap}
+                        </Slider>
                         <button className="testimonialbutton">GET STARTED</button>
                     </div>
                 </div>
@@ -35,13 +103,17 @@ class Home extends Component {
                         <button className="testimonialbutton">GET STARTED</button>
                     </div>
                 </div>
+                <div className="homebookcontainer">
+                    <h1 className="homebooktitle">FIND YOUR TEXTBOOK</h1>
+                    <div className="homebooksubtitle">Finally, professional videos that go with your textbook!</div>
+                    <div className="homebooks">
+                        {bookMap}
+                    </div>
+                    <Link to="/books" className="homebooksbutton">FIND YOUR TEXTBOOK</Link>
+                </div>
             </div>
         )
     }
 }
 
-function mapStateToProps(state) {
-
-}
-
-export default connect(mapStateToProps)(Home)
+export default Home

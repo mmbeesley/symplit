@@ -7,7 +7,7 @@ function Header(props){
     let accountLink = props.user.auth_id ? <Link to='/account'>Your Account</Link> : <a href={process.env.REACT_APP_LOGIN}>Login</a>
     return(
         <div className='mainheader'>
-            <Link to='/'><img src={logo} className='headItem'/></Link>
+            <Link to='/'><img src={logo} alt="Symplit" className='headItem'/></Link>
             <div className='headItem'>
                 {accountLink}
             </div>

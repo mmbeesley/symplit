@@ -1,34 +1,49 @@
 //Package Declarations
 require('dotenv').config();
-const express = require('express')
-    , bodyParser = require('body-parser')
-    , massive = require('massive')
-    , session = require('express-session')
-    , passport = require('passport')
-    , Auth0Strategy = require('passport-auth0')
-    , cors = require('cors')
-    , app = express()
+const express = require('express');
+const bodyParser = require('body-parser');
+const massive = require('massive');
+const session = require('express-session');
+const app = express();
+const passport = require('passport');
+const Auth0Strategy = require('passport-auth0');
+const cors = require('cors');
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+const port = process.env.SERVER_PORT || 5000;
+const cloudinary = require('cloudinary');
 
 //Controller Declarations
 const contentController = require('./controllers/contentController')
-    , paymentController = require('./controllers/paymentController')
-    , problemsController = require('./controllers/problemsController')
-    , testimonialController = require('./controllers/testimonialController')
-    , userController = require('./controllers/userController')
-    , bookController = require('./controllers/bookController')
-    , chapterController = require('./controllers/chapterController')
-    , sectionController = require('./controllers/sectionController')
-    , sectionVideoController = require('./controllers/sectionVideoController')
-    , videoController = require('./controllers/videoController')
-    , membershipController = require('./controllers/membershipController')
-    , offerController = require('./controllers/offerController')
+const paymentController = require('./controllers/paymentController')
+const problemsController = require('./controllers/problemsController')
+const testimonialController = require('./controllers/testimonialController')
+const userController = require('./controllers/userController')
+const bookController = require('./controllers/bookController')
+const chapterController = require('./controllers/chapterController')
+const sectionController = require('./controllers/sectionController')
+const sectionVideoController = require('./controllers/sectionVideoController')
+const videoController = require('./controllers/videoController')
+const membershipController = require('./controllers/membershipController')
+const offerController = require('./controllers/offerController')
+
+//Hosting
+// app.use( express.static( `${__dirname}/../build`) );
 
 //Top Level Middleware
 app.use(bodyParser.json());
 app.use(cors());
-massive(process.env.CONNECTION_STRING).then(db => {
+massive(process.env.CONNECTION_STRING).then((db) => {
     app.set('db', db);
 })
+
+cloudinary.config({
+    cloud_name: 'symplit',
+    api_key: '364962671353451',
+    api_secret: process.env.CLOUDINARY_SECRET
+});
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(session({
     secret: process.env.SESSION_SECRET,
@@ -117,11 +132,11 @@ app.post('/api/videos', videoController.createVideo); //Req.body will send video
 app.put('/api/videos/:videoId', videoController.updateVideo); //Update video details based on video id
 app.delete('/api/videos/:videoId', videoController.deleteVideo); //Delete video based on video id
 
-//Testimonial Endpoints
+// Testimonial Endpoints
 app.get('/api/testimonials', testimonialController.getTestimonials); //Gets list of testimonials from db for display on home view and purchase view
 
-//Admin Testimonial Endpoints
-app.get('/api/testimonials', testimonialController.getOneTestimonial); //Gets one testimonial for admin view
+// Admin Testimonial Endpoints
+app.get('/api/testimonials/:testimonailId', testimonialController.getOneTestimonial); //Gets one testimonial for admin view
 app.post('/api/testimonials', testimonialController.createTestimonial); //Req.body sends testimonial_giver, testimonial_text. Adds to testimonials table
 app.put('/api/testimonials/:testimonialId', testimonialController.updateTestimonial); //Update testimonial details based on testimonial id
 app.delete('/api/testimonials/:testimonialId', testimonialController.deleteTestimonial); //Delete testimonial based on testimonial id
@@ -153,11 +168,7 @@ app.post('/api/offers', offerController.createOffer) //Req.body sends offer_titl
 app.put('/api/offers/:offerId', offerController.updateOffer) //Update offer details based on offer id
 app.delete('/api/offers/:offerId', offerController.deleteOffer) //Delete offer based on offer id
 
-//Hosting
-app.use( express.static( `${__dirname}/../build`) );
-
-//Server Port
-const port = process.env.SERVER_PORT || 5000
-
 ////////////////////////////////////////////Listen/////////////////////////////////////////
-app.listen(port, () => console.log(`Port ${port} is not the droids you're looking for...`))
+app.listen(port, () => {
+    console.log(`Port ${port} is not the droids you're looking for...`)
+})

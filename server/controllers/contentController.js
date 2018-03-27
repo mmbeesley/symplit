@@ -10,7 +10,7 @@ module.exports = {
 
     searchBooks: (req,res) => {
         const db = req.app.get('db');
-        const search = '%' + req.query.book.toUpperCase() + '%'
+        const search = '%' + req.query.book.toUpperCase() + '%';
 
         db.get_searchbooks([search]).then(books => {
             res.status(200).send(books);

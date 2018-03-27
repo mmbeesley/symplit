@@ -154,14 +154,16 @@
 }
 
 .hometitle {
-    color: var(--logo-light-blue);
+    color: var(--logo-white);
     font-weight: bold;
     font-size: 40px;
+    text-shadow: 2px 2px var(--logo-dark-blue);
 }
 
 .homesubtitle {
     color: var(--logo-white);
     font-size: 30px;
+    text-shadow: 2px 2px var(--logo-dark-blue);
 }
 
 .testimonialcontainer {
@@ -170,7 +172,7 @@
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-    height: 300px;
+    height: 350px;
     padding: 25px; 
 }
 
@@ -190,21 +192,42 @@
     background: white;
     height: 200px;
     width: 500px;
+    padding: 25px;
+}
+
+.testimonialtext {
+    font-size: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 100%;
+    height: 200px;
+}
+
+.testimonial {
+    margin-top: 20px; 
+}
+
+.testimonialauthor {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.testimonialtext h3 {
+    line-height: 20px;
 }
 
 .testimonialbutton {
     background: white;
     color: var(--logo-dark-blue);
     font-weight: bold;
-    width: 150px;
-    height: 40px;
+    padding: 15px;
     border-radius: 25px;
     border: none;
 }
 
 .homemissioncontainer {
     height: 150px;
-    background: white;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -224,7 +247,7 @@
 }
 
 .howcontainer {
-    height: 300px;
+    height: 350px;
     display: flex;
     background: var(--logo-dark-blue);
 }
@@ -258,5 +281,150 @@
 }
 
 .howbody ul li {
-    margin-top: 5px; 
+    margin-top: 10px; 
+}
+
+.homebookcontainer {
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.homebookcontainer a {
+    text-decoration: none;
+}
+
+.homebooktitle {
+    color: var(--logo-dark-blue);
+}
+
+.homebooksubtitle {
+    font-size: 20px;
+}
+
+.homeauthorlist {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.homebookauthor {
+    font-size: 10px;
+    font-style: italic;
+    padding: 2px;
+}
+
+.homebooks {
+    width: 70%;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.booktile {
+    width: 30%;
+    height: 250px;
+    transition: .6s;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    border: solid;
+    border-width: 1px;
+    border-color: var(--logo-white);
+}
+
+.booktilebook {
+    width: 80%;
+    background-size: contain;
+    height: 60%;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.booktile:hover {
+    border-color: var(--logo-dark-blue);
+}
+
+.booktilesubtitle {
+    font-size: 13px;
+    font-style: italic;
+}
+
+.homebooks a {
+    text-decoration: none;
+    color: var(--site-text);
+}
+
+.homebooksbutton {
+    padding: 15px;
+    background: var(--logo-dark-blue);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+/* books */
+
+.booksbody {
+    min-height: 65vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+}
+
+.booklist {
+    margin-top: 25px;
+}
+
+.booksearch {
+    display: flex;
+    width: 40%;
+    justify-content: space-around;
+}
+
+.searchbar {
+    padding: 10px;
+    font-size: 20px;
+    border-radius: 3px;
+}
+
+.searchbutton {
+    background: var(--logo-dark-blue);
+    border: none;
+    color: white;
+    padding: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.bookrequest {
+    margin-top: 25px;
+}
+
+.supportlink {
+    text-decoration: none;
+    color: var(--site-text);
+    font-weight: bold;
+}
+
+.breadcrumbcontainer {
+    width: 100%;
+    height: 20px;
+}
+
+.breadcrumb {
+    background: var(--logo-dark-blue);
+    padding: 5px;
+    color: white;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
 }

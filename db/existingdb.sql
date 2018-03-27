@@ -79,3 +79,10 @@ values
 ('SECTION 1.1 EXAMPLE 4', 'https://i.vimeocdn.com/video/598162332.webp?mw=600&mh=360', null, 'https://i.vimeocdn.com/video/598162332.webp?mw=600&mh=360'),
 ('SECTION 1.1 EXAMPLE 5', 'https://i.vimeocdn.com/video/598162149.webp?mw=600&mh=360', null, 'https://i.vimeocdn.com/video/598162149.webp?mw=600&mh=360'),
 ('SECTION 1.1 EXAMPLE 6', 'https://i.vimeocdn.com/video/598162147.webp?mw=600&mh=360', null, 'https://i.vimeocdn.com/video/598162147.webp?mw=600&mh=360')
+
+insert into user_testimonials
+(testimonial_author, testimonial_text)
+values
+('Bryce', `I absolutely love your videos. My teacher is a great guy but doesn't know how to teach very well especially to people like me who have no calculus background. I've enjoyed your videos thus far. They have been extremely helpful in teaching me everything. Thank you`),
+('Cooper B.', `These short and simple videos taught me everything I needed to know to pass the exam with flying colors. It was the best $20 I've ever spent! Thank you!`),
+('Taylor', `Your explanations made it so much more clear. I was usually confused after the lectures and you always cleared it up. Your explanations are the only reason I'm getting a good grade in Calculus.`)
