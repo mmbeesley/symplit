@@ -17,7 +17,6 @@ class App extends Component {
             <div className='mainbody'>
               {routes}
             </div>
-            <Footer />
           </div>
         </div>
       </div>

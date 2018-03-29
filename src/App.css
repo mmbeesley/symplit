@@ -11,13 +11,14 @@
 .mainheader {
     height: 10vh;
     width: 100%;
-    box-shadow: 0px 0px 14px 3px gray;
+    box-shadow: 0px 0px 14px 3px var(--site-text);
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding-left: 15px;
     padding-right: 15px;
     background: var(--logo-white);
+    position: relative;
     z-index: 2;
 }
 
@@ -37,7 +38,7 @@
 /* nav */
 .navcontainer {
     background: var(--site-text);
-    max-width: 200px;
+    max-width: 250px;
     height: 90vh;
     display: flex;
     position: fixed;
@@ -62,8 +63,8 @@
 }
 
 .navlinkcontainer {
-    width: 200px;
-    margin-left: -200px;
+    width: 250px;
+    margin-left: -250px;
     transition: .3s;
     display: flex;
     flex-direction: column;
@@ -73,11 +74,11 @@
 .navlink {
     width: 100%;
     padding: 5px;
-    padding-left: 75px;
+    padding-left: 85px;
     color: white;
     height: 75px;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     position: relative;
     z-index: 7;
@@ -85,6 +86,7 @@
     border-width: 4px;
     border-color: var(--site-text);
     transition: .5s;
+    font-size: 20px;
 }
 
 .navlinkcontainer a {
@@ -117,7 +119,6 @@
 .mainbody {
     color: var(--site-text);
     width: 100%;
-    padding: 20px;
     position: relative;
     z-index: 0;
 }
@@ -149,6 +150,7 @@
     align-items: center;
     color: var(--logo-white);
     padding: 25px;
+    margin-top: 45px;
 }
 
 .footerlinks {
@@ -176,7 +178,7 @@
     flex-direction: column;
     justify-content: space-around;
     height: 500px;
-    padding: 150px;
+    padding: 125px;
     background: rgba(0,0,0,.25);
 }
 
@@ -189,7 +191,7 @@
 
 .homesubtitle {
     color: var(--logo-white);
-    font-size: 30px;
+    font-size: 27px;
     text-shadow: 2px 2px var(--logo-dark-blue);
 }
 
@@ -251,6 +253,7 @@
     padding: 15px;
     border-radius: 25px;
     border: none;
+    font-size: 18px;
 }
 
 .homemissioncontainer {
@@ -396,14 +399,22 @@
     font-size: 18px;
 }
 
+.homesplash a {
+    text-decoration: none;
+}
+
+.splashbutton {
+    width: 130px;
+}
+
 /* books */
 
 .booksbody {
-    min-height: 65vh;
+    min-height: 85vh;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 15px;
+    padding-top: 15px;
 }
 
 .booklist {
@@ -459,5 +470,20 @@
 /* single book */
 
 .singlebookbody {
+    min-height: 65vh;
+    position: relative;
+    display: flex;
+}
+
+.booknavcontainer {
+    width: 175px;
+    border-left: solid;
+    border-width: 1px;
+    border-color: white;
+    height: 90vh;
+    background: var(--logo-dark-blue);
+}
+
+.singlebookcontent {
     min-height: 65vh;
 }

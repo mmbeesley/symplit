@@ -4,6 +4,7 @@ import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Link } from 'react-router-dom';
+import Footer from './Footer';
 
 class Home extends Component {
     constructor() {
@@ -75,7 +76,8 @@ class Home extends Component {
             <div className="homebody">
                 <div className="homesplash">
                     <div className="hometitle">Struggling in Math?</div>
-                    <div className="homesubtitle">Textbook-Specific Tutorial Videos</div>
+                    <div className="homesubtitle">Video Walkthroughs of YOUR Textbook</div>
+                    <Link to='/books' className="homebooksbutton splashbutton">Get Started</Link>
                 </div>
                 <div className="testimonialcontainer">
                     <div className='testimonialtitle'>
@@ -85,7 +87,7 @@ class Home extends Component {
                         <Slider {...settings} className="testimonialcarousel">
                             {testimonialMap}
                         </Slider>
-                        <button className="testimonialbutton">GET STARTED</button>
+                        <button className="testimonialbutton">Get Started</button>
                     </div>
                 </div>
                 <div className="homemissioncontainer">
@@ -100,17 +102,18 @@ class Home extends Component {
                             <li>Numerous example videos for each concept</li>
                             <li>Downloadable PDFs with unique tips and tricks for tackling the harder concepts</li>
                         </ul>
-                        <button className="testimonialbutton">GET STARTED</button>
+                        <button className="testimonialbutton">Get Started</button>
                     </div>
                 </div>
                 <div className="homebookcontainer">
-                    <h1 className="homebooktitle">FIND YOUR TEXTBOOK</h1>
+                    <h1 className="homebooktitle">Find Your Textbook</h1>
                     <div className="homebooksubtitle">Finally, professional videos that go with your textbook!</div>
                     <div className="homebooks">
                         {bookMap}
                     </div>
                     <Link to="/books" className="homebooksbutton">FIND YOUR TEXTBOOK</Link>
                 </div>
+                <Footer/>
             </div>
         )
     }

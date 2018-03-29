@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import Footer from './Footer';
 
 class Books extends Component {
     constructor() {
@@ -86,6 +87,7 @@ class Books extends Component {
                     {bookMap}
                 </div>
                 <h3 className="bookrequest">Not seeing your textbook? Request yours at <a href="mailto:support@symplit.com" className="supportlink">support@symplit.com</a></h3>
+                <Footer/>
             </div>
         )
     }

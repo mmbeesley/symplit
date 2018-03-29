@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
+import Footer from './Footer';
 
 class SingleBook extends Component {
     constructor(){
@@ -23,7 +24,10 @@ class SingleBook extends Component {
     render (){
         return (
             <div className="singlebookbody">
-
+                <div className="booknavcontainer"></div>
+                <div className="singlebookcontent">
+                    <Footer/>
+                </div>
             </div>
         )
     }
