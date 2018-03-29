@@ -18,6 +18,7 @@
     padding-left: 15px;
     padding-right: 15px;
     background: var(--logo-white);
+    z-index: 2;
 }
 
 .headItem {
@@ -36,46 +37,67 @@
 /* nav */
 .navcontainer {
     background: var(--site-text);
-    width: 225px;
+    max-width: 200px;
     height: 90vh;
-    width: 20%;
+    display: flex;
+    position: fixed;
+    z-index: 5;
 }
 
-.navcontainer a {
-    text-decoration: none;
-    color: var(--logo-white);
+.naviconcontainer {
+    width: 75px;
+}
+
+.navicon {
+    height: 75px;
+    width: 75px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.navicon img {
+    width: 45px;
+}
+
+.navlinkcontainer {
+    width: 200px;
+    margin-left: -200px;
+    transition: .3s;
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
 }
 
 .navlink {
-    height: 70px;
+    width: 100%;
+    padding: 5px;
+    padding-left: 75px;
+    color: white;
+    height: 75px;
     display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 7;
+    border-right: solid;
+    border-width: 4px;
+    border-color: var(--site-text);
     transition: .5s;
 }
 
+.navlinkcontainer a {
+    text-decoration: none;
+}
+
+.navcontainer:hover .navlinkcontainer {
+    margin-left: -75px;
+    opacity: 1;
+}
+
 .navlink:hover {
-    background: var(--logo-gray);
-}
-
-.navlinkicon {
-    height: 70px;
-    width: 60px;
-    padding: 5px;
-    padding-left: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.navlinkdesc {
-    font-size: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 165px;
-}
-
-.nav-icon {
-    width: 45px;
+    border-color: var(--logo-light-blue);
 }
 
 /* body */
@@ -85,9 +107,11 @@
 }
 
 .rightNav {
-    width: 80%;
+    width: 95%;
     height: 90vh;
     overflow-y: scroll;
+    z-index: 0;
+    margin-left: 75px;
 }
 
 .mainbody {
@@ -95,6 +119,7 @@
     width: 100%;
     padding: 20px;
     position: relative;
+    z-index: 0;
 }
 
 .mainbody h1 {
@@ -142,6 +167,8 @@
     background-repeat: no-repeat;
     background-size: contain;
     background-image: url("images/home-back.png");
+    position: relative;
+    z-index: 0;
 }
 
 .homesplash {
@@ -427,4 +454,10 @@
     border: none;
     border-radius: 2px;
     cursor: pointer;
+}
+
+/* single book */
+
+.singlebookbody {
+    min-height: 65vh;
 }
