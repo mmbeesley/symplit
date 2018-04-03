@@ -38,7 +38,7 @@
 /* nav */
 .navcontainer {
     background: var(--site-text);
-    max-width: 250px;
+    max-width: 19.5vw;
     height: 90vh;
     display: flex;
     position: fixed;
@@ -46,12 +46,12 @@
 }
 
 .naviconcontainer {
-    width: 75px;
+    width: 5.85vw;
 }
 
 .navicon {
-    height: 75px;
-    width: 75px;
+    height: 5.85vw;
+    width: 5.85vw;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -59,12 +59,12 @@
 }
 
 .navicon img {
-    width: 45px;
+    width: 4vw;
 }
 
 .navlinkcontainer {
-    width: 250px;
-    margin-left: -250px;
+    width: 19.5vw;
+    margin-left: -19.5vw;
     transition: .3s;
     display: flex;
     flex-direction: column;
@@ -74,7 +74,7 @@
 .navlink {
     width: 100%;
     padding: 5px;
-    padding-left: 85px;
+    padding-left: 6vw;
     color: white;
     height: 75px;
     display: flex;
@@ -100,6 +100,7 @@
 
 .navlink:hover {
     border-color: var(--logo-light-blue);
+    font-weight: bold;
 }
 
 /* body */
@@ -473,6 +474,9 @@
     min-height: 65vh;
     position: relative;
     display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .booknavcontainer {
@@ -482,8 +486,64 @@
     border-color: white;
     height: 90vh;
     background: var(--logo-dark-blue);
+    overflow-y: scroll;
 }
 
 .singlebookcontent {
     min-height: 65vh;
+}
+
+.bookoverview {
+    padding: 25px;
+    display: flex;
+    width: 60%;
+    justify-content: space-between;
+}
+
+.chapterlist {
+    padding: 25px;
+    width: 100%;
+    border-top: solid;
+    border-width: 2px;
+    border-color: var(--site-text);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.chapterlist a {
+    text-decoration: none;
+    color: var(--site-text);
+}
+
+.chaptertile {
+    display: flex;
+    width: 75%;
+    justify-content: space-between;
+    align-items: center;
+    border: solid;
+    border-width: 1px;
+    border-color: var(--logo-gray);
+    margin-top: 15px;
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.chaptertile h2 {
+    font-size: 20px;
+    margin-top: 0px;
+}
+
+.singlebookimage {
+    max-width: 300px;
+}
+
+.booksummary {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
 }
