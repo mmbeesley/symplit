@@ -487,6 +487,9 @@
     height: 90vh;
     background: var(--logo-dark-blue);
     overflow-y: scroll;
+    color: white;
+    padding: 5px;
+    position:fixed;
 }
 
 .singlebookcontent {
@@ -546,4 +549,55 @@
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
+}
+
+.sectiontitle {
+    font-size: 13px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.videolist {
+    list-style: disc;
+    font-size: 12px;
+    padding-left: 3px;
+    border-top: solid;
+    border-bottom: solid;
+    border-width: 1px;
+    border-color: white;
+    margin-top: 10px;
+}
+
+.videolist a {
+    text-decoration: none;
+    color: white;
+}
+
+.videolistitem {
+    text-transform: capitalize;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    cursor: pointer;
+    list-style-type: disc;
+}
+
+.videolistitem:hover {
+    color: lightgray;
+}
+
+.sectiontitle:hover {
+    color: lightgray;
+}
+
+.singlechapterbody {
+    display: flex;
+}
+
+.singlechaptercontent {
+    width: 79vw;
+    margin-left: 175px;
+}
+
+.sectionbodycontainer {
+    padding: 25px;
 }

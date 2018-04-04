@@ -1,6 +1,6 @@
 module.exports = {
 
-    getBooks: (req,res) => {
+    getBooks: (req, res) => {
         const db = req.app.get('db');
 
         db.get_allbooks().then(books => {
@@ -8,7 +8,7 @@ module.exports = {
         })
     },
 
-    searchBooks: (req,res) => {
+    searchBooks: (req, res) => {
         const db = req.app.get('db');
         const search = '%' + req.query.book.toUpperCase() + '%';
 
@@ -20,7 +20,7 @@ module.exports = {
     getChapters: (req, res) => {
         const db = req.app.get('db');
         const { bookId } = req.params;
-        
+
         db.get_allchapters([bookId]).then(chapters => {
             res.status(200).send(chapters);
         })
@@ -32,7 +32,7 @@ module.exports = {
 
         db.get_allsections([chapterId]).then(sections => {
             var results = [];
-            for(var i = 0, obj = {}; i < sections.length; i++){
+            for (var i = 0, obj = {}; i < sections.length; i++) {
                 if (sections[i].section_id != obj.sectionId) {
                     obj = {
                         sectionId: sections[i].section_id,
