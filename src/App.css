@@ -492,6 +492,11 @@
     position:fixed;
 }
 
+.booknavcontainer a {
+    text-decoration: none;
+    color: white;
+}
+
 .singlebookcontent {
     min-height: 65vh;
 }
@@ -553,8 +558,9 @@
 
 .sectiontitle {
     font-size: 13px;
-    margin-top: 10px;
     cursor: pointer;
+    margin-top: 10px;
+    text-align: center;
 }
 
 .videolist {
@@ -596,8 +602,76 @@
 .singlechaptercontent {
     width: 79vw;
     margin-left: 175px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .sectionbodycontainer {
     padding: 25px;
+}
+
+.bookcrumb {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 15px;
+    margin-top: 10px;
+}
+
+.bookcrumbimg {
+    height: 50px;
+}
+
+.bookcrumb div {
+    margin-left: 10px;
+}
+
+.bookcrumb:hover {
+    color: lightgray;
+}
+
+.navchaptertitle {
+    font-size: 14px;
+    text-align: center;
+    margin-top: 10px; 
+    border-bottom: solid;
+    border-width: 2px;
+    border-color: white;
+    padding: 5px;
+    border-top: solid;  
+}
+
+.videotile {
+    padding: 25px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    height: 525px;
+    justify-content: space-around
+}
+
+.bodysectiontitle {
+    font-size: 30px;
+}
+
+.reactplayer {
+    width: 50%;
+}
+
+.videobody {
+    display: flex;
+    justify-content: space-between;
+}
+
+.videodesc {
+    width: 50%;
+    padding: 25px;
+}
+
+.sectionbodycontainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }

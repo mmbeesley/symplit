@@ -2,27 +2,47 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Footer from './Footer';
-import {Player} from 'video-react';
+import ReactPlayer from 'react-player';
+
+const videoStyle = {
+    border: "solid",
+    borderWidth: "2px",
+    borderColor: "var(--logo-gray)",
+    padding: "2px",
+    borderRadius: "2px"
+}
 
 class SingleChapter extends Component {
     constructor() {
         super();
 
         this.state = {
+            book: [],
+            chapter: [],
             sections: []
         }
     }
 
     componentDidMount() {
         let chapterId = this.props.match.params.chapter
-        axios.get('/api/sections/' + chapterId).then(sections => {
+        let bookId = this.props.match.params.book
+        let sections = axios.get('/api/sections/' + chapterId);
+        let chapter = axios.get('/api/chapter/' + chapterId);
+        let book = axios.get('/api/books/' + bookId);
+
+        axios.all([sections, chapter, book]).then(res => {
             this.setState({
-                sections: sections.data
+                sections: res[0].data,
+                chapter: res[1].data,
+                book: res[2].data
             })
         })
     }
 
     render() {
+
+        let book = this.state.book[0];
+        let chapter = this.state.chapter[0];
 
         let navMap = this.state.sections.length > 0 ? this.state.sections.map((e, i) => {
             let videoMap = e.sectionVideos.map((x, y) => {
@@ -36,7 +56,12 @@ class SingleChapter extends Component {
             })
             return (
                 <div key={e.sectionId}>
-                    <div className="sectiontitle">{this.props.match.params.chapter}.{e.sectionNumber} {e.sectionTitle}</div>
+                    <Link to={`/book/${book.book_id}`} className="bookcrumb">
+                        <img src={`http://res.cloudinary.com/symplit/image/upload/${book.book_image}`} alt="Back to Book" className="bookcrumbimg" />
+                        <div>{book.book_title}</div>
+                    </Link>
+                    <div className="navchaptertitle">{chapter.book_chapter}. {chapter.chapter_title}</div>
+                    <a href={`#${e.sectionTitle}`} ><div className="sectiontitle">{this.props.match.params.chapter}.{e.sectionNumber} {e.sectionTitle}</div></a>
                     <ul className="videolist">
                         {videoMap}
                     </ul>
@@ -47,28 +72,31 @@ class SingleChapter extends Component {
         let bodyMap = this.state.sections.length > 0 ? this.state.sections.map((e, i) => {
             let bodyVideoMap = e.sectionVideos.map((x, y) => {
                 return (
-                    <a className="videotile" name={x.sectionVideoTitle}>
-                        <div className="videotitle">{x.sectionVideoTitle}</div>
-                        <div className="videobody">
-                            <Player
-                                playsinline
-                                poster={x.videoThumbnail}
-                                src={x.videoUrl}
-                            />
-                            <div className="videodesc">
-
+                    <a name={x.sectionVideoTitle} key={x.sectionVideoId}>
+                        <div className="videotile" >
+                            <div className="videotitle">{x.sectionVideoTitle}</div>
+                            <div className="videobody">
+                                <ReactPlayer
+                                    url={x.videoUrl}
+                                    style={videoStyle}
+                                    className="reactplayer"
+                                />
+                                <div className="videodesc">
+                                    <div>{x.sectionVideoText}</div>
+                                    {/* <div><button></button></div> */}
+                                </div>
                             </div>
                         </div>
                     </a>
                 )
             })
             return (
-                <div key={e.sectionId} className="sectionbodycontainer">
+                <a name={e.sectionTitle} key={e.sectionId} className="sectionbodycontainer">
                     <div className="bodysectiontitle">{this.props.match.params.chapter}.{e.sectionNumber} {e.sectionTitle}</div>
                     <div className="bodyvideocontainer">
                         {bodyVideoMap}
                     </div>
-                </div>
+                </a>
             )
         }) : null
 

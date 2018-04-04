@@ -108,7 +108,7 @@ app.put('/api/books/:bookId', bookController.updateBook); //Update book details 
 app.delete('/api/books/:bookId', bookController.deleteBook); //Delete book based on book id
 
 //Admin Chapter Endpoints
-app.get('/api/chapters/:chapterId', chapterController.getOneChapter); //Get single chapter based on chapter id
+app.get('/api/chapter/:chapterId', chapterController.getOneChapter); //Get single chapter based on chapter id
 app.post('/api/chapters', chapterController.createChapter); //Req.body will send book_id, book_chapter, chapter_title, chapter_text, membership_required. Adds new chapter to chapters table
 app.put('/api/chapters/:chapterId', chapterController.updateChapter); //Update chapter details based on chapter id
 app.delete('/api/chapters/:chapterId', chapterController.deleteChapter); //Delete chapter based on chapter id
