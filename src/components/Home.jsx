@@ -54,7 +54,7 @@ class Home extends Component {
         var bookMap = this.state.books.map((e, i) => {
             if(i<4){
                 var authorMap = e.author.length > 0 ? e.author.map((x, y) => {
-                    return <h3 className="homebookauthor">{x}</h3>
+                    return <h3 className="homebookauthor" key={y}>{x}</h3>
                 }) : null
     
                 let imageUrl = `http://res.cloudinary.com/symplit/image/upload/${e.book_image}`;
@@ -77,7 +77,7 @@ class Home extends Component {
                 <div className="homesplash">
                     <div className="hometitle">Struggling in Math?</div>
                     <div className="homesubtitle">Video Walkthroughs of YOUR Textbook</div>
-                    <Link to='/books' className="homebooksbutton splashbutton">Get Started</Link>
+                    <Link to='/books' ><button className="homebooksbutton splashbutton">Get Started</button></Link>
                 </div>
                 <div className="testimonialcontainer">
                     <div className='testimonialtitle'>

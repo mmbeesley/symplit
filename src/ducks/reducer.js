@@ -7,7 +7,8 @@ const initialState = {
 const GET_USER_INFO = "GET_USER_INFO";
 
 export function getUserInfo() {
-    let userData = axios.get('auth/me').then(user => {
+    let userData = axios.get('/auth/me').then(user => {
+        console.log(user.data);
         return user.data
     })
     return {

@@ -7,9 +7,8 @@ const session = require('express-session');
 const app = express();
 const passport = require('passport');
 const Auth0Strategy = require('passport-auth0');
-const cors = require('cors');
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
-const port = process.env.SERVER_PORT || 5000;
+const port = 3500;
 const cloudinary = require('cloudinary');
 
 //Controller Declarations
@@ -31,7 +30,6 @@ const offerController = require('./controllers/offerController')
 
 //Top Level Middleware
 app.use(bodyParser.json());
-app.use(cors());
 massive(process.env.CONNECTION_STRING).then((db) => {
     app.set('db', db);
 })
@@ -51,37 +49,65 @@ app.use(session({
     saveUninitialized: true
 }))
 
-//Auth0 Strategy //need to know what clients we are using for login so that I can build the strategy
-// passport.use(new Auth0Strategy({
-//     domain: process.env.AUTH_DOMAIN,
-//     clientID: process.env.AUTH_CLIENT_ID,
-//     clientSecret: process.env.AUTH_CLIENT_SECRET,
-//     callbackURL: process.env.AUTH_CALLBACK_URL,
-//     scope: `openid profile`
-// }, function (accessToken, refreshToken, extraParams, profile, done) {
-//     console.log(profile) // need to figure out what profile comes back as
-//     
-//     db.get_user([]).then((users) => {
-//     if (!users[0]) {
-//         db.create_user([]).then(newUser => {
-//             return done(null, newUser[0].user_id)
-//         })
-//     } else {
-//         return done(null, users[0].user_id)
-//     }
-// })
-//     })
-// }))
+// Auth0 Strategy //need to know what clients we are using for login so that I can build the strategy
+passport.use(new Auth0Strategy({
+    domain: process.env.AUTH_DOMAIN,
+    clientID: process.env.CLIENT_ID,
+    clientSecret: process.env.CLIENT_SECRET,
+    callbackURL: process.env.CALLBACK_URL,
+    scope: 'openid profile'
+}, (accessToken, refreshToken, extraParams, profile, done) => {//receives profile from auth callback endpoint
 
-//User Endpoints
-passport.serializeUser(userController.serialize);
-passport.deserializeUser(userController.deserialize);
-app.get('/auth', passport.authenticate('auth0')); //Redirect to auth0
-app.get('/auth/callback', passport.authenticate('auth0', {
-    successRedirect: process.env.REACT_APP_REDIRECT,
-    failureRedirect: '/'})); //Redirect back to site
-app.get('/auth/me', userController.loginUser); //Login user, add cookie to sessions, add user to database.
-app.get('/auth/logout', userController.logoutUser); //Logout user
+    let { nickname, user_id } = profile;
+    const db = app.get('db');//database connection
+
+    db.find_user([user_id]).then(function (users) { //checks if user doesn't exist and adds them to database, if user does exist, returns user
+        if (!users[0]) {
+            db.create_user([user_id, nickname])
+                .then(user => {
+                    return done(null, user[0].user_id)
+                })
+        } else {
+            return done(null, users[0].user_id)
+        }
+    })
+}))
+//Serialize User, receives profile data from auth strategy callback, ties profile to session id in session store and cookie
+passport.serializeUser((id, done) => {
+    return done(null, id);
+})
+//Deserialize User, checks session id from cookie, receives profile data and adds it to req.user, is hit when session user hits endpoint
+passport.deserializeUser((id, done) => {
+    const db = app.get('db')
+    db.find_session_user([id])
+    .then(function(user){
+        return done(null,user[0])
+    })
+})
+
+//Auth endpoints
+app.get('/auth', passport.authenticate('auth0'));//kicks off authentication process, redirects us to auth0, then redirects to callback with data
+app.get('/auth/callback', passport.authenticate('auth0', {//kicks off authentication process again to make sure is authenticated and receives data and inserts data into profile parameter, sends profile to strategy
+    successRedirect: 'http://localhost:3000/',
+    failureRedirect: 'http://localhost:3000/'
+}));
+
+//Endpoints
+//Login
+app.get('/auth/me', (req,res)=>{
+    if(!req.user){
+        console.log('no user')
+        res.status(404).send('User not found.');
+    } else {
+        console.log('yes user')
+        res.status(200).send(req.user);
+    }
+})
+//Logout
+app.get('/auth/logout', function(req,res){
+    req.logOut();
+    res.redirect('http://localhost:3000/')
+})
 
 //Admin User Endpoints
 app.get('/api/users/:userId', userController.getOneUser) //Get one user for admin view

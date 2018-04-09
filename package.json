@@ -40,8 +40,6 @@
     "eject": "react-scripts eject"
   },
   "description": "This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).",
-  "main": "server/server.js",
-  "proxy": "http://localhost:5000",
   "devDependencies": {},
   "repository": {
     "type": "git",
@@ -53,5 +51,7 @@
   "bugs": {
     "url": "https://github.com/FullFaceRub/Symplit/issues"
   },
-  "homepage": "https://github.com/FullFaceRub/Symplit#readme"
+  "homepage": "https://github.com/FullFaceRub/Symplit#readme",
+  "main": "server/server.js",
+  "proxy": "http://localhost:3500"
 }

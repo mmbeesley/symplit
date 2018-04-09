@@ -80,3 +80,8 @@ create table user_testimonials
 (testimonial_id serial primary key
 , testimonial_author varchar(180)
 , testimonial_text text)
+
+create table user_saved_books
+(saved_id serial primary key
+, user_id integer
+, book_id integer)

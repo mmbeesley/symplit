@@ -7,7 +7,7 @@ module.exports = {
     deserialize: (user, done) => {
         const db = app.get('db');
     
-        db.get_user([user.id]).then((foundUser)=>{
+        db.find_user([user.id]).then((foundUser)=>{
             return done(null, Object.assign(foundUser[0], { token: user.token }))
         })
     },
@@ -16,6 +16,7 @@ module.exports = {
         if (!req.user) {
             res.status(404).send('User not found');
         } else {
+            console.log(req.user)
             res.status(200).send(req.user)
         }
     },
