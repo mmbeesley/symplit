@@ -5,10 +5,11 @@ const bodyParser = require('body-parser');
 const massive = require('massive');
 const session = require('express-session');
 const app = express();
+const cors = require('cors');
 const passport = require('passport');
 const Auth0Strategy = require('passport-auth0');
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
-const port = 3500;
+const port = process.env.SERVER_PORT || 3500;
 const cloudinary = require('cloudinary');
 
 //Controller Declarations
@@ -29,10 +30,17 @@ const offerController = require('./controllers/offerController')
 // app.use( express.static( `${__dirname}/../build`) );
 
 //Top Level Middleware
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true
+}))
+
 app.use(bodyParser.json());
 massive(process.env.CONNECTION_STRING).then((db) => {
     app.set('db', db);
 })
+app.use(cors());
 
 cloudinary.config({
     cloud_name: 'symplit',
@@ -43,11 +51,6 @@ cloudinary.config({
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: true
-}))
 
 // Auth0 Strategy //need to know what clients we are using for login so that I can build the strategy
 passport.use(new Auth0Strategy({
@@ -74,13 +77,13 @@ passport.use(new Auth0Strategy({
 }))
 //Serialize User, receives profile data from auth strategy callback, ties profile to session id in session store and cookie
 passport.serializeUser((id, done) => {
+    console.log(id);
     return done(null, id);
 })
-//Deserialize User, checks session id from cookie, receives profile data and adds it to req.user, is hit when session user hits endpoint
+//Deserialize User, checks session user_id from cookie, receives profile data and adds it to req.user, is hit when session user hits endpoint
 passport.deserializeUser((id, done) => {
     const db = app.get('db')
-    db.find_session_user([id])
-    .then(function(user){
+    db.find_session_user([id]).then(function(user){
         return done(null,user[0])
     })
 })
@@ -99,7 +102,7 @@ app.get('/auth/me', (req,res)=>{
         console.log('no user')
         res.status(404).send('User not found.');
     } else {
-        console.log('yes user')
+        console.log(req.user)
         res.status(200).send(req.user);
     }
 })
