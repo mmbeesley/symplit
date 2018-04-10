@@ -3,7 +3,6 @@ module.exports = {
     getOneBook: (req, res) => {
         const db = req.app.get('db');
         const { bookId } = req.params;
-        console.log(req.user);
 
         db.get_book([bookId]).then(book => {
             db.get_allchapters([bookId]).then(chapters => {

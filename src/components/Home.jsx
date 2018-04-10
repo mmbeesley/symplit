@@ -148,8 +148,6 @@ class Home extends Component {
     render() {
 
         let adminAddTestimonial = !this.props.user.is_admin ? null : <button className="adminbutton" onClick={() => this.openAddModal()}>Add Testimonial</button>
-        // let adminEditTestimonial = !this.props.user.is_admin ? null : <button className="adminbutton" onClick={()=>this.openEditModal(e.testimonial_id)}>Edit</button>
-        // let adminDeleteTestimonial = !this.props.user.is_admin ? null : <button className="adminbutton" onClick={()=>this.openDeleteModal(e.testimonial_id)}>Delete</button>
 
         var settings = {
             dots: true,
