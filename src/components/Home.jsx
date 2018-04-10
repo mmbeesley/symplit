@@ -5,6 +5,22 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Link } from 'react-router-dom';
 import Footer from './Footer';
+import { getUserInfo } from '../ducks/reducer';
+import { connect } from 'react-redux';
+import Modal from 'react-modal';
+
+const addStyles = {
+    content: {
+        width: "50%",
+        height: "300px",
+        background: "white",
+        margin: "auto",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-around",
+        padding: "25px"
+    }
+}
 
 class Home extends Component {
     constructor() {
@@ -12,8 +28,23 @@ class Home extends Component {
 
         this.state = {
             books: [],
-            testimonials: []
+            testimonials: [],
+            editing: null,
+            deleting: null,
+            bodyInput: '',
+            nameInput: ''
         }
+        this.openAddModal = this.openAddModal.bind(this);
+        this.closeAddModal = this.closeAddModal.bind(this);
+        this.openEditModal = this.openEditModal.bind(this);
+        this.closeEditModal = this.closeEditModal.bind(this);
+        this.openDeleteModal = this.openDeleteModal.bind(this);
+        this.closeDeleteModal = this.closeDeleteModal.bind(this);
+        this.handleBodyInput = this.handleBodyInput.bind(this);
+        this.handleNameInput = this.handleNameInput.bind(this);
+        this.addTestimonial = this.addTestimonial.bind(this);
+        this.updateTestimonial = this.updateTestimonial.bind(this);
+        this.deleteTestimonial = this.deleteTestimonial.bind(this);
     }
 
     componentDidMount() {
@@ -30,7 +61,95 @@ class Home extends Component {
         })
     }
 
+    openAddModal() {
+        this.setState({
+            addModal: true
+        })
+    }
+
+    closeAddModal() {
+        this.setState({
+            addModal: false
+        })
+    }
+
+    openEditModal(i) {
+        axios.get('/api/testimonials/'+i).then(testimonial => {
+            this.setState({
+                editModal: true,
+                editing: i,
+                bodyInput: testimonial.data[0].testimonial_text,
+                nameInput: testimonial.data[0].testimonial_author
+            })
+        })
+    }
+
+    closeEditModal() {
+        this.setState({
+            editModal: false,
+            editing: null
+        })
+    }
+
+    openDeleteModal(i) {
+        this.setState({
+            deleteModal: true,
+            deleting: i
+        })
+    }
+
+    closeDeleteModal() {
+        this.setState({
+            deleteModal: false,
+            deleting: null
+        })
+    }
+
+    handleBodyInput(e) {
+        this.setState({
+            bodyInput: e
+        })
+    }
+
+    handleNameInput(e) {
+        this.setState({
+            nameInput: e
+        })
+    }
+
+    addTestimonial() {
+        axios.post('/api/testimonials', {testimonial_giver: this.state.nameInput, testimonial_text: this.state.bodyInput}).then(testimonial => {
+            this.setState({
+                addModal: false,
+                bodyInput: '',
+                nameInput: ''
+            })
+        })
+    }
+
+    updateTestimonial() {
+        axios.put('/api/testimonials/'+this.state.editing, {testimonial_giver: this.state.nameInput, testimonial_text: this.state.bodyInput}).then(testimonial => {
+            this.setState({
+                editModal: false,
+                bodyInput: '',
+                nameInput: ''
+            })
+        })
+    }
+
+    deleteTestimonial() {
+        axios.delete('/api/testimonials/'+this.state.deleting).then(deleted => {
+            this.setState({
+                deleteModal: false
+            })
+        })
+    }
+
     render() {
+
+        let adminAddTestimonial = !this.props.user.is_admin ? null : <button className="adminbutton" onClick={() => this.openAddModal()}>Add Testimonial</button>
+        // let adminEditTestimonial = !this.props.user.is_admin ? null : <button className="adminbutton" onClick={()=>this.openEditModal(e.testimonial_id)}>Edit</button>
+        // let adminDeleteTestimonial = !this.props.user.is_admin ? null : <button className="adminbutton" onClick={()=>this.openDeleteModal(e.testimonial_id)}>Delete</button>
 
         var settings = {
             dots: true,
@@ -47,21 +166,25 @@ class Home extends Component {
                 <div key={i} className="testimonialtext">
                     <h3 className="testimonialauthor">{e.testimonial_author} said:</h3>
                     <h3 className="testimonial">"{e.testimonial_text}"</h3>
+                    <div className="adminbuttoncontainer">
+                        {!this.props.user.is_admin ? null : <button className="adminbutton" onClick={() => this.openEditModal(e.testimonial_id)}>Edit</button>}
+                        {!this.props.user.is_admin ? null : <button className="adminbutton" onClick={() => this.openDeleteModal(e.testimonial_id)}>Delete</button>}
+                    </div>
                 </div>
             )
         });
 
         var bookMap = this.state.books.map((e, i) => {
-            if(i<4){
+            if (i < 4) {
                 var authorMap = e.author.length > 0 ? e.author.map((x, y) => {
                     return <h3 className="homebookauthor" key={y}>{x}</h3>
                 }) : null
-    
+
                 let imageUrl = `http://res.cloudinary.com/symplit/image/upload/${e.book_image}`;
-    
+
                 return (
                     <Link to={`/book/${e.book_id}`} key={i} className="booktile">
-                        <div style={{backgroundImage: `url(${imageUrl})`}} className="booktilebook"></div>
+                        <div style={{ backgroundImage: `url(${imageUrl})` }} className="booktilebook"></div>
                         <h3>{e.book_title}</h3>
                         <h3 className="booktilesubtitle">{e.book_subtitle}</h3>
                         <div className="homeauthorlist">
@@ -71,6 +194,7 @@ class Home extends Component {
                 )
             }
         })
+
 
         return (
             <div className="homebody">
@@ -87,6 +211,7 @@ class Home extends Component {
                         <Slider {...settings} className="testimonialcarousel">
                             {testimonialMap}
                         </Slider>
+                        {adminAddTestimonial}
                         <button className="testimonialbutton">Get Started</button>
                     </div>
                 </div>
@@ -113,10 +238,36 @@ class Home extends Component {
                     </div>
                     <Link to="/books" className="homebooksbutton">FIND YOUR TEXTBOOK</Link>
                 </div>
-                <Footer/>
+
+                <Modal isOpen={this.state.addModal} onRequestClose={this.closeAddModal} style={addStyles}>
+                    <button onClick={this.closeAddModal}>Close</button>
+                    <input placeholder="Testimonial Giver Name" value={this.state.nameInput} onChange={(e) => this.handleNameInput(e.target.value)}></input>
+                    <input placeholder="Testimonial Body" value={this.state.bodyInput} onChange={(e) => this.handleBodyInput(e.target.value)}></input>
+                    <button onClick={() => this.addTestimonial()}>Submit</button>
+                </Modal>
+
+                <Modal isOpen={this.state.editModal} onRequestClose={this.closeEditModal} style={addStyles}>
+                    <button onClick={this.closeEditModal}>Close</button>
+                    <input placeholder="Testimonial Giver Name" value={this.state.nameInput} onChange={(e) => this.handleNameInput(e.target.value)}></input>
+                    <input placeholder="Testimonial Body" value={this.state.bodyInput} onChange={(e) => this.handleBodyInput(e.target.value)}></input>
+                    <button onClick={() => this.updateTestimonial()}>Submit</button>
+                </Modal>
+
+                <Modal isOpen={this.state.deleteModal} onRequestClose={this.closeDeleteModal} style={addStyles}>
+                    <div>Are you sure you want to delete this?</div>
+                    <button onClick={()=>this.deleteTestimonial()}>Delete</button>
+                </Modal>
+
+                <Footer />
             </div>
         )
     }
 }
 
-export default Home
+function mapStateToProps(state) {
+    return {
+        user: state.user
+    }
+}
+
+export default connect(mapStateToProps, { getUserInfo })(Home)

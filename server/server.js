@@ -163,7 +163,7 @@ app.delete('/api/videos/:videoId', videoController.deleteVideo); //Delete video 
 app.get('/api/testimonials', testimonialController.getTestimonials); //Gets list of testimonials from db for display on home view and purchase view
 
 // Admin Testimonial Endpoints
-app.get('/api/testimonials/:testimonailId', testimonialController.getOneTestimonial); //Gets one testimonial for admin view
+app.get('/api/testimonials/:testimonialId', testimonialController.getOneTestimonial); //Gets one testimonial for admin view
 app.post('/api/testimonials', testimonialController.createTestimonial); //Req.body sends testimonial_giver, testimonial_text. Adds to testimonials table
 app.put('/api/testimonials/:testimonialId', testimonialController.updateTestimonial); //Update testimonial details based on testimonial id
 app.delete('/api/testimonials/:testimonialId', testimonialController.deleteTestimonial); //Delete testimonial based on testimonial id

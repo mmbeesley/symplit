@@ -4,28 +4,24 @@ import book from '../images/icon-book.png';
 import about from '../images/icon-symplit.png';
 import { connect } from 'react-redux';
 import { getUserInfo } from '../ducks/reducer';
-import axios from 'axios';
 
 class NavBar extends Component {
-    constructor(){
+    constructor() {
         super();
 
-        this.state={
+        this.state = {
             user: {}
         }
     }
 
     componentDidMount() {
-        // this.props.getUserInfo();
-        axios.get('/auth/me').then(user => {
-            console.log(user)
-            this.setState({
-                user: user.data
-            })
-        })
+        this.props.getUserInfo();
     }
 
     render() {
+
+        let accountLink = !this.props.user.user_id ? <a href={process.env.REACT_APP_LOGIN}><div className="navlink">Login</div></a> : <Link to={`/account`}><div className="navlink">Your Account</div></Link>
+
         return (
             <div className="navcontainer">
                 <div className="naviconcontainer">
@@ -52,9 +48,7 @@ class NavBar extends Component {
                     <Link to='/about'>
                         <div className="navlink">About</div>
                     </Link>
-                    <a href={process.env.REACT_APP_LOGIN}>
-                        <div className="navlink">Login</div>
-                    </a>
+                    {accountLink}
                 </div>
             </div>
         )
