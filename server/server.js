@@ -58,15 +58,16 @@ passport.use(new Auth0Strategy({
     clientID: process.env.CLIENT_ID,
     clientSecret: process.env.CLIENT_SECRET,
     callbackURL: process.env.CALLBACK_URL,
-    scope: 'openid profile'
-}, (accessToken, refreshToken, extraParams, profile, done) => {//receives profile from auth callback endpoint
+    scope: 'openid email'
+}, (accessToken, refreshToken, extraParams, email, done) => {//receives profile from auth callback endpoint
 
-    let { nickname, user_id } = profile;
     const db = app.get('db');//database connection
+    
+    let { emails, user_id } = email;
 
     db.find_user([user_id]).then(function (users) { //checks if user doesn't exist and adds them to database, if user does exist, returns user
         if (!users[0]) {
-            db.create_user([user_id, nickname])
+            db.create_user([user_id, emails[0].value])
                 .then(user => {
                     return done(null, user[0].user_id)
                 })
@@ -77,7 +78,6 @@ passport.use(new Auth0Strategy({
 }))
 //Serialize User, receives profile data from auth strategy callback, ties profile to session id in session store and cookie
 passport.serializeUser((id, done) => {
-    console.log(id);
     return done(null, id);
 })
 //Deserialize User, checks session user_id from cookie, receives profile data and adds it to req.user, is hit when session user hits endpoint
@@ -99,10 +99,8 @@ app.get('/auth/callback', passport.authenticate('auth0', {//kicks off authentica
 //Login
 app.get('/auth/me', (req,res)=>{
     if(!req.user){
-        console.log('no user')
         res.status(404).send('User not found.');
     } else {
-        console.log(req.user)
         res.status(200).send(req.user);
     }
 })
