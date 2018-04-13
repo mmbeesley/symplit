@@ -48,7 +48,6 @@ class Books extends Component {
         this.closeDeleteModal = this.closeDeleteModal.bind(this);
         this.handleTitle = this.handleTitle.bind(this);
         this.handleSubtitle = this.handleSubtitle.bind(this);
-        this.handleImage = this.handleImage.bind(this);
         this.handleSubject = this.handleSubject.bind(this);
         this.handleAuthor = this.handleAuthor.bind(this);
         this.handleMemRequired = this.handleMemRequired.bind(this);
@@ -57,7 +56,7 @@ class Books extends Component {
         this.addBook = this.addBook.bind(this);
         this.updateBook = this.updateBook.bind(this);
         this.deleteBook = this.deleteBook.bind(this);
-
+        this.handleImage = this.handleImage.bind(this);
     }
 
     componentDidMount() {
@@ -116,7 +115,7 @@ class Books extends Component {
                 bookSubtitle: book.data[0].book_subtitle,
                 bookImage: book.data[0].book_image,
                 bookSubject: book.data[0].book_subject,
-                bookAuthor: book.data[0].book_author,
+                bookAuthor: book.data[0].author,
                 bookMemRequired: book.data[0].membership_required_book,
                 bookMemIds: book.data[0].membership_ids_book,
                 bookVisible: book.data[0].visible
@@ -157,10 +156,20 @@ class Books extends Component {
         })
     }
 
-    handleImage(e) {
-        this.setState({
-            bookImage: e
-        })
+    handleImage() {
+        let _this = this;
+        window.cloudinary.openUploadWidget({ cloud_name: 'symplit', upload_preset: 'rg7skvww' },
+            function (error, result) {
+                let fileName;
+                for (var i = result[0].path.length - 1; i > 0; i--) {
+                    if (result[0].path[i] === '/') {
+                        break;
+                    }
+                    _this.setState({
+                        bookImage: result[0].path.slice(i)
+                    })
+                }
+            });
     }
 
     handleSubject(e) {
@@ -305,31 +314,66 @@ class Books extends Component {
 
                 <Modal isOpen={this.state.addModal} onRequestClose={this.closeAddModal} style={addStyles}>
                     <button onClick={this.closeAddModal}>Close</button>
-                    <input placeholder="Book Title" value={this.state.bookTitle} onChange={(e) => this.handleTitle(e.target.value)}></input>
-                    <input placeholder="Book Subtitle" value={this.state.bookSubtitle} onChange={(e) => this.handleSubtitle(e.target.value)}></input>
-                    <input placeholder="Book Image" value={this.state.bookImage} onChange={(e) => this.handleImage(e.target.value)}></input>
-                    <input placeholder="Book Subject" value={this.state.bookSubject} onChange={(e) => this.handleSubject(e.target.value)}></input>
-                    <input placeholder="Book Author" value={this.state.bookAuthor} onChange={(e) => this.handleAuthor(e.target.value)}></input>
-                    <input placeholder="Book Membership Required?" value={this.state.bookMemRequired} onChange={(e) => this.handleMemRequired(e.target.value)}></input>
-                    <input placeholder="Book Membership IDs" value={this.state.bookMemIds} onChange={(e) => this.handleMemIds(e.target.value)}></input>
-                    <input placeholder="Book Visible?" value={this.state.bookVisible} onChange={(e) => this.handleVisible(e.target.value)}></input>
+                    <div className="checkboxfield">
+                        Title: <input placeholder="Book Title" value={this.state.bookTitle} onChange={(e) => this.handleTitle(e.target.value)}></input>
+                    </div>
+                    <div className="checkboxfield">
+                        Subtitle: <input placeholder="Book Subtitle" value={this.state.bookSubtitle} onChange={(e) => this.handleSubtitle(e.target.value)}></input>
+                    </div>
+                    <div className="checkboxfield">
+                        Upload New Image: <button onClick={this.handleImage} className="upload=button">Add Image</button>
+                    </div>
+                    <p>Current Image: {this.state.bookImage}</p>
+                    <div className="checkboxfield">
+                        Subject: <input placeholder="Book Subject" value={this.state.bookSubject} onChange={(e) => this.handleSubject(e.target.value)}></input>
+                    </div>
+                    <div className="checkboxfield">
+                        Author(s): <input placeholder="Book Author" value={this.state.bookAuthor} onChange={(e) => this.handleAuthor(e.target.value)}></input>
+                    </div>
+                    <div className="checkboxfield">
+                        Is Membership Required? <input type="checkbox" defaultChecked={this.state.bookMemRequired} onChange={(e) => this.handleMemRequired(e.target.checked)}></input>
+                    </div>
+                    <div className="checkboxfield">
+                        Membership IDs: <input placeholder="Book Membership IDs" value={this.state.bookMemIds} onChange={(e) => this.handleMemIds(e.target.value)}></input>
+                    </div>
+                    <div className="checkboxfield">
+                        Is this book Visible yet? <input type="checkbox" defaultChecked={this.state.bookVisible} onChange={(e) => this.handleVisible(e.target.checked)}></input>
+                    </div>
                     <button onClick={() => this.addBook()}>Submit</button>
                 </Modal>
 
                 <Modal isOpen={this.state.editModal} onRequestClose={this.closeEditModal} style={addStyles}>
                     <button onClick={this.closeEditModal}>Close</button>
-                    <input placeholder="Book Title" value={this.state.bookTitle} onChange={(e) => this.handleTitle(e.target.value)}></input>
-                    <input placeholder="Book Subtitle" value={this.state.bookSubtitle} onChange={(e) => this.handleSubtitle(e.target.value)}></input>
-                    <input placeholder="Book Image" value={this.state.bookImage} onChange={(e) => this.handleImage(e.target.value)}></input>
-                    <input placeholder="Book Subject" value={this.state.bookSubject} onChange={(e) => this.handleSubject(e.target.value)}></input>
-                    <input placeholder="Book Author" value={this.state.bookAuthor} onChange={(e) => this.handleAuthor(e.target.value)}></input>
-                    <input placeholder="Book Membership Required?" value={this.state.bookMemRequired} onChange={(e) => this.handleMemRequired(e.target.value)}></input>
-                    <input placeholder="Book Membership IDs" value={this.state.bookMemIds} onChange={(e) => this.handleMemIds(e.target.value)}></input>
-                    <input placeholder="Book Visible?" value={this.state.bookVisible} onChange={(e) => this.handleVisible(e.target.value)}></input>
+                    <div className="checkboxfield">
+                        Title: <input placeholder="Book Title" value={this.state.bookTitle} onChange={(e) => this.handleTitle(e.target.value)}></input>
+                    </div>
+                    <div className="checkboxfield">
+                        Subtitle: <input placeholder="Book Subtitle" value={this.state.bookSubtitle} onChange={(e) => this.handleSubtitle(e.target.value)}></input>
+                    </div>
+                    <div className="checkboxfield">
+                        Upload New Image: <button onClick={this.handleImage} className="upload=button">Add Image</button>
+                    </div>
+                    <p>Current Image: {this.state.bookImage}</p>
+                    <div className="checkboxfield">
+                        Subject: <input placeholder="Book Subject" value={this.state.bookSubject} onChange={(e) => this.handleSubject(e.target.value)}></input>
+                    </div>
+                    <div className="checkboxfield">
+                        Author(s): <input placeholder="Book Author" value={this.state.bookAuthor} onChange={(e) => this.handleAuthor(e.target.value)}></input>
+                    </div>
+                    <div className="checkboxfield">
+                        Is Membership Required? <input type="checkbox" defaultChecked={this.state.bookMemRequired} onChange={(e) => this.handleMemRequired(e.target.checked)}></input>
+                    </div>
+                    <div className="checkboxfield">
+                        Membership IDs: <input placeholder="Book Membership IDs" value={this.state.bookMemIds} onChange={(e) => this.handleMemIds(e.target.value)}></input>
+                    </div>
+                    <div className="checkboxfield">
+                        Is this book Visible yet? <input type="checkbox" defaultChecked={this.state.bookVisible} onChange={(e) => this.handleVisible(e.target.checked)}></input>
+                    </div>
                     <button onClick={() => this.updateBook()}>Submit</button>
                 </Modal>
 
                 <Modal isOpen={this.state.deleteModal} onRequestClose={this.closeDeleteModal} style={addStyles}>
+                    <button onClick={this.closeDeleteModal}>Close</button>
                     <div>Are you sure you want to delete this?</div>
                     <button onClick={() => this.deleteBook()}>Delete</button>
                 </Modal>

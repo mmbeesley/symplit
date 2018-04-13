@@ -17,8 +17,10 @@ module.exports = {
         const { book_title, book_subtitle, book_image, book_subject, author, membership_required_book, membership_ids_book, visible } = req.body
         const title = book_title.toUpperCase();
         const subject = book_subject.toUpperCase();
+        const authorFormat = `{${author}}`;
+        const idsFormat = `{${membership_ids_book}}`;
 
-        db.create_book([title, book_subtitle, book_image, subject, author, membership_required_book, membership_ids_book, visible]).then(newBook => {
+        db.create_book([title, book_subtitle, book_image, subject, authorFormat, membership_required_book, membership_ids_book, visible]).then(newBook => {
             res.status(200).send(newBook);
         })
     },
@@ -29,8 +31,10 @@ module.exports = {
         const { book_title, book_subtitle, book_image, book_subject, author, membership_required_book, membership_ids_book, visible } = req.body
         const title = book_title.toUpperCase();
         const subject = book_subject.toUpperCase();
-
-        db.update_book([bookId, title, book_subtitle, book_image, subject, author, membership_required_book, membership_ids_book, visible]).then(udpatedBook => {
+        const authorFormat = `{${author}}`
+        const idsFormat = `{${membership_ids_book}}`
+        
+        db.update_book([bookId, title, book_subtitle, book_image, subject, authorFormat, membership_required_book, membership_ids_book, visible]).then(udpatedBook => {
             res.status(200).send(udpatedBook)
         })
     },
@@ -39,7 +43,9 @@ module.exports = {
         const db = req.app.get('db');
         const { bookId } = req.params;
 
-        db.delete_book([bookId]).then(deleted => { })
+        db.delete_book([bookId]).then(deleted => {
+            res.status(200).send('Book deleted successfully')
+        })
     }
 
 }
