@@ -11,19 +11,19 @@ module.exports = {
 
     createChapter: (req,res) => {
         const db = req.app.get('db');
-        const { book_id, book_chapter, chapter_title, chapter_text, membership_required_chapter, membership_ids } = req.body;
+        const { book_id, book_chapter, chapter_title, chapter_text, membership_required_chapter, membership_ids_chapter } = req.body;
 
-        db.create_chapter([book_id, book_chapter, chapter_title, chapter_text, membership_required_chapter, membership_ids]).then(newChapter => {
+        db.create_chapter([book_id, book_chapter, chapter_title, chapter_text, membership_required_chapter, membership_ids_chapter]).then(newChapter => {
             res.status(200).send(newChapter);
         })
     },
 
     updateChapter: (req,res) => {
         const db = req.app.get('db');
-        const { book_id, book_chapter, chapter_title, chapter_text, membership_required_chapter, membership_ids } = req.body;
+        const { book_id, book_chapter, chapter_title, chapter_text, membership_required_chapter, membership_ids_chapter } = req.body;
         const { chapterId } = req.params
 
-        db.update_chapter([chapter_id, book_id, book_chapter, chapter_title, chapter_text, membership_required_chapter, membership_ids]).then(updatedChapter => {
+        db.update_chapter([chapterId, book_id, book_chapter, chapter_title, chapter_text, membership_required_chapter, membership_ids_chapter]).then(updatedChapter => {
             res.status(200).send(updatedChapter)
         })
     },
@@ -32,7 +32,9 @@ module.exports = {
         const db = req.app.get('db');
         const { chapterId } = req.params;
 
-        db.delete_chapter([ chapterId ]).then(deleted => {})
+        db.delete_chapter([ chapterId ]).then(deleted => {
+            res.status(200).send('Deleted!')
+        })
     }
 
 }

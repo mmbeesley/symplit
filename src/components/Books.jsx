@@ -227,6 +227,12 @@ class Books extends Component {
                 bookMemIds: [],
                 bookVisible: false
             })
+
+            axios.get('/api/books').then(books => {
+                this.setState({
+                    books: books.data
+                })
+            })
         })
     }
 
@@ -255,6 +261,12 @@ class Books extends Component {
                 bookMemIds: [],
                 bookVisible: false
             })
+
+            axios.get('/api/books').then(books => {
+                this.setState({
+                    books: books.data
+                })
+            })
         })
     }
 
@@ -262,6 +274,12 @@ class Books extends Component {
         axios.delete('/api/books/' + this.state.deleting).then(deleted => {
             this.setState({
                 deleteModal: false
+            })
+
+            axios.get('/api/books').then(books => {
+                this.setState({
+                    books: books.data
+                })
             })
         })
     }
