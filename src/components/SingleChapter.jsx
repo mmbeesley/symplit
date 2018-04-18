@@ -73,6 +73,7 @@ class SingleChapter extends Component {
         this.props.getUserInfo();
 
         axios.all([sections, chapter, book, chapSections]).then(res => {
+            console.log(res[2].data)
             this.setState({
                 sections: res[0].data,
                 chapter: res[1].data,
@@ -310,10 +311,17 @@ class SingleChapter extends Component {
 
     render() {
 
-        let book = this.state.book[0];
-        let chapter = this.state.chapter[0];
-
         let adminAddSection = !this.props.user.is_admin ? null : <button className="adminbutton" onClick={() => this.openAddSectionModal()}>Add Section</button>
+        let book = this.state.book.length > 0 ?
+            <div>
+                <Link to={`/book/${this.state.book[0].book_id}`} className="bookcrumb">
+                    <img src={`http://res.cloudinary.com/symplit/image/upload/${this.state.book[0].book_image}`} alt="Back to Book" className="bookcrumbimg" />
+                    <div>{this.state.book[0].book_title}</div>
+                </Link>
+                <div className="navchaptertitle">{this.state.chapter[0].book_chapter}. {this.state.chapter[0].chapter_title}</div>
+                {adminAddSection}
+            </div> : null;
+
 
         let navMap = this.state.sections.length > 0 ? this.state.sections.map((e, i) => {
             let videoMap = e.sectionVideos.map((x, y) => {
@@ -327,12 +335,6 @@ class SingleChapter extends Component {
             })
             return (
                 <div key={e.sectionId}>
-                    <Link to={`/book/${book.book_id}`} className="bookcrumb">
-                        <img src={`http://res.cloudinary.com/symplit/image/upload/${book.book_image}`} alt="Back to Book" className="bookcrumbimg" />
-                        <div>{book.book_title}</div>
-                    </Link>
-                    <div className="navchaptertitle">{chapter.book_chapter}. {chapter.chapter_title}</div>
-                    {adminAddSection}
                     <a href={`#${e.sectionTitle}`} ><div className="sectiontitle">{this.props.match.params.chapter}.{e.sectionNumber} {e.sectionTitle}</div></a>
                     <ul className="videolist">
                         {videoMap}
@@ -379,6 +381,7 @@ class SingleChapter extends Component {
         return (
             <div className="singlechapterbody">
                 <div className="booknavcontainer">
+                    {book}
                     {navMap}
                 </div>
                 <div className="singlechaptercontent">
