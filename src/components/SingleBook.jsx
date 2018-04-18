@@ -104,7 +104,11 @@ class SingleBook extends Component {
     closeChapDeleteModal() {
         this.setState({
             chapDeleteModal: false,
-            deleting: null
+            deleting: null,
+            chapterTitle: '',
+            chapterText: '',
+            chapterMemRequired: false,
+            chapterMemIds: []
         })
     }
 
@@ -141,7 +145,11 @@ class SingleBook extends Component {
     closeChapEditModal() {
         this.setState({
             chapEditModal: false,
-            editing: null
+            editing: null,
+            chapterTitle: '',
+            chapterText: '',
+            chapterMemRequired: false,
+            chapterMemIds: []
         })
     }
 
@@ -197,7 +205,11 @@ class SingleBook extends Component {
 
     closeAddModal() {
         this.setState({
-            addModal: false
+            addModal: false,
+            chapterTitle: '',
+            chapterText: '',
+            chapterMemRequired: false,
+            chapterMemIds: []
         })
     }
 
@@ -221,14 +233,30 @@ class SingleBook extends Component {
     closeEditModal() {
         this.setState({
             editModal: false,
-            editing: null
+            editing: null,
+            bookTitle: '',
+            bookSubtitle: '',
+            bookImage: '',
+            bookSubject: '',
+            bookAuthor: [],
+            bookMemRequired: false,
+            bookMemIds: [],
+            bookVisible: false
         })
     }
 
     openDeleteModal(i) {
         this.setState({
             deleteModal: true,
-            deleting: i
+            deleting: i,
+            bookTitle: '',
+            bookSubtitle: '',
+            bookImage: '',
+            bookSubject: '',
+            bookAuthor: [],
+            bookMemRequired: false,
+            bookMemIds: [],
+            bookVisible: false
         })
     }
 

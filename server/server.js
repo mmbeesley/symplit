@@ -126,6 +126,7 @@ app.get('/api/books', contentController.getBooks); //Gets all books for display 
 app.get('/api/books/search', contentController.searchBooks); //Gets all books based on req.query, searches through database based on subject and book title/subtitle for display on search results view
 app.get('/api/chapters/:bookId', contentController.getChapters); //Gets all chapters of a book based on book id from db for display on the chapters view
 app.get('/api/sections/:chapterId', contentController.getSections); //Gets all sections of a chapter based on chapter id from db for display on the sections view
+app.get('/api/chapsections/:chapterId', contentController.getChapterSections); //Gets just sections without sections videos in case sections don't have section videos for display on the sections view
 app.get('/api/sectionvideos/:sectionId', contentController.getSectionVideos); //Gets all videos of a section based on section id from db for display on the videos view. JOIN with videos table.
 
 //Admin Book Endpoints
@@ -141,7 +142,7 @@ app.put('/api/chapters/:chapterId', chapterController.updateChapter); //Update c
 app.delete('/api/chapters/:chapterId', chapterController.deleteChapter); //Delete chapter based on chapter id
 
 //Admin Section Endpoints
-app.get('/api/sections/:sectionId', sectionController.getOneSection); //Get single section based on section id
+app.get('/api/section/:sectionId', sectionController.getOneSection); //Get single section based on section id
 app.post('/api/sections', sectionController.createSection); //Req.body will send chapter_id, section_number, section_title, practice_pdf, section_text, membership_required, membership_ids, array of problem_id's. Adds new section to sections table
 app.put('/api/sections/:sectionId', sectionController.updateSection); //Update section details based on section id
 app.delete('/api/sections/:sectionId', sectionController.deleteSection); //Delete section based on section id

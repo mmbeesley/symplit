@@ -61,8 +61,18 @@ module.exports = {
                     videoProblems: sections[i].video_problems,
                     videoThumbnail: sections[i].video_thumbnail
                 })
+
             }
             res.status(200).send(results);
+        })
+    },
+
+    getChapterSections: (req, res) => {
+        const db = req.app.get('db');
+        const {chapterId} = req.params;
+
+        db.get_chapter_sections([chapterId]).then(chapSections => {
+            res.status(200).send(chapSections);
         })
     },
 

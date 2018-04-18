@@ -102,7 +102,15 @@ class Books extends Component {
 
     closeAddModal() {
         this.setState({
-            addModal: false
+            addModal: false,
+            bookTitle: '',
+            bookSubtitle: '',
+            bookImage: '',
+            bookSubject: '',
+            bookAuthor: [],
+            bookMemRequired: false,
+            bookMemIds: [],
+            bookVisible: false
         })
     }
 
@@ -126,7 +134,15 @@ class Books extends Component {
     closeEditModal() {
         this.setState({
             editModal: false,
-            editing: null
+            editing: null,
+            bookTitle: '',
+            bookSubtitle: '',
+            bookImage: '',
+            bookSubject: '',
+            bookAuthor: [],
+            bookMemRequired: false,
+            bookMemIds: [],
+            bookVisible: false
         })
     }
 
@@ -140,7 +156,15 @@ class Books extends Component {
     closeDeleteModal() {
         this.setState({
             deleteModal: false,
-            deleting: null
+            deleting: null,
+            bookTitle: '',
+            bookSubtitle: '',
+            bookImage: '',
+            bookSubject: '',
+            bookAuthor: [],
+            bookMemRequired: false,
+            bookMemIds: [],
+            bookVisible: false
         })
     }
 
@@ -160,7 +184,6 @@ class Books extends Component {
         let _this = this;
         window.cloudinary.openUploadWidget({ cloud_name: 'symplit', upload_preset: 'rg7skvww' },
             function (error, result) {
-                let fileName;
                 for (var i = result[0].path.length - 1; i > 0; i--) {
                     if (result[0].path[i] === '/') {
                         break;
@@ -169,7 +192,8 @@ class Books extends Component {
                         bookImage: result[0].path.slice(i)
                     })
                 }
-            });
+            }
+        );
     }
 
     handleSubject(e) {
