@@ -11,8 +11,6 @@ import FAQ from './components/About/FAQ';
 import Books from './components/Books';
 import SingleBook from './components/SingleBook';
 import SingleChapter from './components/SingleChapter';
-import SingleSection from './components/SingleSection';
-import SingleVideo from './components/SingleVideo';
 import Account from './components/Account';
 import Problems from './components/Problems';
 
@@ -28,9 +26,7 @@ export default (
         <Route path='/books' component={Books}/>
         <Route exact distinct path='/book/:book/' component={SingleBook}/>
         <Route exact distinct path='/book/:book/:chapter/' component={SingleChapter}/>
-        <Route exact distinct path='/book/:book/:chapter/:section' component={SingleSection}/>
-        <Route exact distince path='/book/:book/:chapter/:section' component={SingleVideo}/>
-        <Route path='/problems' component={Problems}/>
+        {/* <Route path='/problems' component={Problems}/> */}
         <Route path='/account' component={Account}/>
     </Switch>
 )

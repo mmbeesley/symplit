@@ -77,6 +77,7 @@ class SingleBook extends Component {
             })
         })
         this.props.getUserInfo();
+        Modal.setAppElement('body');
     }
 
     openChapDeleteModal(i) {
@@ -87,7 +88,6 @@ class SingleBook extends Component {
     }
 
     openChapEditModal(i) {
-        console.log(i);
         axios.get('/api/chapter/' + i).then(chapter => {
             this.setState({
                 chapEditModal: true,
@@ -406,7 +406,7 @@ class SingleBook extends Component {
 
         let chapterList = chapters ? chapters.map((e, i) => {
             return (
-                <div className="chaptercontainer">
+                <div className="chaptercontainer" key={i}>
                     <Link to={`/book/${this.props.match.params.book}/${e.chapter_id}`} key={i} className="chaptertile">
                         <h1 className="chapternumber">CHAPTER {e.book_chapter}</h1>
                         <h2 className="chaptertitle">{e.chapter_title}</h2>

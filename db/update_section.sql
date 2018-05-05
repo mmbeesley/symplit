@@ -7,5 +7,5 @@ set section_number = $2
 , membership_ids_section = $7
 , practice_problems_ids = $8
 , section_handout = $9
-where section_id = $1
+where section_number = $1 and chapter_id = $4
 returning *

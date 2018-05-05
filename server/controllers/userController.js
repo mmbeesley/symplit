@@ -16,7 +16,6 @@ module.exports = {
         if (!req.user) {
             res.status(404).send('User not found');
         } else {
-            console.log(req.user)
             res.status(200).send(req.user)
         }
     },

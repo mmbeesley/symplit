@@ -142,20 +142,20 @@ app.put('/api/chapters/:chapterId', chapterController.updateChapter); //Update c
 app.delete('/api/chapters/:chapterId', chapterController.deleteChapter); //Delete chapter based on chapter id
 
 //Admin Section Endpoints
-app.get('/api/section/:sectionId', sectionController.getOneSection); //Get single section based on section id
+app.get('/api/section/:sectionId/:chapterId', sectionController.getOneSection); //Get single section based on section id
 app.post('/api/sections', sectionController.createSection); //Req.body will send chapter_id, section_number, section_title, practice_pdf, section_text, membership_required, membership_ids, array of problem_id's. Adds new section to sections table
-app.put('/api/sections/:sectionId', sectionController.updateSection); //Update section details based on section id
-app.delete('/api/sections/:sectionId', sectionController.deleteSection); //Delete section based on section id
+app.put('/api/sections/:sectionId/:chapterId', sectionController.updateSection); //Update section details based on section id
+app.delete('/api/sections/:sectionId/:chapterId', sectionController.deleteSection); //Delete section based on section id
 
 //Admin Section Video Endpoints
-app.get('/api/sectionvideos/:sectionvideoId', sectionVideoController.getOneSectionVideo); //Get single sectionvideo based on sectionvideo id
+app.get('/api/sectionvideo/:sectionvideoId', sectionVideoController.getOneSectionVideo); //Get single sectionvideo based on sectionvideo id
 app.post('/api/sectionvideos', sectionVideoController.createSectionVideo); //Req.body will send section_id, video_id, sectionvideo_title, sectionvideo_text, membership_required, membership_ids. Adds new sectionvideo to sectionvideos table.
 app.put('/api/sectionvideos/:sectionvideoId', sectionVideoController.updateSectionVideo); //Update sectionvideo details based on sectionvideo id
 app.delete('/api/sectionvideos/:sectionvideoId', sectionVideoController.deleteSectionVideo); //Delete sectionvideo based on sectionvideo id
 
 //Admin Video Endpoints
 app.get('/api/videos', videoController.getVideos); //Get all videos for selection to add to sections
-app.get('/api/videos/:videoId', videoController.getOneVideo); //Get one video for admin view to be able to update and delete
+app.get('/api/video/:videoId', videoController.getOneVideo); //Get one video for admin view to be able to update and delete
 app.post('/api/videos', videoController.createVideo); //Req.body will send video_title, video_url, video_problem, video_thumbnail. Adds new video to videos table
 app.put('/api/videos/:videoId', videoController.updateVideo); //Update video details based on video id
 app.delete('/api/videos/:videoId', videoController.deleteVideo); //Delete video based on video id

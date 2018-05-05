@@ -675,6 +675,8 @@
 
 .bodysectiontitle {
     font-size: 30px;
+    text-align: center;
+    padding: 25px;
 }
 
 .reactplayer {

@@ -1,2 +1,2 @@
 select * from sections
-where section_id = $1
+where section_number = $1 and chapter_id = $2

@@ -59,7 +59,8 @@ create table section_videos
 , section_video_title varchar(180)
 , section_video_text text
 , membership_required_video boolean
-membership_ids integer[])
+, membership_ids integer[]
+, section_video_handout text)
 
 create table videos
 (video_id serial primary key

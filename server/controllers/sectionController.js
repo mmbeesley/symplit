@@ -2,9 +2,9 @@ module.exports = {
 
     getOneSection: (req,res) => {
         const db = req.app.get('db');
-        const {sectionId} = req.params;
+        const {sectionId, chapterId} = req.params;
 
-        db.get_section([sectionId]).then(section => {
+        db.get_section([sectionId, chapterId]).then(section => {
             res.status(200).send(section)
         })
     },
@@ -30,9 +30,11 @@ module.exports = {
 
     deleteSection: (req,res) => {
         const db = req.app.get('db');
-        const { sectionId } = req.params;
+        const { sectionId, chapterId } = req.params;
 
-        db.delete_section([ sectionId ]).then(deleted => {})
+        db.delete_section([ sectionId, chapterId ]).then(deleted => {
+            res.status(200).send('Deleted');
+        })
     }
 
 }

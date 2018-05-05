@@ -314,7 +314,7 @@ class Books extends Component {
 
         var bookMap = this.state.books.map((e, i) => {
             var authorMap = e.author.length > 0 ? e.author.map((x, y) => {
-                return <h3 className="homebookauthor">{x}</h3>
+                return <h3 key={i} className="homebookauthor">{x}</h3>
             }) : null
 
             let imageUrl = `http://res.cloudinary.com/symplit/image/upload/${e.book_image}`;

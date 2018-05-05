@@ -24,7 +24,8 @@ const addStyles = {
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-around",
-        padding: "25px"
+        padding: "50px",
+        overflowY: "scroll"
     }
 }
 
@@ -37,13 +38,22 @@ class SingleChapter extends Component {
             chapter: [],
             sections: [],
             chapSections: [],
+            videos: [],
             sectionTitle: '',
             sectionNumber: null,
             sectionText: '',
             memRequiredSection: false,
             memIdsSection: [],
             practiceProblemsIds: [],
-            sectionHandout: ''
+            sectionHandout: '',
+            sectionVideoTitle: '',
+            sectionVideoText: '',
+            memRequiredVideo: false,
+            memIdsVideo: [],
+            sectionVideoHandout: '',
+            sectionVideo: {},
+            vimeoVideoTitle: '',
+            vimeoVideoUrl: ''
         }
         this.openAddSectionModal = this.openAddSectionModal.bind(this);
         this.openSectionDeleteModal = this.openSectionDeleteModal.bind(this);
@@ -61,6 +71,33 @@ class SingleChapter extends Component {
         this.addSection = this.addSection.bind(this);
         this.updateSection = this.updateSection.bind(this);
         this.deleteSection = this.deleteSection.bind(this);
+        this.openVideoAddModal = this.openVideoAddModal.bind(this);
+        this.closeVideoAddModal = this.closeVideoAddModal.bind(this);
+        this.videoEditModal = this.videoEditModal.bind(this);
+        this.closeVideoEditModal = this.closeVideoEditModal.bind(this);
+        this.videoDeleteModal = this.videoDeleteModal.bind(this);
+        this.closeVideoDeleteModal = this.closeVideoDeleteModal.bind(this);
+        this.handleSectionVideoTitle = this.handleSectionVideoTitle.bind(this);
+        this.handleSectionVideoText = this.handleSectionVideoText.bind(this);
+        this.handleSectionVideoMemRequired = this.handleSectionVideoMemRequired.bind(this);
+        this.handleSectionVideoMemIds = this.handleSectionVideoMemIds.bind(this);
+        this.handleSectionVideoPDF = this.handleSectionVideoPDF.bind(this);
+        this.openVideosModal = this.openVideosModal.bind(this);
+        this.closeVideosModal = this.closeVideosModal.bind(this);
+        this.addSectionVideo = this.addSectionVideo.bind(this);
+        this.editSectionVideo = this.editSectionVideo.bind(this);
+        this.deleteSectionVideo = this.deleteSectionVideo.bind(this);
+        this.vimeoModal = this.vimeoModal.bind(this);
+        this.closeVimeoModal = this.closeVimeoModal.bind(this);
+        this.addVimeoLink = this.addVimeoLink.bind(this);
+        this.handleVimeoVideoTitle = this.handleVimeoVideoTitle.bind(this);
+        this.handleVimeoVideoUrl = this.handleVimeoVideoUrl.bind(this);
+        this.vimeoEditModal = this.vimeoEditModal.bind(this);
+        this.closeVimeoEditModal = this.closeVimeoEditModal.bind(this);
+        this.vimeoDeleteModal = this.vimeoDeleteModal.bind(this);
+        this.closeVimeoDeleteModal = this.closeVimeoDeleteModal.bind(this);
+        this.vimeoDelete = this.vimeoDelete.bind(this);
+        this.vimeoEdit = this.vimeoEdit.bind(this);
     }
 
     componentDidMount() {
@@ -70,17 +107,19 @@ class SingleChapter extends Component {
         let chapter = axios.get('/api/chapter/' + chapterId);
         let book = axios.get('/api/books/' + bookId);
         let chapSections = axios.get('/api/chapsections/' + chapterId);
+        let videos = axios.get('/api/videos')
         this.props.getUserInfo();
 
-        axios.all([sections, chapter, book, chapSections]).then(res => {
-            console.log(res[2].data)
+        axios.all([sections, chapter, book, chapSections, videos]).then(res => {
             this.setState({
                 sections: res[0].data,
                 chapter: res[1].data,
                 book: res[2].data,
-                chapSections: res[3].data
+                chapSections: res[3].data,
+                videos: res[4].data
             })
         })
+        Modal.setAppElement('body');
     }
 
     openAddSectionModal() {
@@ -97,7 +136,7 @@ class SingleChapter extends Component {
     }
 
     openSectionEditModal(i) {
-        axios.get('/api/section/' + i).then(section => {
+        axios.get('/api/section/' + i + '/' + this.props.match.params.chapter).then(section => {
             this.setState({
                 sectionEditModal: true,
                 editing: i,
@@ -235,12 +274,16 @@ class SingleChapter extends Component {
             let sections = axios.get('/api/sections/' + chapterId);
             let chapter = axios.get('/api/chapter/' + chapterId);
             let book = axios.get('/api/books/' + bookId);
+            let chapSections = axios.get('/api/chapsections/' + chapterId);
+            let videos = axios.get('/api/videos')
 
-            axios.all([sections, chapter, book]).then(res => {
+            axios.all([sections, chapter, book, chapSections, videos]).then(res => {
                 this.setState({
                     sections: res[0].data,
                     chapter: res[1].data,
-                    book: res[2].data
+                    book: res[2].data,
+                    chapSections: res[3].data,
+                    videos: res[4].data
                 })
             })
         })
@@ -259,7 +302,7 @@ class SingleChapter extends Component {
             section_handout: this.state.sectionHandout
         }
 
-        axios.put('/api/sections/' + this.state.editing, body).then(section => {
+        axios.put('/api/sections/' + this.state.editing + '/' + this.props.match.params.chapter, body).then(section => {
             this.setState({
                 addSectionModal: false,
                 sectionTitle: '',
@@ -276,19 +319,23 @@ class SingleChapter extends Component {
             let sections = axios.get('/api/sections/' + chapterId);
             let chapter = axios.get('/api/chapter/' + chapterId);
             let book = axios.get('/api/books/' + bookId);
+            let chapSections = axios.get('/api/chapsections/' + chapterId);
+            let videos = axios.get('/api/videos')
 
-            axios.all([sections, chapter, book]).then(res => {
+            axios.all([sections, chapter, book, chapSections, videos]).then(res => {
                 this.setState({
                     sections: res[0].data,
                     chapter: res[1].data,
-                    book: res[2].data
+                    book: res[2].data,
+                    chapSections: res[3].data,
+                    videos: res[4].data
                 })
             })
         })
     }
 
     deleteSection() {
-        axios.delete('/api/sections/' + this.state.deleting).then(deleted => {
+        axios.delete('/api/sections/' + this.state.deleting + '/' + this.props.match.params.chapter).then(deleted => {
             this.setState({
                 sectionDeleteModal: false
             })
@@ -298,12 +345,351 @@ class SingleChapter extends Component {
             let sections = axios.get('/api/sections/' + chapterId);
             let chapter = axios.get('/api/chapter/' + chapterId);
             let book = axios.get('/api/books/' + bookId);
+            let chapSections = axios.get('/api/chapsections/' + chapterId);
+            let videos = axios.get('/api/videos')
 
-            axios.all([sections, chapter, book]).then(res => {
+            axios.all([sections, chapter, book, chapSections, videos]).then(res => {
                 this.setState({
                     sections: res[0].data,
                     chapter: res[1].data,
-                    book: res[2].data
+                    book: res[2].data,
+                    chapSections: res[3].data,
+                    videos: res[4].data
+                })
+            })
+        })
+    }
+
+    openVideoAddModal(e) {
+        this.setState({
+            videoAddModal: true,
+            sectionParam: e
+        })
+    }
+
+    closeVideoAddModal() {
+        this.setState({
+            videoAddModal: false,
+            sectionParam: null
+        })
+    }
+
+    handleSectionVideoTitle(e) {
+        this.setState({
+            sectionVideoTitle: e
+        })
+    }
+
+    handleSectionVideoText(e) {
+        this.setState({
+            sectionVideoText: e
+        })
+    }
+
+    openVideosModal() {
+        this.setState({
+            videosModal: true
+        })
+    }
+
+    closeVideosModal() {
+        this.setState({
+            videosModal: false
+        })
+    }
+
+    handleSectionVideoMemRequired(e) {
+        this.setState({
+            memRequiredVideo: e
+        })
+    }
+
+    handleSectionVideoMemIds(e) {
+        this.setState({
+            memIdsVideo: e
+        })
+    }
+
+    handleSectionVideoPDF() {
+        let _this = this;
+        window.cloudinary.openUploadWidget({ cloud_name: 'symplit', upload_preset: 'rg7skvww' },
+            function (error, result) {
+                for (var i = result[0].path.length - 1; i > 0; i--) {
+                    if (result[0].path[i] === '/') {
+                        break;
+                    }
+                    _this.setState({
+                        sectionVideoHandout: result[0].path.slice(i)
+                    })
+                }
+            }
+        );
+    }
+
+    addSectionVideo() {
+
+        let body = {
+            section_id: this.state.sectionParam,
+            video_id: this.state.sectionVideo.video_id ? this.state.sectionVideo.video_id : null,
+            sectionvideo_title: this.state.sectionVideoTitle,
+            sectionvideo_text: this.state.sectionVideoText,
+            membership_required_video: this.state.memRequiredVideo,
+            membership_ids: this.state.memIdsVideo,
+            sectionvideo_handout: this.state.sectionVideoHandout
+        }
+
+        axios.post('/api/sectionvideos', body).then(newVideo => {
+            let chapterId = this.props.match.params.chapter
+            let bookId = this.props.match.params.book
+            let sections = axios.get('/api/sections/' + chapterId);
+            let chapter = axios.get('/api/chapter/' + chapterId);
+            let book = axios.get('/api/books/' + bookId);
+            let chapSections = axios.get('/api/chapsections/' + chapterId);
+            let videos = axios.get('/api/videos')
+
+            axios.all([sections, chapter, book, chapSections, videos]).then(res => {
+                this.setState({
+                    sections: res[0].data,
+                    chapter: res[1].data,
+                    book: res[2].data,
+                    chapSections: res[3].data,
+                    videos: res[4].data,
+                    videoAddModal: false,
+                    sectionParam: null,
+                    sectionVideo: {},
+                    sectionVideoTitle: '',
+                    sectionVideoText: '',
+                    memRequiredVideo: false,
+                    memIdsVideo: '',
+                    sectionVideoHandout: ''
+                })
+            })
+        })
+    }
+
+    selectVideo(e) {
+        this.setState({
+            sectionVideo: e,
+            videosModal: false
+        })
+    }
+
+    vimeoModal() {
+        this.setState({
+            vimeoModal: true
+        })
+    }
+
+    closeVimeoModal() {
+        this.setState({
+            vimeoModal: false
+        })
+    }
+
+    handleVimeoVideoTitle(e) {
+        this.setState({
+            vimeoVideoTitle: e
+        })
+    }
+
+    handleVimeoVideoUrl(e) {
+        this.setState({
+            vimeoVideoUrl: e
+        })
+    }
+
+    addVimeoLink() {
+
+        let body = {
+            video_title: this.state.vimeoVideoTitle,
+            video_url: this.state.vimeoVideoUrl
+        }
+
+        axios.post('/api/videos', body).then(newVideo => {
+            axios.get('/api/videos').then(videos => {
+                this.setState({
+                    vimeoModal: false,
+                    videos: videos.data,
+                    vimeoVideoTitle: '',
+                    vimeoVideoUrl: ''
+                })
+            })
+        })
+    }
+
+    vimeoEditModal(e) {
+        axios.get('/api/video/' + e).then(video => {
+            console.log(video.data);
+            this.setState({
+                vimeoEditModal: true,
+                editing: e,
+                vimeoVideoTitle: video.data[0].video_title,
+                vimeoVideoUrl: video.data[0].video_url
+            })
+        })
+    }
+
+    closeVimeoEditModal() {
+        this.setState({
+            vimeoEditModal: false,
+            editing: null
+        })
+    }
+
+    vimeoDeleteModal(e) {
+        this.setState({
+            vimeoDeleteModal: true,
+            deleting: e
+        })
+    }
+
+    closeVimeoDeleteModal() {
+        this.setState({
+            vimeoDeleteModal: false,
+            deleting: null
+        })
+    }
+
+    vimeoEdit() {
+
+        let body = {
+            video_title: this.state.vimeoVideoTitle,
+            video_url: this.state.vimeoVideoUrl
+        }
+
+        axios.put('/api/videos/' + this.state.editing, body).then(updated => {
+            axios.get('/api/videos').then(videos => {
+                this.setState({
+                    vimeoEditModal: false,
+                    editing: null,
+                    vimeoVideoTitle: '',
+                    vimeoVideoUrl: '',
+                    videos: videos.data
+                })
+            })
+        })
+
+    }
+
+    vimeoDelete() {
+        axios.delete('/api/videos/' + this.state.deleting).then(deleted => {
+            axios.get('/api/videos').then(videos => {
+                this.setState({
+                    vimeoDeleteModal: false,
+                    deleting: null,
+                    videos: videos.data
+                })
+            })
+        })
+    }
+
+    videoEditModal(e) {
+        axios.get('/api/sectionvideo/' + e).then(res => {
+            axios.get('/api/video/' + res.data[0].video_id).then(resp => {
+                this.setState({
+                    sectionVideo: resp.data[0]
+                })
+            })
+            this.setState({
+                videoEditModal: true,
+                editing: e,
+                sectionVideoTitle: res.data[0].section_video_title,
+                sectionVideoText: res.data[0].section_video_text,
+                memRequiredVideo: res.data[0].membership_required_video,
+                memIdsVideo: res.data[0].membership_ids,
+                sectionVideoHandout: res.data[0].section_video_handout
+            })
+        })
+    }
+
+    closeVideoEditModal() {
+        this.setState({
+            videoEditModal: false,
+            editing: null,
+            sectionVideoTitle: '',
+            sectionVideoText: '',
+            memRequiredVideo: false,
+            memIdsVideo: '',
+            sectionVideoHandout: '',
+            secionVideo: {}
+        })
+    }
+
+    videoDeleteModal(e) {
+        this.setState({
+            videoDeleteModal: true,
+            deleting: e
+        })
+    }
+
+    closeVideoDeleteModal() {
+        this.setState({
+            videoDeleteModal: false,
+            deleting: null
+        })
+    }
+
+    editSectionVideo() {
+
+        let body = {
+            video_id: this.state.sectionVideo.video_id ? this.state.sectionVideo.video_id : null,
+            sectionvideo_title: this.state.sectionVideoTitle,
+            sectionvideo_text: this.state.sectionVideoText,
+            membership_required_video: this.state.memRequiredVideo,
+            membership_ids: this.state.memIdsVideo,
+            sectionvideo_handout: this.state.sectionVideoHandout
+        }
+
+        axios.put('/api/sectionvideos/' + this.state.editing, body).then(res => {
+
+            let chapterId = this.props.match.params.chapter
+            let bookId = this.props.match.params.book
+            let sections = axios.get('/api/sections/' + chapterId);
+            let chapter = axios.get('/api/chapter/' + chapterId);
+            let book = axios.get('/api/books/' + bookId);
+            let chapSections = axios.get('/api/chapsections/' + chapterId);
+            let videos = axios.get('/api/videos')
+
+            axios.all([sections, chapter, book, chapSections, videos]).then(resp => {
+                this.setState({
+                    sections: resp[0].data,
+                    chapter: resp[1].data,
+                    book: resp[2].data,
+                    chapSections: resp[3].data,
+                    videos: resp[4].data,
+                    videoEditModal: false,
+                    editing: null,
+                    sectionVideoTitle: '',
+                    sectionVideoText: '',
+                    memRequiredVideo: false,
+                    memIdsVideo: '',
+                    sectionVideoHandout: '',
+                    sectionVideo: {}
+                })
+            })
+        })
+    }
+
+    deleteSectionVideo() {
+        axios.delete('/api/sectionvideos/'+this.state.deleting).then(deleted => {
+
+            let chapterId = this.props.match.params.chapter
+            let bookId = this.props.match.params.book
+            let sections = axios.get('/api/sections/' + chapterId);
+            let chapter = axios.get('/api/chapter/' + chapterId);
+            let book = axios.get('/api/books/' + bookId);
+            let chapSections = axios.get('/api/chapsections/' + chapterId);
+            let videos = axios.get('/api/videos')
+
+            axios.all([sections, chapter, book, chapSections, videos]).then(res => {
+                this.setState({
+                    sections: res[0].data,
+                    chapter: res[1].data,
+                    book: res[2].data,
+                    chapSections: res[3].data,
+                    videos: res[4].data,
+                    deleting: null,
+                    videoDeleteModal: false
                 })
             })
         })
@@ -322,6 +708,16 @@ class SingleChapter extends Component {
                 {adminAddSection}
             </div> : null;
 
+        let videosMap = this.state.videos.length > 0 ? this.state.videos.map((e, i) => {
+            return (
+                <div >
+                    <h1>{e.video_title}</h1>
+                    <button onClick={() => this.vimeoEditModal(e.video_id)}>Edit</button><button onClick={() => this.vimeoDeleteModal(e.video_id)}>Delete</button>
+                    <button onClick={() => this.selectVideo(e)}>Select</button>
+                </div>
+            )
+        }) : null;
+
 
         let navMap = this.state.sections.length > 0 ? this.state.sections.map((e, i) => {
             let videoMap = e.sectionVideos.map((x, y) => {
@@ -334,7 +730,7 @@ class SingleChapter extends Component {
                 )
             })
             return (
-                <div key={e.sectionId}>
+                <div key={e.sectionTitle}>
                     <a href={`#${e.sectionTitle}`} ><div className="sectiontitle">{this.props.match.params.chapter}.{e.sectionNumber} {e.sectionTitle}</div></a>
                     <ul className="videolist">
                         {videoMap}
@@ -349,6 +745,8 @@ class SingleChapter extends Component {
                     <a name={x.sectionVideoTitle} key={x.sectionVideoId}>
                         <div className="videotile" >
                             <div className="videotitle">{x.sectionVideoTitle}</div>
+                            {!this.props.user.is_admin ? null : <button className="adminbutton" onClick={() => this.videoEditModal(x.sectionVideoId)}>Edit Video</button>}
+                            {!this.props.user.is_admin ? null : <button className="adminbutton" onClick={() => this.videoDeleteModal(x.sectionVideoId)}>Delete Video</button>}
                             <div className="videobody">
                                 <ReactPlayer
                                     url={x.videoUrl}
@@ -365,11 +763,12 @@ class SingleChapter extends Component {
                 )
             })
             return (
-                <a name={e.sectionTitle} key={e.sectionId} className="sectionbodycontainer">
+                <a name={e.sectionTitle} key={e.sectionTitle} className="sectionbodycontainer">
                     <div className="bodysectiontitle">{this.props.match.params.chapter}.{e.sectionNumber} {e.sectionTitle}</div>
                     <div className="adminbuttoncontainer">
-                        {!this.props.user.is_admin ? null : <button className="adminbutton" onClick={() => this.openSectionEditModal(e.sectionId)}>Edit</button>}
-                        {!this.props.user.is_admin ? null : <button className="adminbutton" onClick={() => this.openSectionDeleteModal(e.sectionId)}>Delete</button>}
+                        {!this.props.user.is_admin ? null : <button className="adminbutton" onClick={() => this.openVideoAddModal(e.sectionNumber)}>Add Video</button>}
+                        {!this.props.user.is_admin ? null : <button className="adminbutton" onClick={() => this.openSectionEditModal(e.sectionNumber)}>Edit Section</button>}
+                        {!this.props.user.is_admin ? null : <button className="adminbutton" onClick={() => this.openSectionDeleteModal(e.sectionNumber)}>Delete Section</button>}
                     </div>
                     <div className="bodyvideocontainer">
                         {bodyVideoMap}
@@ -446,6 +845,97 @@ class SingleChapter extends Component {
                         <div>Are you sure you want to delete this?</div>
                         <button onClick={() => this.deleteSection()}>Delete</button>
                     </Modal>
+
+                    <Modal isOpen={this.state.videoAddModal} onRequestClose={this.closeVideoAddModal} style={addStyles}>
+                        <button onClick={this.closeVideoAddModal}>Close</button>
+                        <div className="checkboxfield">
+                            Section Video Title: <input placeholder="Section Video Title" value={this.state.sectionVideoTitle} onChange={(e) => this.handleSectionVideoTitle(e.target.value)} type="text" />
+                        </div>
+                        <div className="checkboxfield">
+                            Section Video Text: <input placeholder="Section Video Text" value={this.state.sectionVideoText} onChange={(e) => this.handleSectionVideoText(e.target.value)} type="text" />
+                        </div>
+                        <div className="checkboxfield">
+                            Add a video: <button onClick={this.openVideosModal}>Add</button>
+                        </div>
+                        <p>Current Video: {this.state.sectionVideo.video_title ? this.state.sectionVideo.video_title : null}</p>
+                        <div className="checkboxfield">
+                            Is Membership Required? <input value={this.state.memRequiredVideo} onChange={(e) => this.handleSectionVideoMemRequired(e.target.checked)} type="checkbox" />
+                        </div>
+                        <div className="checkboxfield">
+                            Membership IDs: <input placeholder="Video Membership IDs" value={this.state.memIdsVideo} onChange={(e) => this.handleSectionVideoMemIds(e.target.value)} type="text" />
+                        </div>
+                        <div className="checkboxfield">
+                            Upload Video Handout: <button className="upload-button" onClick={this.handleSectionVideoPDF}>Add PDF</button>
+                        </div>
+                        <p>Current PDF: {this.state.sectionVideoHandout}</p>
+                        <button onClick={this.addSectionVideo}>Submit</button>
+                    </Modal>
+
+                    <Modal isOpen={this.state.videoEditModal} onRequestClose={this.closeVideoEditModal} style={addStyles}>
+                        <button onClick={this.closeVideoEditModal}>Close</button>
+                        <div className="checkboxfield">
+                            Section Video Title: <input placeholder="Section Video Title" value={this.state.sectionVideoTitle} onChange={(e) => this.handleSectionVideoTitle(e.target.value)} type="text" />
+                        </div>
+                        <div className="checkboxfield">
+                            Section Video Text: <input placeholder="Section Video Text" value={this.state.sectionVideoText} onChange={(e) => this.handleSectionVideoText(e.target.value)} type="text" />
+                        </div>
+                        <div className="checkboxfield">
+                            Choose a different video: <button onClick={this.openVideosModal}>Choose</button>
+                        </div>
+                        <p>Current Video: {this.state.sectionVideo.video_title ? this.state.sectionVideo.video_title : null}</p>
+                        <div className="checkboxfield">
+                            Is Membership Required? <input value={this.state.memRequiredVideo} onChange={(e) => this.handleSectionVideoMemRequired(e.target.checked)} type="checkbox" />
+                        </div>
+                        <div className="checkboxfield">
+                            Membership IDs: <input placeholder="Video Membership IDs" value={this.state.memIdsVideo} onChange={(e) => this.handleSectionVideoMemIds(e.target.value)} type="text" />
+                        </div>
+                        <div className="checkboxfield">
+                            Upload Video Handout: <button className="upload-button" onClick={this.handleSectionVideoPDF}>Add PDF</button>
+                        </div>
+                        <p>Current PDF: {this.state.sectionVideoHandout}</p>
+                        <button onClick={this.editSectionVideo}>Submit</button>
+                    </Modal>
+
+                    <Modal isOpen={this.state.videoDeleteModal} onRequestClose={this.closeVideoDeleteModal} style={addStyles}>
+                        <button onClick={this.closeVideoDeleteModal}>Close</button>
+                        <p>Are you sure you want to delete this?</p>
+                        <button onClick={this.deleteSectionVideo}>Delete</button>
+                    </Modal>
+
+                    <Modal isOpen={this.state.videosModal} onRequestClose={this.closeVideosModal} style={addStyles}>
+                        <button onClick={this.closeVideosModal}>Close</button>
+                        {videosMap}
+                        <button onClick={this.vimeoModal}>New Vimeo Link</button>
+                    </Modal>
+
+                    <Modal isOpen={this.state.vimeoModal} onRequestClose={this.closeVimeoModal} style={addStyles}>
+                        <button onClick={this.closeVimeoModal}>Close</button>
+                        <div className="checkboxfield">
+                            Vimeo Video Title: <input placeholder="Vimeo Video Title" value={this.state.vimeoVideoTitle} onChange={(e) => this.handleVimeoVideoTitle(e.target.value)} type="text" />
+                        </div>
+                        <div className="checkboxfield">
+                            Vimeo Video URL: <input placeholder="Vimeo Video URL" value={this.state.vimeoVideoUrl} onChange={(e) => this.handleVimeoVideoUrl(e.target.value)} type="text" />
+                        </div>
+                        <button onClick={this.addVimeoLink}>Submit</button>
+                    </Modal>
+
+                    <Modal isOpen={this.state.vimeoEditModal} onRequestClose={this.closeVimeoEditModal} style={addStyles}>
+                        <button onClick={this.closeVimeoEditModal}>Close</button>
+                        <div className="checkboxfield">
+                            Vimeo Video Title: <input placeholder="Vimeo Video Title" value={this.state.vimeoVideoTitle} onChange={(e) => this.handleVimeoVideoTitle(e.target.value)} type="text" />
+                        </div>
+                        <div className="checkboxfield">
+                            Vimeo Video URL: <input placeholder="Vimeo Video URL" value={this.state.vimeoVideoUrl} onChange={(e) => this.handleVimeoVideoUrl(e.target.value)} type="text" />
+                        </div>
+                        <button onClick={this.vimeoEdit}>Submit</button>
+                    </Modal>
+
+                    <Modal isOpen={this.state.vimeoDeleteModal} onRequestClose={this.closeVimeoDeleteModal} style={addStyles}>
+                        <button onClick={this.closeVimeoDeleteModal}>Close</button>
+                        <p>Are you sure you want to delete this from the database?</p>
+                        <button onClick={this.vimeoDelete}>Delete</button>
+                    </Modal>
+
 
                     <Footer />
                 </div>

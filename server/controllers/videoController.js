@@ -19,19 +19,22 @@ module.exports = {
 
     createVideo: (req,res) => {
         const db = req.app.get('db');
-        const {video_title, video_url, video_problem, video_thumbnail} = req.body;
+        const {video_title, video_url} = req.body;
 
-        db.create_video([video_title, video_url, video_problem, video_thumbnail]).then(newVideo => {
+        db.create_video([video_title, video_url]).then(newVideo => {
             res.status(200).send(newVideo);
         })
     },
 
     updateVideo: (req,res) => {
         const db = req.app.get('db');
-        const {video_title, video_url, video_problem, video_thumbnail} = req.body;
+        const {video_title, video_url} = req.body;
         const { videoId } = req.params;
 
-        db.update_video([ videoId, video_title, video_url, video_problem, video_thumbnail ]).then(update => {
+        console.log('hit the endpoint', video_title, video_url);
+
+        db.update_video([ videoId, video_title, video_url ]).then(update => {
+            console.log(update);
             res.status(200).send(update)
         })
     },
@@ -39,8 +42,10 @@ module.exports = {
     deleteVideo: (req,res) => {
         const db = req.app.get('db');
         const { videoId } = req.params;
-
-        db.delete_video([ videoId ]).then(deleted => {})
+        console.log('hit the endpoint', videoId);
+        db.delete_video([ videoId ]).then(deleted => {
+            res.status(200).send('deleted');
+        })
     }
 
 }
