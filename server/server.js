@@ -26,6 +26,7 @@ const videoController = require('./controllers/videoController')
 const membershipController = require('./controllers/membershipController')
 const offerController = require('./controllers/offerController')
 
+const loginMiddleware = require('./middleware/loginMiddleware')
 //Hosting
 // app.use( express.static( `${__dirname}/../build`) );
 
@@ -89,11 +90,8 @@ passport.deserializeUser((id, done) => {
 })
 
 //Auth endpoints
-app.get('/auth', passport.authenticate('auth0'));//kicks off authentication process, redirects us to auth0, then redirects to callback with data
-app.get('/auth/callback', passport.authenticate('auth0', {//kicks off authentication process again to make sure is authenticated and receives data and inserts data into profile parameter, sends profile to strategy
-    successRedirect: 'http://localhost:3000/',
-    failureRedirect: 'http://localhost:3000/'
-}));
+app.get('/auth', loginMiddleware.storePath, passport.authenticate('auth0'));//kicks off authentication process, redirects us to auth0, then redirects to callback with data
+app.get('/auth/callback', loginMiddleware.authenticate);
 
 //Endpoints
 //Login

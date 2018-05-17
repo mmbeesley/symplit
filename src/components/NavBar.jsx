@@ -20,8 +20,7 @@ class NavBar extends Component {
 
     render() {
 
-        let accountLink = !this.props.user.user_id ? <a href={process.env.REACT_APP_LOGIN}><div className="navlink">Login</div></a> : <Link to={`/account`}><div className="navlink">Your Account</div></Link>
-
+        let accountLink = !this.props.user.user_id ? <a href={`${process.env.REACT_APP_LOGIN}?redirectPath=${this.props.path}`}><div className="navlink">Login</div></a> : <Link to={`/account`}><div className="navlink">Your Account</div></Link>
         return (
             <div className="navcontainer">
                 <div className="naviconcontainer">
@@ -35,7 +34,7 @@ class NavBar extends Component {
                             <img src={about} alt="About" />
                         </div>
                     </Link>
-                    <a href={process.env.REACT_APP_LOGIN} >
+                    <a href={`${process.env.REACT_APP_LOGIN}?redirectPath=${this.props.path}`} >
                         <div className="navicon">
                             <img src={about} alt="Login" />
                         </div>
@@ -57,7 +56,8 @@ class NavBar extends Component {
 
 function mapStateToProps(state) {
     return {
-        user: state.user
+        user: state.user,
+        path: state.path
     }
 }
 

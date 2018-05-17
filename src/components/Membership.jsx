@@ -165,7 +165,7 @@ class Membership extends Component {
         let membershipMap = this.state.memberships.length > 0 ? this.state.memberships.map((e, i) => {
             var months = 'per ' + e.membership_period + ' months'
             if (e.membership_period === 1) {
-                months = 'per ' + e.membership_period + ' month'
+                months = 'per month'
             }
             if (e.membership_period === null || e.membership_period === '') {
                 months = 'lifetime'

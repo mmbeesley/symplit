@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Footer from './Footer';
 import { connect } from 'react-redux';
-import { getUserInfo } from '../ducks/reducer';
+import { getUserInfo, getPath } from '../ducks/reducer';
 import Modal from 'react-modal';
 
 const addStyles = {
@@ -66,6 +66,7 @@ class Books extends Component {
             })
         })
         this.props.getUserInfo();
+        this.props.getPath(this.props.location.pathname);
     }
 
     handleSearchInput(e) {
@@ -432,4 +433,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, { getUserInfo })(Books)
+export default connect(mapStateToProps, { getUserInfo, getPath })(Books)
