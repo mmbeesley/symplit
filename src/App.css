@@ -706,3 +706,119 @@
 .chaptercontainer {
     width: 75%;
 }
+
+.membershipbody {
+    padding: 35px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.membershipcontainer {
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+    margin-top: 25px;
+    background: url('./images/chapter-back-1024x419.png');
+    height: 400px;
+    align-items: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.membershiptile {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 300px;
+    border: solid;
+    border-width: 2px;
+    border-color: var(--logo-dark-blue);
+    width: 200px;
+    align-items: center;
+    padding: 20px;
+    background: var(--logo-white);
+    border-radius: 4px;
+}
+
+.membershipdesc {
+    font-size: 15px;
+    text-align: center;
+}
+
+.membershipdetails {
+    height: 33%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.membershipperiod {
+    font-size: 14px;
+    color: var(--logo-light-blue);
+    font-style: italic;
+}
+
+.allmembershipsinclude {
+    display: flex;
+    flex-direction: column;
+    height: 200px;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 25px;
+}
+
+.includelist {
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    list-style: disc;
+    width: 60%;
+}
+
+.closebuttoncontainer {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.closebutton {
+    background: var(--logo-white);
+    border: none;
+    color: var(--logo-dark-blue);
+    font-size: 20px;
+}
+
+.paymentoptions {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    height: 60%;
+    margin-top: 20px;
+}
+
+.membershipbutton {
+    background: var(--logo-dark-blue);
+    border: none;
+    border-radius: 25px;
+    width: 75px;
+    height: 25px;
+    color: white;
+    font-size: 20px;
+}
+
+.selectfield {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+}
+
+.selectfield div {
+    width: 24%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

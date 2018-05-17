@@ -18,34 +18,46 @@ module.exports = {
     },
 
     createVideo: (req,res) => {
-        const db = req.app.get('db');
-        const {video_title, video_url} = req.body;
+        if(req.user.is_admin){
 
-        db.create_video([video_title, video_url]).then(newVideo => {
-            res.status(200).send(newVideo);
-        })
+            const db = req.app.get('db');
+            const {video_title, video_url} = req.body;
+            
+            db.create_video([video_title, video_url]).then(newVideo => {
+                res.status(200).send(newVideo);
+            })
+        } else {
+            res.status(403).send('Unauthorized');
+        }
     },
 
     updateVideo: (req,res) => {
-        const db = req.app.get('db');
-        const {video_title, video_url} = req.body;
-        const { videoId } = req.params;
+        if(req.user.is_admin){
 
-        console.log('hit the endpoint', video_title, video_url);
-
-        db.update_video([ videoId, video_title, video_url ]).then(update => {
-            console.log(update);
-            res.status(200).send(update)
-        })
+            const db = req.app.get('db');
+            const {video_title, video_url} = req.body;
+            const { videoId } = req.params;
+            
+            
+            db.update_video([ videoId, video_title, video_url ]).then(update => {
+                res.status(200).send(update)
+            })
+        } else {
+            res.status(403).send('Unauthorized');
+        }
     },
 
     deleteVideo: (req,res) => {
-        const db = req.app.get('db');
-        const { videoId } = req.params;
-        console.log('hit the endpoint', videoId);
-        db.delete_video([ videoId ]).then(deleted => {
-            res.status(200).send('deleted');
-        })
+        if(req.user.is_admin){
+
+            const db = req.app.get('db');
+            const { videoId } = req.params;
+            db.delete_video([ videoId ]).then(deleted => {
+                res.status(200).send('deleted');
+            })
+        } else {
+            res.status(403).send('Unauthorized');
+        }
     }
 
 }

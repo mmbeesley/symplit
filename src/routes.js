@@ -13,6 +13,7 @@ import SingleBook from './components/SingleBook';
 import SingleChapter from './components/SingleChapter';
 import Account from './components/Account';
 import Problems from './components/Problems';
+import Membership from './components/Membership';
 
 
 export default (
@@ -27,6 +28,7 @@ export default (
         <Route exact distinct path='/book/:book/' component={SingleBook}/>
         <Route exact distinct path='/book/:book/:chapter/' component={SingleChapter}/>
         {/* <Route path='/problems' component={Problems}/> */}
+        <Route path='/memberships' component={Membership}/>
         <Route path='/account' component={Account}/>
     </Switch>
 )

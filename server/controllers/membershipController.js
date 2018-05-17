@@ -1,6 +1,8 @@
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+
 module.exports = {
 
-    getMemberships: (req,res) => {
+    getMemberships: (req, res) => {
         const db = req.app.get('db');
 
         db.get_allmemberships().then(memberships => {
@@ -8,7 +10,7 @@ module.exports = {
         })
     },
 
-    getOneMembership: (req,res) => {
+    getOneMembership: (req, res) => {
         const db = req.app.get('db');
         const { membershipId } = req.params;
 
@@ -17,30 +19,66 @@ module.exports = {
         })
     },
 
-    createMembership: (req,res) => {
-        const db = req.app.get('db');
-        const {membership_title, membership_description, membership_price, membership_recurring } = req.body;
+    createMembership: (req, res) => {
+        if (req.user.is_admin) {
+            const db = req.app.get('db');
+            const { membership_title, membership_description, membership_price, membership_period, membership_recurring } = req.body;
+            const amount = membership_price * 100;
 
-        db.create_membership([membership_title, membership_description, membership_price, membership_recurring]).then(newMembership => {
-            res.status(200).send(newMembership)
-        })
+            if (membership_recurring) {
+                const product = stripe.products.create({
+                    name: membership_title,
+                    type: 'service'
+                }).then(response => {
+                    const plan = stripe.plans.create({
+                        product: response.id,
+                        currency: 'usd',
+                        interval: 'month',
+                        interval_count: membership_period,
+                        amount: amount,
+                    }).then(newPlan => {
+                        db.create_membership([membership_title, membership_description, membership_price, membership_recurring, membership_period, newPlan.id, false]).then(newMembership => {
+                            res.status(200).send(newMembership)
+                        })
+                    })
+                })
+            } else {
+                db.create_membership([membership_title, membership_description, membership_price, false, false, null, false]).then(newMembership => {
+                    res.status(200).send(newMembership)
+                })
+            }
+        } else {
+            res.status(403).send('Unauthorized');
+        }
     },
 
-    updateMembership: (req,res) => {
-        const db = req.app.get('db');
-        const {membership_title, membership_description, membership_price, membership_recurring} = req.body;
-        const {membershipId} = req.params;
+    updateMembership: (req, res) => {
+        if (req.user.is_admin) {
 
-        db.update_membership([membershipId, membership_title, membership_description, membership_price, membership_recurring]).then(updated => {
-            res.status(200).send(updated)
-        })
+            const db = req.app.get('db');
+            const { available } = req.body;
+            const { membershipId } = req.params;
+
+            db.update_membership([membershipId, available]).then(updated => {
+                res.status(200).send(updated)
+            })
+        } else {
+            res.status(403).send('Unauthorized');
+        }
     },
 
-    deleteMembership: (req,res) => {
-        const db = req.app.get('db');
-        const {membershipId} = req.params;
+    deleteMembership: (req, res) => {
+        if (req.user.is_admin) {
 
-        db.delete_membership([membershipId]).then(deleted => {})
+            const db = req.app.get('db');
+            const { membershipId } = req.params;
+
+            db.delete_membership([membershipId]).then(deleted => {
+                res.status(200).send('Deleted');
+             })
+        } else {
+            res.status(403).send('Unauthorized');
+        }
     }
 
 }

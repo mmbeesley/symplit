@@ -43,6 +43,7 @@ module.exports = {
     },
 
     makeAdmin: (req, res) => {
+    
         const db = app.get('db');
         const { userId } = req.params;
 
