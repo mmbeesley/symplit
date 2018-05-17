@@ -519,7 +519,6 @@ class SingleChapter extends Component {
 
     vimeoEditModal(e) {
         axios.get('/api/video/' + e).then(video => {
-            console.log(video.data);
             this.setState({
                 vimeoEditModal: true,
                 editing: e,

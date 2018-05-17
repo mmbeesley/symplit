@@ -158,7 +158,6 @@ class Membership extends Component {
         let booTog = boo ? false : true;
 
         axios.put('/api/memberships/' + id, { available: booTog }).then(res => {
-            console.log('Made available');
         })
     }
 
@@ -200,7 +199,6 @@ class Membership extends Component {
         let selectMemb = !this.props.user.is_admin ? null : <button onClick={this.selectAvailable}>Select Available Memberships</button>
 
         let selectMap = this.state.memberships.length > 0 ? this.state.memberships.map((e, i) => {
-            console.log(e.available);
             return (
                 <div key={i} className="selectfield">
                     <div>
