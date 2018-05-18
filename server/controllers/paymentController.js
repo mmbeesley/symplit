@@ -4,9 +4,9 @@ module.exports = {
     payment: (req, res, next) => {
         const db = req.app.get('db');
         const date = new Date();
-        const user = req.user.user_id;
-        const {memId} = req.body
-        
+        const {user_id, user_email, stripe_customer_id} = req.user;
+        const { membership, amount } = req.body
+
         //convert amount to pennies
         const amountArray = req.body.amount.toString().split('');
         const pennies = [];
@@ -29,17 +29,33 @@ module.exports = {
         }
 
         const convertedAmt = parseInt(pennies.join(''));
-    
-        const charge = stripe.charges.create({
-            amount: convertedAmt, // amount in cents, again
-            currency: 'usd',
-            source: req.body.token.id,
-            description: 'New member'
-        }, function (err, charge) {
-            if (err) return res.sendStatus(500, "Payment error")
-            db.create_member([user, memId]).then((newMember) => {
-                res.status(200).send(newMember);
+        if (!membership.membership_recurring) {
+            //one time charge for lifetime purchases or single period purchases
+
+            const charge = stripe.charges.create({
+                amount: convertedAmt, // amount in cents, again
+                currency: 'usd',
+                source: req.body.token.id,
+                description: 'New member'
+            }, function (err, charge) {
+                if (err) { return res.sendStatus(500, "Payment error") }
+                db.create_member([user_id, membership.membership_id, date]).then((newMember) => {
+                    res.status(200).send(newMember);
+                })
+            });
+        } else {
+            //create customer and add to existing plan
+            const customer = stripe.customers.create({
+                email: user_email,
+                source: req.body.token.id
+            }).then(response => {
+                db.newStripeCustomer([response.id, user_id]).then(customer => {
+                    const subscription = stripe.subscriptions.create({
+                        customer: response.id,
+                        items: [{plan: membership.stripe_plan_id}]
+                    })
+                })
             })
-        });
+        }
     }
 }

@@ -22,7 +22,7 @@ module.exports = {
     createMembership: (req, res) => {
         if (req.user.is_admin) {
             const db = req.app.get('db');
-            const { membership_title, membership_description, membership_price, membership_period, membership_recurring } = req.body;
+            const { membership_title, membership_desc, membership_price, membership_period, membership_recurring } = req.body;
             const amount = membership_price * 100;
 
             if (membership_recurring) {
@@ -37,13 +37,13 @@ module.exports = {
                         interval_count: membership_period,
                         amount: amount,
                     }).then(newPlan => {
-                        db.create_membership([membership_title, membership_description, membership_price, membership_recurring, membership_period, newPlan.id, false]).then(newMembership => {
+                        db.create_membership([membership_title, membership_desc, membership_price, membership_recurring, membership_period, newPlan.id, false]).then(newMembership => {
                             res.status(200).send(newMembership)
                         })
                     })
                 })
             } else {
-                db.create_membership([membership_title, membership_description, membership_price, false, false, null, false]).then(newMembership => {
+                db.create_membership([membership_title, membership_desc, membership_price, false, false, null, false]).then(newMembership => {
                     res.status(200).send(newMembership)
                 })
             }

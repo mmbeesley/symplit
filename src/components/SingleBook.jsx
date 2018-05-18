@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Footer from './Footer';
-import { getUserInfo } from '../ducks/reducer';
+import { getUserInfo, getPath } from '../ducks/reducer';
 import { connect } from 'react-redux';
 import Modal from 'react-modal';
 
@@ -77,6 +77,7 @@ class SingleBook extends Component {
             })
         })
         this.props.getUserInfo();
+        this.props.getPath(this.props.location.pathname);
         Modal.setAppElement('body');
     }
 
@@ -543,4 +544,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, { getUserInfo })(SingleBook)
+export default connect(mapStateToProps, { getUserInfo, getPath })(SingleBook)

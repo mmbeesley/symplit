@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import Footer from './Footer';
 import ReactPlayer from 'react-player';
 import { connect } from 'react-redux';
-import { getUserInfo } from '../ducks/reducer';
+import { getUserInfo, getPath } from '../ducks/reducer';
 import Modal from 'react-modal';
 
 const videoStyle = {
@@ -109,6 +109,7 @@ class SingleChapter extends Component {
         let chapSections = axios.get('/api/chapsections/' + chapterId);
         let videos = axios.get('/api/videos')
         this.props.getUserInfo();
+        this.props.getPath(this.props.location.pathname);
 
         axios.all([sections, chapter, book, chapSections, videos]).then(res => {
             this.setState({
@@ -950,4 +951,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, { getUserInfo })(SingleChapter)
+export default connect(mapStateToProps, { getUserInfo, getPath })(SingleChapter)

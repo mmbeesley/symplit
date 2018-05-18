@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Footer from './Footer';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import { getUserInfo } from '../ducks/reducer';
+import { getUserInfo, getPath } from '../ducks/reducer';
 import stripe from '../stripeKey';
 import StripeCheckout from 'react-stripe-checkout';
 import Modal from 'react-modal';
@@ -51,6 +51,8 @@ class Membership extends Component {
                 memberships: res.data
             })
         })
+        this.props.getUserInfo();
+        this.props.getPath(this.props.location.pathname);
     }
 
     onToken = (token) => {
@@ -58,10 +60,23 @@ class Membership extends Component {
             progressModal: true
         })
         token.card = void 0;
-        // axios.post('/api/payment', {
-        //     token,
-
-        // })
+        axios.post('/api/payment', {
+            token,
+            amount: this.state.selected.membership_price,
+            membership: this.state.selected
+        }).then(response => {
+            if(response.status === 200){
+                this.setState({
+                    progressModal: false,
+                    successModal: true
+                })
+            } else {
+                this.setState({
+                    progressModal: false,
+                    failureModal: true
+                })
+            }
+        })
     }
 
     payModal(e) {
@@ -128,13 +143,16 @@ class Membership extends Component {
             membership_period: this.state.membershipPeriod,
             membership_recurring: this.state.membershipRecurring
         }).then(res => {
-            this.setState({
-                addMembershipModal: false,
-                membershipTitle: '',
-                membershipDescription: '',
-                membershipPrice: '',
-                membershipRecurring: '',
-                membershipPeriod: ''
+            axios.get('/api/memberships').then(resp => {
+                this.setState({
+                    addMembershipModal: false,
+                    membershipTitle: '',
+                    membershipDescription: '',
+                    membershipPrice: '',
+                    membershipRecurring: '',
+                    membershipPeriod: '',
+                    memberships: resp.data
+                })
             })
         })
     }
@@ -294,4 +312,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, { getUserInfo })(Membership);
+export default connect(mapStateToProps, { getUserInfo, getPath })(Membership);

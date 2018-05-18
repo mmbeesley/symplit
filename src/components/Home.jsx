@@ -5,7 +5,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Link } from 'react-router-dom';
 import Footer from './Footer';
-import { getUserInfo } from '../ducks/reducer';
+import { getUserInfo, getPath } from '../ducks/reducer';
 import { connect } from 'react-redux';
 import Modal from 'react-modal';
 
@@ -59,6 +59,9 @@ class Home extends Component {
                 testimonials: testimonials.data
             })
         })
+
+        this.props.getUserInfo();
+        this.props.getPath(this.props.location.pathname);
     }
 
     openAddModal() {
@@ -268,4 +271,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, { getUserInfo })(Home)
+export default connect(mapStateToProps, { getUserInfo, getPath })(Home)
