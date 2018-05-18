@@ -22,7 +22,7 @@ module.exports = {
             const authorFormat = `{${author}}`;
             const idsFormat = `{${membership_ids_book}}`;
             
-            db.create_book([title, book_subtitle, book_image, subject, authorFormat, membership_required_book, membership_ids_book, visible]).then(newBook => {
+            db.create_book([title, book_subtitle, book_image, subject, authorFormat, membership_required_book, idsFormat, visible]).then(newBook => {
                 res.status(200).send(newBook);
             })
         } else {
@@ -41,7 +41,7 @@ module.exports = {
             const authorFormat = `{${author}}`
             const idsFormat = `{${membership_ids_book}}`
             
-            db.update_book([bookId, title, book_subtitle, book_image, subject, authorFormat, membership_required_book, membership_ids_book, visible]).then(udpatedBook => {
+            db.update_book([bookId, title, book_subtitle, book_image, subject, authorFormat, membership_required_book, idsFormat, visible]).then(udpatedBook => {
                 res.status(200).send(udpatedBook)
             })
         } else {

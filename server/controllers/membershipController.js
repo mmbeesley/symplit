@@ -23,7 +23,7 @@ module.exports = {
         if (req.user.is_admin) {
             const db = req.app.get('db');
             const { membership_title, membership_desc, membership_price, membership_period, membership_recurring } = req.body;
-            const amount = membership_price * 100;
+            const amount = Math.round(membership_price * 100);
 
             if (membership_recurring) {
                 const product = stripe.products.create({
@@ -60,7 +60,26 @@ module.exports = {
             const { membershipId } = req.params;
 
             db.update_membership([membershipId, available]).then(updated => {
-                res.status(200).send(updated)
+                db.get_allmemberships().then(memberships => {
+                    res.status(200).send(memberships)
+                })
+            })
+        } else {
+            res.status(403).send('Unauthorized');
+        }
+    },
+
+    updateMembershipDetails: (req,res) => {
+        if (req.user.is_admin) {
+
+            const db = req.app.get('db');
+            const {membership_title, membership_desc } = req.body;
+            const {membershipId} = req.params;
+
+            db.update_membershipdetails([membershipId, membership_title, membership_desc]).then(updated => {
+                db.get_allmemberships().then(memberships => {
+                    res.status(200).send(memberships)
+                })
             })
         } else {
             res.status(403).send('Unauthorized');
@@ -74,8 +93,10 @@ module.exports = {
             const { membershipId } = req.params;
 
             db.delete_membership([membershipId]).then(deleted => {
-                res.status(200).send('Deleted');
-             })
+                db.get_allmemberships().then(memberships => {
+                    res.status(200).send(memberships)
+                })
+            })
         } else {
             res.status(403).send('Unauthorized');
         }

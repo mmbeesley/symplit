@@ -804,10 +804,12 @@
     background: var(--logo-dark-blue);
     border: none;
     border-radius: 25px;
-    width: 75px;
-    height: 25px;
+    padding: 8px;
     color: white;
-    font-size: 20px;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .selectfield {

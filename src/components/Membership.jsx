@@ -28,7 +28,7 @@ class Membership extends Component {
             membershipDescription: '',
             membershipPrice: '',
             membershipRecurring: false,
-            membershipPeriod: null
+            membershipPeriod: ''
         }
         this.payModal = this.payModal.bind(this);
         this.closePayModal = this.closePayModal.bind(this);
@@ -43,6 +43,14 @@ class Membership extends Component {
         this.selectAvailable = this.selectAvailable.bind(this);
         this.closeSelectAvailable = this.closeSelectAvailable.bind(this);
         this.makeAvailable = this.makeAvailable.bind(this);
+        this.closeFailureModal = this.closeFailureModal.bind(this);
+        this.closeSuccessModal = this.closeSuccessModal.bind(this);
+        this.membDeleteModal = this.membDeleteModal.bind(this);
+        this.membEditModal = this.membEditModal.bind(this);
+        this.closeMembDeleteModal = this.closeMembDeleteModal.bind(this);
+        this.closeMembEditModal = this.closeMembEditModal.bind(this);
+        this.updateMemb = this.updateMemb.bind(this);
+        this.deleteMemb = this.deleteMemb.bind(this);
     }
 
     componentDidMount() {
@@ -53,6 +61,7 @@ class Membership extends Component {
         })
         this.props.getUserInfo();
         this.props.getPath(this.props.location.pathname);
+        Modal.setAppElement('body');
     }
 
     onToken = (token) => {
@@ -65,7 +74,7 @@ class Membership extends Component {
             amount: this.state.selected.membership_price,
             membership: this.state.selected
         }).then(response => {
-            if(response.status === 200){
+            if (response.status === 200) {
                 this.setState({
                     progressModal: false,
                     successModal: true
@@ -176,6 +185,78 @@ class Membership extends Component {
         let booTog = boo ? false : true;
 
         axios.put('/api/memberships/' + id, { available: booTog }).then(res => {
+            this.setState({
+                memberships: res.data
+            })
+        })
+    }
+
+    closeFailureModal() {
+        this.setState({
+            failureModal: false
+        })
+    }
+
+    closeSuccessModal() {
+        this.setState({
+            successModal: false
+        })
+    }
+
+    membEditModal(e) {
+        axios.get('/api/membership/' + e).then(res => {
+            this.setState({
+                editing: e,
+                membEditModal: true,
+                membershipTitle: res.data[0].membership_title,
+                membershipDescription: res.data[0].membership_desc
+            })
+        })
+    }
+
+    membDeleteModal(e) {
+        this.setState({
+            deleting: e,
+            membDeleteModal: true
+        })
+    }
+
+    closeMembEditModal() {
+        this.setState({
+            editing: null,
+            membEditModal: false
+        })
+    }
+
+    closeMembDeleteModal() {
+        this.setState({
+            deleting: null,
+            membDeleteModal: false
+        })
+    }
+
+    updateMemb() {
+        let body = {
+            membership_title: this.state.membershipTitle,
+            membership_desc: this.state.membershipDescription,
+        }
+
+        axios.put('/api/membershipdetails/' + this.state.editing, body).then(res => {
+            this.setState({
+                editing: null,
+                membEditModal: false,
+                memberships: res.data
+            })
+        })
+    }
+
+    deleteMemb() {
+        axios.delete('/api/memberships/' + this.state.deleting).then(res => {
+            this.setState({
+                deleting: null,
+                membDeleteModal: false,
+                memberships: res.data
+            })
         })
     }
 
@@ -197,6 +278,10 @@ class Membership extends Component {
                         <div className="membershipdesc">
                             {e.membership_desc}
                         </div>
+                        <div className="adminbuttoncontainer">
+                            {!this.props.user.is_admin ? null : <button className="adminbutton" onClick={() => this.membEditModal(e.membership_id)}>Edit</button>}
+                            {!this.props.user.is_admin ? null : <button className="adminbutton" onClick={() => this.membDeleteModal(e.membership_id)}>Delete</button>}
+                        </div>
                         <div className="membershipdetails">
                             <p>
                                 ${e.membership_price}
@@ -206,7 +291,7 @@ class Membership extends Component {
                             </div>
                             <button className="membershipbutton" onClick={() => this.payModal(e)}>
                                 Select
-                        </button>
+                            </button>
                         </div>
                     </div>
                 )
@@ -300,6 +385,53 @@ class Membership extends Component {
                     </div>
                     {selectMap}
                 </Modal>
+
+                <Modal isOpen={this.state.progressModal} style={addStyle}>
+                    <div>
+                        Please wait while your order is processed...
+                </div>
+                </Modal>
+
+                <Modal isOpen={this.state.successModal} onRequestClose={this.closeSuccessModal} style={addStyle}>
+                    <div className="closebuttoncontainer">
+                        <button onClick={this.closeSuccessModal}>X</button>
+                    </div>
+                    <div>
+                        Thank you for your payment. Now go and enjoy the Maths!
+                    </div>
+                </Modal>
+
+                <Modal isOpen={this.state.failureModal} onRequestClose={this.closeFailureModal} style={addStyle}>
+                    <div className="closebuttoncontainer">
+                        <button onClick={this.closeFailureModal}>X</button>
+                    </div>
+                    <div>
+                        It appears that there was an error with your payment, please try again or with a different card. If this problem persists, please <a href="mailto:support@symplit.com">Contact Us</a>. Thank you for your patience.
+                    </div>
+                </Modal>
+
+                <Modal isOpen={this.state.membEditModal} onRequestClose={this.closeMembEditModal} style={addStyle}>
+                    <button onClick={this.closeMembEditModal}>Close</button>
+                    <div className="checkboxfield">
+                        You are only able to update the title and description and this only effects the db and how it is displayed on the page. If you want to change period, recurring, or cost that needs to be done with the add new membership button.
+                    </div>
+                    <div className="checkboxfield">
+                        Membership title: <input value={this.state.membershipTitle} onChange={(e) => this.handleMembershipTitle(e.target.value)} type="text" />
+                    </div>
+                    <div className="checkboxfield">
+                        Membership description: <input value={this.state.membershipDescription} onChange={(e) => this.handleMembershipDescription(e.target.value)} type="text" />
+                    </div>
+                    <button onClick={this.updateMemb}>Submit</button>
+                </Modal>
+
+                <Modal isOpen={this.state.membDeleteModal} onRequestClose={this.closeMembDeleteModal} style={addStyle}>
+                    <button onClick={this.closeMembDeleteModal}>Close</button>
+                    <div className="checkboxfield">
+                        This will only delete from the database and available memberships and not from stripe. Are you sure you want to delete?
+                    </div>
+                    <button onClick={this.deleteMemb}>Delete</button>
+                </Modal>
+
                 <Footer />
             </div>
         )

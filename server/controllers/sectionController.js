@@ -19,7 +19,14 @@ module.exports = {
                 membership_ids = null;
             }
 
-            db.create_section([section_number, section_title, chapter_id, section_text, membership_required_section, membership_ids, problem_ids, section_handout]).then(newSection => {
+            if (problem_ids == '') {
+                problem_ids = null;
+            }
+
+            const memIdsFormat = `{${membership_ids}}`
+            const probIdsFormat = `{${problem_ids}}`
+
+            db.create_section([section_number, section_title, chapter_id, section_text, membership_required_section, memIdsFormat, probIdsFormat, section_handout]).then(newSection => {
                 res.status(200).send(newSection);
             })
         } else {
@@ -37,8 +44,15 @@ module.exports = {
             if (membership_ids == '') {
                 membership_ids = null;
             }
+
+            if (problem_ids == '') {
+                problem_ids = null;
+            }
+
+            const memIdsFormat = `{${membership_ids}}`
+            const probIdsFormat = `{${problem_ids}}`
             
-            db.update_section([sectionId, section_number, section_title, chapter_id, section_text, membership_required_section, membership_ids, problem_ids, section_handout]).then(updatedSection => {
+            db.update_section([sectionId, section_number, section_title, chapter_id, section_text, membership_required_section, memIdsFormat, probIdsFormat, section_handout]).then(updatedSection => {
                 res.status(200).send(updatedSection)
             })
         } else {

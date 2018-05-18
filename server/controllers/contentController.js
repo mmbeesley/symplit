@@ -73,15 +73,6 @@ module.exports = {
         db.get_chapter_sections([chapterId]).then(chapSections => {
             res.status(200).send(chapSections);
         })
-    },
-
-    getSectionVideos: (req, res) => {
-        const db = req.app.get('db');
-        const { sectionId } = req.params;
-
-        db.get_allsectionvideos([sectionId]).then(videos => {
-            res.status(200).send(videos);
-        })
     }
 
 }

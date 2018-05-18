@@ -321,7 +321,7 @@ class Books extends Component {
             let imageUrl = `http://res.cloudinary.com/symplit/image/upload/${e.book_image}`;
 
             return (
-                <div className="booktile" key={i}>
+                <div className="booktile" key={e.book_title}>
                     <Link to={`/book/${e.book_id}`} className="booklink">
                         <div style={{ backgroundImage: `url(${imageUrl})` }} className="booktilebook"></div>
                         <h3>{e.book_title}</h3>

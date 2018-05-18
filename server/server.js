@@ -125,7 +125,6 @@ app.get('/api/books/search', contentController.searchBooks); //Gets all books ba
 app.get('/api/chapters/:bookId', contentController.getChapters); //Gets all chapters of a book based on book id from db for display on the chapters view
 app.get('/api/sections/:chapterId', contentController.getSections); //Gets all sections of a chapter based on chapter id from db for display on the sections view
 app.get('/api/chapsections/:chapterId', contentController.getChapterSections); //Gets just sections without sections videos in case sections don't have section videos for display on the sections view
-app.get('/api/sectionvideos/:sectionId', contentController.getSectionVideos); //Gets all videos of a section based on section id from db for display on the videos view. JOIN with videos table.
 
 //Admin Book Endpoints
 app.get('/api/books/:bookId', bookController.getOneBook); //Get single book based on book id
@@ -180,9 +179,10 @@ app.delete('/api/problems/:problemId', problemsController.deleteProblem); //Dele
 app.get('/api/memberships', membershipController.getMemberships) //Gets list of memberships available for purchase
 
 //Admin Memberships Endpoints
-app.get('/api/memberships/:membershipId', membershipController.getOneMembership) //Gets one membership based on membership id for admin view
+app.get('/api/membership/:membershipId', membershipController.getOneMembership) //Gets one membership based on membership id for admin view
 app.post('/api/memberships', membershipController.createMembership) //Req.body sends membership_title, membership_description, membership_price, membership_recurring, membership_period. Adds membership to memberships table
-app.put('/api/memberships/:membershipId', membershipController.updateMembership) //Update membership details based on membership id
+app.put('/api/memberships/:membershipId', membershipController.updateMembership) //Update membership availability based on membership id
+app.put('/api/membershipdetails/:membershipId', membershipController.updateMembershipDetails) //Updates membership title and description
 app.delete('/api/memberships/:membershipId', membershipController.deleteMembership) //Delete membership based on membership id
 
 //Offers Endpoints

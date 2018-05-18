@@ -35,7 +35,7 @@ class SingleBook extends Component {
             bookVisible: false,
             chapterTitle: '',
             chapterText: '',
-            bookChapter: null,
+            bookChapter: '',
             chapterMemRequired: false,
             chapterMemIds: []
         }
@@ -284,7 +284,6 @@ class SingleBook extends Component {
         let _this = this;
         window.cloudinary.openUploadWidget({ cloud_name: 'symplit', upload_preset: 'rg7skvww' },
             function (error, result) {
-                let fileName;
                 for (var i = result[0].path.length - 1; i > 0; i--) {
                     if (result[0].path[i] === '/') {
                         break;

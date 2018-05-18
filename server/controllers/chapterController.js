@@ -15,11 +15,13 @@ module.exports = {
             const db = req.app.get('db');
             const { book_id, book_chapter, chapter_title, chapter_text, membership_required_chapter, membership_ids_chapter } = req.body;
             
-            if(membership_ids == ''){
-                membership_ids = null;
+            if(membership_ids_chapter == ''){
+                membership_ids_chapter = null;
             }
+            const memIdsFormat = `{${membership_ids_chapter}}`
+
             
-            db.create_chapter([book_id, book_chapter, chapter_title, chapter_text, membership_required_chapter, membership_ids_chapter]).then(newChapter => {
+            db.create_chapter([book_id, book_chapter, chapter_title, chapter_text, membership_required_chapter, memIdsFormat]).then(newChapter => {
                 res.status(200).send(newChapter);
             })
         } else {
@@ -34,11 +36,12 @@ module.exports = {
             const { book_id, book_chapter, chapter_title, chapter_text, membership_required_chapter, membership_ids_chapter } = req.body;
             const { chapterId } = req.params
             
-            if(membership_ids == ''){
-                membership_ids = null;
+            if(membership_ids_chapter == ''){
+                membership_ids_chapter = null;
             }
+            const memIdsFormat = `{${membership_ids_chapter}}`
             
-            db.update_chapter([chapterId, book_id, book_chapter, chapter_title, chapter_text, membership_required_chapter, membership_ids_chapter]).then(updatedChapter => {
+            db.update_chapter([chapterId, book_id, book_chapter, chapter_title, chapter_text, membership_required_chapter, memIdsFormat]).then(updatedChapter => {
                 res.status(200).send(updatedChapter)
             })
         } else {

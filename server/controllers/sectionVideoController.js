@@ -15,7 +15,12 @@ module.exports = {
             const db = req.app.get('db');
             const { section_id, video_id, sectionvideo_title, sectionvideo_text, membership_required_video, membership_ids, sectionvideo_handout } = req.body;
             
-            db.create_sectionvideo([ section_id, video_id, sectionvideo_title, sectionvideo_text, membership_required_video, membership_ids, sectionvideo_handout ]).then(newVideo => {
+            if (membership_ids == '') {
+                membership_ids = null;
+            }
+            const memIdsFormat = `{${membership_ids}}`
+
+            db.create_sectionvideo([ section_id, video_id, sectionvideo_title, sectionvideo_text, membership_required_video, memIdsFormat, sectionvideo_handout ]).then(newVideo => {
                 res.status(200).send(newVideo);
             })
         } else {
@@ -30,11 +35,12 @@ module.exports = {
             const { video_id, sectionvideo_title, sectionvideo_text, membership_required_video, membership_ids, sectionvideo_handout } = req.body;
             const {sectionvideoId} = req.params;
             
-            if(membership_ids == ''){
+            if (membership_ids == '') {
                 membership_ids = null;
             }
+            const memIdsFormat = `{${membership_ids}}`
             
-            db.update_sectionvideo([ sectionvideoId, video_id, sectionvideo_title, sectionvideo_text, membership_required_video, membership_ids, sectionvideo_handout]).then(updated => {
+            db.update_sectionvideo([ sectionvideoId, video_id, sectionvideo_title, sectionvideo_text, membership_required_video, memIdsFormat, sectionvideo_handout]).then(updated => {
                 res.status(200).send(updated);
             })
         } else {
