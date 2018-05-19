@@ -58,3 +58,6 @@ button {
 input {
 	outline: none;
 }
+body a {
+	text-decoration: none;
+}

@@ -76,6 +76,7 @@ class Membership extends Component {
         }).then(response => {
             if (response.status === 200) {
                 this.setState({
+                    payModal: false,
                     progressModal: false,
                     successModal: true
                 })

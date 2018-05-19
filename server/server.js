@@ -59,16 +59,15 @@ passport.use(new Auth0Strategy({
     clientID: process.env.CLIENT_ID,
     clientSecret: process.env.CLIENT_SECRET,
     callbackURL: process.env.CALLBACK_URL,
-    scope: 'openid email'
-}, (accessToken, refreshToken, extraParams, email, done) => {//receives profile from auth callback endpoint
+    scope: 'openid profile email'
+}, (accessToken, refreshToken, extraParams, profile, done) => {//receives profile from auth callback endpoint
 
     const db = app.get('db');//database connection
-    
-    let { emails, user_id } = email;
+    let {emails, user_id, displayName} = profile;
 
     db.find_user([user_id]).then(function (users) { //checks if user doesn't exist and adds them to database, if user does exist, returns user
         if (!users[0]) {
-            db.create_user([user_id, emails[0].value])
+            db.create_user([user_id, emails[0].value, displayName])
                 .then(user => {
                     return done(null, user[0].user_id)
                 })
@@ -170,10 +169,11 @@ app.delete('/api/testimonials/:testimonialId', testimonialController.deleteTesti
 app.get('/api/problems/:sectionId', problemsController.getProblems); //Gets list of practice problems based on sectionId from db for display on practice problems carousel
 
 //Admin Practice Problems Endpoints
-app.get('/api/problems/:problemId', problemsController.getOneProblem); //Gets one problem for editing on admin view
+app.get('/api/problem/:problemId', problemsController.getOneProblem); //Gets one problem for editing on admin view
 app.post('/api/problems', problemsController.createProblem); //Req.body sends problem_title, problem_image, problem_solution, membership_required. Adds to practiceproblems table.
 app.put('/api/problems/:problemId', problemsController.updateProblem); //Update practice problems details based on problem id
 app.delete('/api/problems/:problemId', problemsController.deleteProblem); //Delete problem based on problem id
+app.get('/api/completedproblems', problemsController.completedProblems); //Get array of completed problems based on user id
 
 //Memberships Endpoints
 app.get('/api/memberships', membershipController.getMemberships) //Gets list of memberships available for purchase

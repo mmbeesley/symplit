@@ -41,5 +41,9 @@ module.exports = {
         const {problemId} = req.params;
 
         db.delete_problem([problemId]).then(deleted => {})
+    },
+
+    completedProblems: (req,res) => {
+        
     }
 }

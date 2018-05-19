@@ -28,7 +28,7 @@ module.exports = {
             }
         }
 
-        const convertedAmt = math.round(parseInt(pennies.join('')));
+        const convertedAmt = parseInt(pennies.join(''));
         if(!membership.membership_recurring && !membership.membership_period ) {
             //one time charge for lifetime purchases
             
@@ -43,25 +43,6 @@ module.exports = {
                     res.status(200).send(newMember);
                 })
             });
-        } else if (!membership.membership_recurring ) {
-            //one time charges for set time plans that will send an email asking if the customer wants to continue subscribing. Does not auto bill.
-            const customer = stripe.customers.create({
-                email: user_email,
-                source: req.body.token.id
-            }).then(response => {
-                db.newStripeCustomer([response.id, user_id]).then(customer => {
-                    const subscription = stripe.subscriptions.create({
-                        customer: response.id,
-                        items: [{plan: membership.stripe_plan_id}],
-                        billing: 'send_invoice',
-                        days_until_due: 30
-                    }).then(sub => {
-                        db.create_member([user_id, membership.membership_id, date]).then((newMember => {
-                            res.status(200).send(newMember);
-                        }))
-                    })
-                })
-            })
         } else {
             //create customer and add to existing plan. Auto bills customer for next payment period for known recurring payment plans.
             const customer = stripe.customers.create({

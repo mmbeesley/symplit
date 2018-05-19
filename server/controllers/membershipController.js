@@ -22,8 +22,12 @@ module.exports = {
     createMembership: (req, res) => {
         if (req.user.is_admin) {
             const db = req.app.get('db');
-            const { membership_title, membership_desc, membership_price, membership_period, membership_recurring } = req.body;
+            const { membership_title, membership_desc, membership_price, membership_recurring } = req.body;
+            let membership_period = req.body.membership_period;
             const amount = Math.round(membership_price * 100);
+            if(membership_period == ''){
+                membership_period = null;
+            }
 
             if (membership_recurring) {
                 const product = stripe.products.create({
@@ -43,7 +47,7 @@ module.exports = {
                     })
                 })
             } else {
-                db.create_membership([membership_title, membership_desc, membership_price, false, false, null, false]).then(newMembership => {
+                db.create_membership([membership_title, membership_desc, membership_price, false, membership_period, null, false]).then(newMembership => {
                     res.status(200).send(newMembership)
                 })
             }
