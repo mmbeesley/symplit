@@ -37,7 +37,8 @@ class SingleBook extends Component {
             chapterText: '',
             bookChapter: '',
             chapterMemRequired: false,
-            chapterMemIds: []
+            chapterMemIds: [],
+            savedbooks: []
         }
         this.openAddModal = this.openAddModal.bind(this);
         this.closeAddModal = this.closeAddModal.bind(this);
@@ -67,6 +68,8 @@ class SingleBook extends Component {
         this.handleChapMemIds = this.handleChapMemIds.bind(this);
         this.updateChap = this.updateChap.bind(this);
         this.deleteChap = this.deleteChap.bind(this);
+        this.addToSaved = this.addToSaved.bind(this);
+        this.removeFromSaved = this.removeFromSaved.bind(this);
     }
 
     componentDidMount() {
@@ -78,6 +81,11 @@ class SingleBook extends Component {
         })
         this.props.getUserInfo();
         this.props.getPath(this.props.location.pathname);
+        axios.get('/api/savedbooks').then(res => {
+            this.setState({
+                savedbooks: res.data
+            })
+        })
         Modal.setAppElement('body');
     }
 
@@ -399,6 +407,22 @@ class SingleBook extends Component {
         })
     }
 
+    addToSaved() {
+        axios.post('/api/savedbooks', {book_id: this.state.book[0].book_id}).then(books => {
+            this.setState({
+                savedbooks: books.data
+            })
+        })
+    }
+
+    removeFromSaved() {
+        axios.delete('/api/savedbooks/'+this.state.book[0].book_id).then(books => {
+            this.setState({
+                savedbooks: books.data
+            })
+        })
+    }
+
     render() {
 
         let adminaddChapter = !this.props.user.is_admin ? null : <button className="adminbutton" onClick={() => this.openAddModal()}>Add Chapter</button>
@@ -428,6 +452,18 @@ class SingleBook extends Component {
             )
         }) : null;
 
+        let savedBooksExist = false;
+        if (this.state.savedbooks.length > 0 && this.state.book[0]) {
+            for (let i = 0; i < this.state.savedbooks.length; i++) {
+                console.log(this.state.savedbooks[i])
+                console.log(this.state.book[0].book_id);
+                if (this.state.book[0].book_id === this.state.savedbooks[i].book_id) {
+                    savedBooksExist = true;
+                }
+            }
+        }
+
+        let addRemoveButton = !this.props.user.user_id ? null : savedBooksExist ? <button onClick={this.removeFromSaved}>Remove from Saved Books</button> : <button onClick={this.addToSaved}>Add to Saved Books</button>
 
         return (
             <div className="singlebookbody">
@@ -437,6 +473,7 @@ class SingleBook extends Component {
                         <h1>{bookTitle}</h1>
                         <h2>{bookSubTitle}</h2>
                         <h3>{bookAuthor}</h3>
+                        {addRemoveButton}
                         <div className="adminbuttoncontainer">
                             {!this.props.user.is_admin ? null : <button className="adminbutton" onClick={() => this.openEditModal(this.state.book[0].book_id)}>Edit</button>}
                             {!this.props.user.is_admin ? null : <button className="adminbutton" onClick={() => this.openDeleteModal(this.state.book[0].book_id)}>Delete</button>}

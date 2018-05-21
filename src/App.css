@@ -910,3 +910,75 @@
 .homebooksbutton a {
     color: white;
 }
+
+.savedbooksmsg {
+    height: 150px;
+}
+
+.savedbooksmsg a {
+    color: var(--logo-light-blue);
+    transition: .2s;
+}
+
+.savedbooksmsg a:hover {
+    color: var(--logo-dark-blue);
+}
+
+.savedbookscontainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    height: 200px;
+    overflow-y: auto;
+}
+
+.savedbooktile {
+    display: flex;
+    width: 90%;
+    min-height: 100px;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.savedbookimg {
+    width: 20%;
+    height: 100px;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.savedbooktitles {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    align-items: center;
+}
+
+.savedbookbuttonscontainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 80px;
+}
+
+.savedbookbutton {
+    background: var(--logo-dark-blue);
+    border: none;
+    padding: 10px;
+    text-align: center;
+    color: white;
+    border-radius: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.savedbookbutton a {
+    color: white;
+    width: 100%;
+    height: 100%;
+}

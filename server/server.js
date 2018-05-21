@@ -25,8 +25,11 @@ const sectionVideoController = require('./controllers/sectionVideoController')
 const videoController = require('./controllers/videoController')
 const membershipController = require('./controllers/membershipController')
 const offerController = require('./controllers/offerController')
+const savedBooksController = require('./controllers/savedBooksController')
 
+//Custom Middleware
 const loginMiddleware = require('./middleware/loginMiddleware')
+
 //Hosting
 // app.use( express.static( `${__dirname}/../build`) );
 
@@ -124,6 +127,11 @@ app.get('/api/books/search', contentController.searchBooks); //Gets all books ba
 app.get('/api/chapters/:bookId', contentController.getChapters); //Gets all chapters of a book based on book id from db for display on the chapters view
 app.get('/api/sections/:chapterId', contentController.getSections); //Gets all sections of a chapter based on chapter id from db for display on the sections view
 app.get('/api/chapsections/:chapterId', contentController.getChapterSections); //Gets just sections without sections videos in case sections don't have section videos for display on the sections view
+
+//Saved Book Endpoints
+app.get('/api/savedbooks', savedBooksController.getBooks); //Gets all books for display on the user account page using req.user
+app.post('/api/savedbooks', savedBooksController.addBook); //Add book to a user's selection of saved books
+app.delete('/api/savedbooks/:bookId', savedBooksController.removeBook); //Remove book from user's selecltion of saved books
 
 //Admin Book Endpoints
 app.get('/api/books/:bookId', bookController.getOneBook); //Get single book based on book id
