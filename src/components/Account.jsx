@@ -78,7 +78,6 @@ class Account extends Component {
                     </div>
                 </div>
             )
-        console.log(this.state.savedbooks);
         let savedBooks = this.state.savedbooks.length === 0 ? <div className='savedbooksmsg'><h3>You don't have any books saved to your profile</h3><p><Link to='/books'>Click here</Link> to find a text book to study!</p></div> : this.state.savedbooks.map((e, i) => {
             let imageUrl = 'http://res.cloudinary.com/symplit/image/upload/'+e.book_image;
             return (
