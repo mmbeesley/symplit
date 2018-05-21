@@ -44,6 +44,8 @@ class Account extends Component {
         })
     }
 
+    console.log('test');
+
     render() {
         let user = this.props.user;
         let mem = this.state.membership;
