@@ -2,11 +2,16 @@ module.exports = {
 
     getBooks: (req, res) => {
         const db = req.app.get('db');
-        const user = req.user.user_id;
+        if (req.user) {
 
-        db.get_savedbooks([user]).then(books => {
-            res.status(200).send(books);
-        })
+            const user = req.user.user_id;
+
+            db.get_savedbooks([user]).then(books => {
+                res.status(200).send(books);
+            })
+        } else {
+            res.status(200).send('no user');
+        }
     },
 
     addBook: (req, res) => {
@@ -16,7 +21,6 @@ module.exports = {
 
         db.add_savedbooks([user, book]).then(book => {
             db.get_savedbooks([user]).then(books => {
-
                 res.status(200).send(books);
             })
         })

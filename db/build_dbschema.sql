@@ -86,3 +86,8 @@ create table user_saved_books
 (saved_id serial primary key
 , user_id integer
 , book_id integer)
+
+create table practice_problems_completed
+(completed_id serial primary key
+, user_id integer
+, problem_id integer)

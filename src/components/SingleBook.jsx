@@ -38,7 +38,9 @@ class SingleBook extends Component {
             bookChapter: '',
             chapterMemRequired: false,
             chapterMemIds: [],
-            savedbooks: []
+            savedbooks: [],
+            practiceProblems: [],
+            completedProblems: []
         }
         this.openAddModal = this.openAddModal.bind(this);
         this.closeAddModal = this.closeAddModal.bind(this);
@@ -73,17 +75,19 @@ class SingleBook extends Component {
     }
 
     componentDidMount() {
-        let bookId = this.props.match.params.book;
-        axios.get('/api/books/' + bookId).then(book => {
-            this.setState({
-                book: book.data
-            })
-        })
         this.props.getUserInfo();
         this.props.getPath(this.props.location.pathname);
-        axios.get('/api/savedbooks').then(res => {
+        let bookId = this.props.match.params.book;
+        let book = axios.get('/api/books/' + bookId)
+        let savedbooks = axios.get('/api/savedbooks')
+        let practiceProblems = axios.get('/api/problems/' + bookId)
+        let completedProblems = axios.get('/api/completedproblems')
+        axios.all([book, savedbooks, practiceProblems, completedProblems]).then(res => {
             this.setState({
-                savedbooks: res.data
+                book: res[0].data,
+                savedbooks: res[1].data,
+                practiceProblems: res[2].data,
+                completedProblems: res[3].data
             })
         })
         Modal.setAppElement('body');
@@ -463,6 +467,32 @@ class SingleBook extends Component {
 
         let addRemoveButton = !this.props.user.user_id ? null : savedBooksExist ? <button className="savedbookbutton" onClick={this.removeFromSaved}>Remove from Saved Books</button> : <button className="savedbookbutton" onClick={this.addToSaved}>Add to Saved Books</button>
 
+        let practiceMap = this.state.practiceProblems.length === 0 ? null : this.state.practiceProblems.map((e, i) => {
+            let completed = typeof this.state.completedProblems === 'object' ? this.state.completedProblems.map((x, y) => {
+                let count = 0;
+                if (x.section_id === e.sectionId) {
+                    for(let i = 0; i<e.practiceProblems.length; i++){
+                        if(e.practiceProblems[i].problem_id === x.problem_id){
+                            count++;
+                        }
+                    }
+                    return count
+                }
+                return count
+            }) : 0
+            let completedTotal = typeof completed === 'object' ? completed.reduce((a,b) => a+b) : 0;
+            let tileClass = completedTotal === e.practiceProblems.length ? 'practicedone' : 'practicetile';
+            return (
+                <div className={tileClass} key={e.sectionTitle}>
+                    <div className="practicetilehead">{e.chapter}.{e.sectionNumber}</div>
+                    <div className="practicetilecomplete">
+                        <div className="practicetilecompletenumber">{completedTotal}/{e.practiceProblems.length}</div>
+                        <div>Completed</div>
+                    </div>
+                </div>
+            )
+        })
+
         return (
             <div className="singlebookbody">
                 <div className="bookoverview">
@@ -488,6 +518,9 @@ class SingleBook extends Component {
                     </div>
                     <div className="practicelist">
                         <h1>PRACTICE</h1>
+                        <div className="practicegrid">
+                            {practiceMap}
+                        </div>
                     </div>
                 </div>
 

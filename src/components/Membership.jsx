@@ -264,13 +264,13 @@ class Membership extends Component {
     render() {
         let membershipMap = this.state.memberships.length > 0 ? this.state.memberships.map((e, i) => {
             var months = 'per ' + e.membership_period + ' months'
-            if (e.membership_period === 1) {
-                months = 'per month'
-            }
-            if (e.membership_period === null || e.membership_period === '') {
-                months = 'lifetime'
-            }
             if (e.available) {
+                if (e.membership_period === null || e.membership_period === '') {
+                    months = 'lifetime'
+                }
+                if (e.membership_period === 1) {
+                    months = 'per month'
+                }
                 return (
                     <div key={i} className="membershiptile">
                         <h2 className="membershiptitle">
@@ -296,6 +296,8 @@ class Membership extends Component {
                         </div>
                     </div>
                 )
+            } else {
+                return null;
             }
         }) : null;
 

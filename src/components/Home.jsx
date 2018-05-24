@@ -60,7 +60,6 @@ class Home extends Component {
             })
         })
 
-        this.props.getUserInfo();
         this.props.getPath(this.props.location.pathname);
     }
 
@@ -158,7 +157,6 @@ class Home extends Component {
             speed: 500,
             slidesToShow: 1,
             slidesToScroll: 1,
-            autoplay: true,
             autoplaySpeed: 5000
         };
 
@@ -193,6 +191,8 @@ class Home extends Component {
                         </div>
                     </Link>
                 )
+            } else {
+                return null;
             }
         })
 

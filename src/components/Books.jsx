@@ -315,13 +315,13 @@ class Books extends Component {
 
         var bookMap = this.state.books.map((e, i) => {
             var authorMap = e.author.length > 0 ? e.author.map((x, y) => {
-                return <h3 key={i} className="homebookauthor">{x}</h3>
+                return <h3 key={y} className="homebookauthor">{x}</h3>
             }) : null
 
             let imageUrl = `http://res.cloudinary.com/symplit/image/upload/${e.book_image}`;
 
             return (
-                <div className="booktile" key={e.book_title}>
+                <div className="booktile" key={e.book_subtitle}>
                     <Link to={`/book/${e.book_id}`} className="booklink">
                         <div style={{ backgroundImage: `url(${imageUrl})` }} className="booktilebook"></div>
                         <h3>{e.book_title}</h3>

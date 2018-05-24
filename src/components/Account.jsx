@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getUserInfo, getPath } from '../ducks/reducer';
-import Modal from 'react-modal';
 import Footer from './Footer';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
@@ -119,6 +118,9 @@ class Account extends Component {
                             <div>
                                 <Link to='/'>Apply a Discount Code</Link>
                             </div>
+                            <div>
+                                <a href={process.env.REACT_APP_LOGOUT}>Logout</a>
+                            </div>
                         </div>
                     </div>
                     <div className="accountright">
@@ -127,14 +129,6 @@ class Account extends Component {
                             <div className="savedbookscontainer">
                                 {savedBooks}
                             </div>
-                        </div>
-                        <div className="accountproblems">
-                            <h2>Practice Problems</h2>
-                            <ul>
-                                <li>select book, list practice problems</li>
-                                <li>select chapter, list practice problems</li>
-                                <li>select section, list practice problems</li>
-                            </ul>
                         </div>
                     </div>
                 </div>

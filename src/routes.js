@@ -12,7 +12,7 @@ import Books from './components/Books';
 import SingleBook from './components/SingleBook';
 import SingleChapter from './components/SingleChapter';
 import Account from './components/Account';
-import Problems from './components/Problems';
+// import Problems from './components/Problems';
 import Membership from './components/Membership';
 
 

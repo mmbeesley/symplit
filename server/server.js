@@ -99,7 +99,7 @@ app.get('/auth/callback', loginMiddleware.authenticate);
 //Login
 app.get('/auth/me', (req,res)=>{
     if(!req.user){
-        res.status(404).send('User not found.');
+        res.status(200).send('User not found.');
     } else {
         res.status(200).send(req.user);
     }
@@ -174,7 +174,7 @@ app.put('/api/testimonials/:testimonialId', testimonialController.updateTestimon
 app.delete('/api/testimonials/:testimonialId', testimonialController.deleteTestimonial); //Delete testimonial based on testimonial id
 
 //Practice Problems Endpoints
-app.get('/api/problems/:sectionId', problemsController.getProblems); //Gets list of practice problems based on sectionId from db for display on practice problems carousel
+app.get('/api/problems/:bookId', problemsController.getProblems); //Gets list of practice problems based on sectionId from db for display on practice problems carousel
 
 //Admin Practice Problems Endpoints
 app.get('/api/problem/:problemId', problemsController.getOneProblem); //Gets one problem for editing on admin view
