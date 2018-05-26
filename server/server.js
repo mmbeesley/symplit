@@ -182,6 +182,10 @@ app.post('/api/problems', problemsController.createProblem); //Req.body sends pr
 app.put('/api/problems/:problemId', problemsController.updateProblem); //Update practice problems details based on problem id
 app.delete('/api/problems/:problemId', problemsController.deleteProblem); //Delete problem based on problem id
 app.get('/api/completedproblems', problemsController.completedProblems); //Get array of completed problems based on user id
+app.get('/api/sectionproblems/:sectionId', problemsController.getSectionProblems) //Get problems by section
+app.get('/api/sectioncompletedproblems/:sectionId', problemsController.getSectionCompletedProblems) //Get completed problems by section
+app.post('/api/completeproblem', problemsController.completeAProblem) //User hits endpoint to mark a problem as complete
+app.delete('/api/uncompleteproblem/:problemId/:sectionId', problemsController.undoCompleteAProblem) //User unmarks a problem as complete
 
 //Memberships Endpoints
 app.get('/api/memberships', membershipController.getMemberships) //Gets list of memberships available for purchase
