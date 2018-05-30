@@ -71,62 +71,104 @@ module.exports = {
   },
 
   createProblem: (req, res) => {
-    const db = req.app.get("db");
-    const {
-      problem_title,
-      problem_image,
-      problem_solution,
-      membership_required
-    } = req.body;
-
-    db
-      .create_problem([
+    if (req.user.is_admin) {
+      const db = req.app.get("db");
+      const {
         problem_title,
         problem_image,
         problem_solution,
-        membership_required
-      ])
-      .then(newProblem => {
-        db.get_allproblems().then(problems => {
-          res.status(200).send(problems);
+        membership_required,
+        membership_ids,
+        section_id
+      } = req.body;
+
+      db
+        .create_problem([
+          problem_title,
+          problem_image,
+          problem_solution,
+          membership_required,
+          membership_ids
+        ])
+        .then(newProblem => {
+          db.get_oneSection([section_id]).then(async section => {
+            let problemArray = [];
+            let loopArray = section[0].practice_problems_ids;
+            for (let i = 0; i < loopArray.length; i++) {
+              let problem_id = loopArray[i];
+              await db.get_sectionProblems([problem_id]).then(problem => {
+                problemArray.push(problem[0]);
+              });
+            }
+            res.status(200).send(problemArray);
+          });
         });
-      });
+    } else {
+      res.status(403).send("No admin");
+    }
   },
 
   updateProblem: (req, res) => {
-    const db = req.app.get("db");
-    const {
-      problem_title,
-      problem_image,
-      problem_solution,
-      membership_required
-    } = req.body;
-    const { problemId } = req.params;
-
-    db
-      .update_problem([
-        problemId,
+    if (req.user.is_admin) {
+      const db = req.app.get("db");
+      const {
         problem_title,
         problem_image,
         problem_solution,
-        membership_required
-      ])
-      .then(updated => {
-        db.get_allproblems().then(problems => {
-          res.status(200).send(problems);
+        membership_required,
+        membership_ids,
+        section_id
+      } = req.body;
+      const { problemId } = req.params;
+
+      db
+        .update_problem([
+          problemId,
+          problem_title,
+          problem_image,
+          problem_solution,
+          membership_required,
+          membership_ids
+        ])
+        .then(updated => {
+          db.get_oneSection([section_id]).then(async section => {
+            let problemArray = [];
+            let loopArray = section[0].practice_problems_ids;
+            for (let i = 0; i < loopArray.length; i++) {
+              let problem_id = loopArray[i];
+              await db.get_sectionProblems([problem_id]).then(problem => {
+                problemArray.push(problem[0]);
+              });
+            }
+            res.status(200).send(problemArray);
+          });
         });
-      });
+    } else {
+      res.status(403).send("No admin");
+    }
   },
 
   deleteProblem: (req, res) => {
-    const db = req.app.get("db");
-    const { problemId } = req.params;
+    if (req.user.is_admin) {
+      const db = req.app.get("db");
+      const { problemId, sectionId } = req.params;
 
-    db.delete_problem([problemId]).then(deleted => {
-      db.get_allproblems().then(problems => {
-        res.status(200).send(problems);
+      db.delete_problem([problemId]).then(deleted => {
+        db.get_oneSection([sectionId]).then(async section => {
+          let problemArray = [];
+          let loopArray = section[0].practice_problems_ids;
+          for (let i = 0; i < loopArray.length; i++) {
+            let problem_id = loopArray[i];
+            await db.get_sectionProblems([problem_id]).then(problem => {
+              problemArray.push(problem[0]);
+            });
+          }
+          res.status(200).send(problemArray);
+        });
       });
-    });
+    } else {
+      res.status(403).send("No admin");
+    }
   },
 
   completedProblems: (req, res) => {
@@ -150,7 +192,6 @@ module.exports = {
 
       db.complete_problem([user_id, problemId, sectionId]).then(completed => {
         db.get_completedproblems([user_id]).then(list => {
-            
           res.status(200).send(list);
         });
       });
@@ -166,7 +207,6 @@ module.exports = {
 
     db.unComplete_problem([user_id, problemId, sectionId]).then(deleted => {
       db.get_completedproblems([user_id]).then(list => {
-          console.log(list);
         res.status(200).send(list);
       });
     });

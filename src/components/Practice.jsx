@@ -35,12 +35,34 @@ class Practice extends Component {
     this.state = {
       practiceProblems: [],
       completedProblems: [],
-      videoUrl: ""
+      videoUrl: "",
+      title: "",
+      image: "",
+      solution: "",
+      mem_required: false,
+      mem_ids: "",
+      editing: null,
+      deleting: null,
+      sectionProblems: []
     };
     this.openVideoModal = this.openVideoModal.bind(this);
     this.closeVideoModal = this.closeVideoModal.bind(this);
     this.completeProblem = this.completeProblem.bind(this);
     this.undoCompleteProblem = this.undoCompleteProblem.bind(this);
+    this.openAddProblemModal = this.openAddProblemModal.bind(this);
+    this.openDeleteModal = this.openDeleteModal.bind(this);
+    this.openEditModal = this.openEditModal.bind(this);
+    this.addProblem = this.addProblem.bind(this);
+    this.editProblem = this.editProblem.bind(this);
+    this.deleteProblem = this.deleteProblem.bind(this);
+    this.closeAddProblemModal = this.closeAddProblemModal.bind(this);
+    this.closeDeleteModal = this.closeDeleteModal.bind(this);
+    this.closeEditModal = this.closeEditModal.bind(this);
+    this.handleTitle = this.handleTitle.bind(this);
+    this.handleImage = this.handleImage.bind(this);
+    this.handleSolution = this.handleSolution.bind(this);
+    this.handleMemRequired = this.handleMemRequired.bind(this);
+    this.handleMemIds = this.handleMemIds.bind(this);
   }
 
   componentDidMount() {
@@ -52,6 +74,7 @@ class Practice extends Component {
     let completedProblems = axios.get(
       "/api/sectioncompletedproblems/" + this.props.match.params.section
     );
+    // let section = 
     axios.all([practiceProblems, completedProblems]).then(res => {
       this.setState({
         practiceProblems: res[0].data,
@@ -98,6 +121,178 @@ class Practice extends Component {
           completedProblems: res.data
         });
       });
+  }
+
+  openAddProblemModal() {
+    this.setState({
+      addModal: true
+    });
+  }
+
+  closeAddProblemModal() {
+    this.setState({
+      addModal: false
+    });
+  }
+
+  openEditModal(e) {
+    axios.get("/api/problem/" + e).then(res => {
+      const {
+        problem_title,
+        problem_image,
+        problem_solution,
+        membership_required_problem,
+        membership_ids
+      } = res.data[0];
+      this.setState({
+        editModal: true,
+        editing: e,
+        title: problem_title,
+        image: problem_image,
+        solution: problem_solution,
+        mem_required: membership_required_problem,
+        mem_ids: membership_ids
+      });
+    });
+  }
+
+  closeEditModal() {
+    this.setState({
+      editModal: false,
+      editing: null
+    });
+  }
+
+  openDeleteModal(e) {
+    this.setState({
+      deleteModal: true,
+      deleting: e
+    });
+  }
+
+  closeDeleteModal() {
+    this.setState({
+      deleteModal: false,
+      deleting: null
+    });
+  }
+
+  addProblem() {
+    const { title, image, solution, mem_required, mem_ids } = this.state;
+    const { section } = this.props.match.params;
+    let body = {
+      problem_title: title,
+      problem_image: image,
+      problem_solution: solution,
+      membership_required: mem_required,
+      membership_ids: mem_ids,
+      section_id: section
+    };
+
+    axios.post("/api/problems", body).then(res => {
+      this.setState({
+        practiceProblems: res.data,
+        title: "",
+        image: "",
+        solution: "",
+        mem_required: "",
+        mem_ids: "",
+        addModal: false
+      });
+    });
+  }
+
+  editProblem() {
+    const {
+      title,
+      image,
+      solution,
+      mem_required,
+      mem_ids,
+      editing
+    } = this.state;
+    const { section } = this.props.match.params;
+    let body = {
+      problem_title: title,
+      problem_image: image,
+      problem_solution: solution,
+      membership_required: mem_required,
+      membership_ids: mem_ids,
+      section_id: section
+    };
+
+    axios.put("/api/problems/" + editing, body).then(res => {
+      this.setState({
+        practiceProblems: res.data,
+        title: "",
+        image: "",
+        solution: "",
+        mem_required: false,
+        mem_ids: "",
+        editing: null,
+        editModal: false
+      });
+    });
+  }
+
+  deleteProblem() {
+    const { deleting } = this.state;
+    const { section } = this.props.match.params;
+    axios
+      .delete("/api/problems/" + this.state.deleting + "/" + section)
+      .then(res => {
+        this.setState({
+          practiceProblems: res.data,
+          deleting: null,
+          deleteModal: false
+        });
+      });
+  }
+
+  handleTitle(e) {
+    this.setState({
+      title: e
+    });
+  }
+
+  handleImage(e) {
+    this.setState({
+      image: e
+    });
+  }
+
+  handleSolution(e) {
+    this.setState({
+      solution: e
+    });
+  }
+
+  handleMemRequired(e) {
+    this.setState({
+      mem_required: e
+    });
+  }
+
+  handleMemIds(e) {
+    this.setState({
+      mem_ids: e
+    });
+  }
+
+  openSelectModal() {
+    this.setState({
+        selectModal: true
+    })
+  }
+
+  handleSelect(e) {
+
+  }
+
+  closeSelectModal() {
+    this.setState({
+        selectModal: false
+    })
   }
 
   render() {
@@ -176,6 +371,114 @@ class Practice extends Component {
           <div className="problemplayer">
             <ReactPlayer url={this.state.videoUrl} style={videoStyle} />
           </div>
+        </Modal>
+
+        <Modal
+          isOpen={this.state.addModal}
+          onRequestClose={this.closeAddProblemModal}
+          style={videoModal}
+        >
+          <button onClick={this.closeAddProblemModal}>Close</button>
+          <div className="checkboxfield">
+            Problem Title:{" "}
+            <input
+              placeholder="Problem Title"
+              value={this.state.title}
+              onChange={e => this.handleTitle(e.target.value)}
+            />
+          </div>
+          <div className="checkboxfield">
+            Problem Image:{" "}
+            <input
+              placeholder="Problem Image"
+              value={this.state.image}
+              onChange={e => this.handleImage(e.target.value)}
+            />
+          </div>
+          <div className="checkboxfield">
+            Problem Solution:{" "}
+            <input
+              placeholder="Problem Solution"
+              value={this.state.solution}
+              onChange={e => this.handleSolution(e.target.value)}
+            />
+          </div>
+          <div className="checkboxfield">
+            Membership Required?{" "}
+            <input
+              value={this.state.mem_required}
+              onChange={e => this.handleMemRequired(e.target.checked)}
+              type="checkbox"
+            />
+          </div>
+          <div className="checkboxfield">
+            Membership Ids:{" "}
+            <input
+              placeholder="Membership Ids"
+              value={this.state.mem_ids}
+              onChange={e => this.handleMemIds(e.target.value)}
+            />
+          </div>
+          <button onClick={this.addProblem}>Submit</button>
+        </Modal>
+
+        <Modal
+          isOpen={this.state.editModal}
+          onRequestClose={this.closeEditModal}
+          style={videoModal}
+        >
+          <button onClick={this.closeEditModal}>Close</button>
+          <div className="checkboxfield">
+            Problem Title:{" "}
+            <input
+              placeholder="Problem Title"
+              value={this.state.title}
+              onChange={e => this.handleTitle(e.target.value)}
+            />
+          </div>
+          <div className="checkboxfield">
+            Problem Image:{" "}
+            <input
+              placeholder="Problem Image"
+              value={this.state.image}
+              onChange={e => this.handleImage(e.target.value)}
+            />
+          </div>
+          <div className="checkboxfield">
+            Problem Solution:{" "}
+            <input
+              placeholder="Problem Solution"
+              value={this.state.solution}
+              onChange={e => this.handleSolution(e.target.value)}
+            />
+          </div>
+          <div className="checkboxfield">
+            Membership Required?{" "}
+            <input
+              value={this.state.mem_required}
+              onChange={e => this.handleMemRequired(e.target.checked)}
+              type="checkbox"
+            />
+          </div>
+          <div className="checkboxfield">
+            Membership Ids:{" "}
+            <input
+              placeholder="Membership Ids"
+              value={this.state.mem_ids}
+              onChange={e => this.handleMemIds(e.target.value)}
+            />
+          </div>
+          <button onClick={this.editProblem}>Submit</button>
+        </Modal>
+
+        <Modal
+          isOpen={this.state.deleteModal}
+          onRequestClose={this.closeDeleteModal}
+          style={videoModal}
+        >
+          <button onClick={this.closeDeleteModal}>Close</button>
+          <div>Are you sure you want to delete this?</div>
+          <button onClick={this.deleteProblem}>Delete</button>
         </Modal>
       </div>
     );

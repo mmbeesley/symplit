@@ -180,7 +180,7 @@ app.get('/api/problems/:bookId', problemsController.getProblems); //Gets list of
 app.get('/api/problem/:problemId', problemsController.getOneProblem); //Gets one problem for editing on admin view
 app.post('/api/problems', problemsController.createProblem); //Req.body sends problem_title, problem_image, problem_solution, membership_required. Adds to practiceproblems table.
 app.put('/api/problems/:problemId', problemsController.updateProblem); //Update practice problems details based on problem id
-app.delete('/api/problems/:problemId', problemsController.deleteProblem); //Delete problem based on problem id
+app.delete('/api/problems/:problemId/:sectionId', problemsController.deleteProblem); //Delete problem based on problem id
 app.get('/api/completedproblems', problemsController.completedProblems); //Get array of completed problems based on user id
 app.get('/api/sectionproblems/:sectionId', problemsController.getSectionProblems) //Get problems by section
 app.get('/api/sectioncompletedproblems/:sectionId', problemsController.getSectionCompletedProblems) //Get completed problems by section
