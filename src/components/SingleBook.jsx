@@ -531,7 +531,7 @@ class SingleBook extends Component {
                   })
                 : 0;
             let completedTotal =
-              typeof completed === "object"
+              typeof completed === "object" && completed.length > 0
                 ? completed.reduce((a, b) => a + b)
                 : 0;
             let tileClass =
