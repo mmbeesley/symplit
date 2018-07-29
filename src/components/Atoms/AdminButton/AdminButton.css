@@ -1,0 +1,17 @@
+.adminbuttonblue{
+    padding: 10px;
+    background: var(--logo-dark-blue);
+    color: white;
+    border: none;
+    border-radius: 15px;
+    margin: 5px;
+}
+
+.adminbuttonwhite{
+    padding: 10px;
+    background: white;
+    color: var(--logo-dark-blue);
+    border: none;
+    border-radius: 15px;
+    margin: 5px;
+}

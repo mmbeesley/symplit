@@ -1,1167 +1,1081 @@
 :root {
-    --logo-gray: #808080;
-    --logo-light-blue: #01C3E2;
-    --logo-dark-blue: #056B89;
-    --logo-mid-blue: #26A9C6;
-    --logo-white: #ffffff;
-    --site-text: #565656;
+  --logo-gray: #808080;
+  --logo-light-blue: #01c3e2;
+  --logo-dark-blue: #056b89;
+  --logo-mid-blue: #26a9c6;
+  --logo-white: #ffffff;
+  --site-text: #565656;
 }
 
 /* header */
+
 .mainheader {
-    height: 10vh;
-    width: 100%;
-    box-shadow: 0px 0px 14px 3px var(--site-text);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-left: 15px;
-    padding-right: 15px;
-    background: var(--logo-white);
-    position: relative;
-    z-index: 2;
+  height: 10vh;
+  width: 100%;
+  box-shadow: 0px 0px 14px 3px var(--site-text);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 15px;
+  padding-right: 15px;
+  background: var(--logo-white);
+  position: relative;
+  z-index: 2;
 }
 
 .headItem {
-    width: 225px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 20px;
+  width: 225px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
 }
 
 .headItem a {
-    text-decoration: none;
-    color: var(--site-text)
+  text-decoration: none;
+  color: var(--site-text);
 }
 
 /* nav */
+
 .navcontainer {
-    background: var(--site-text);
-    max-width: 19.5vw;
-    height: 90vh;
-    display: flex;
-    position: fixed;
-    z-index: 5;
+  background: var(--site-text);
+  height: 90vh;
+  width: 90px;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  z-index: 5;
 }
 
-.naviconcontainer {
-    width: 5.85vw;
+.navcontainer a {
+  text-decoration: none;
+  color: var(--logo-white);
 }
 
 .navicon {
-    height: 5.85vw;
-    width: 5.85vw;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-right: solid;
+  border-left: solid;
+  border-color: var(--site-text);
+  border-width: 3px;
+  transition: 0.3s;
 }
 
 .navicon img {
-    width: 4vw;
-}
-
-.navlinkcontainer {
-    width: 19.5vw;
-    margin-left: -19.5vw;
-    transition: .3s;
-    display: flex;
-    flex-direction: column;
-    opacity: 0;
+  width: 100%;
 }
 
 .navlink {
-    width: 100%;
-    padding: 5px;
-    padding-left: 6vw;
-    color: white;
-    height: 75px;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    position: relative;
-    z-index: 7;
-    border-right: solid;
-    border-width: 4px;
-    border-color: var(--site-text);
-    transition: .5s;
-    font-size: 20px;
+  width: 100%;
+  margin-top: 5px;
+  text-align: center;
+  font-size: 12px;
 }
 
-.navlinkcontainer a {
-    text-decoration: none;
-}
-
-.navcontainer:hover .navlinkcontainer {
-    margin-left: -75px;
-    opacity: 1;
-}
-
-.navlink:hover {
-    border-color: var(--logo-light-blue);
-    font-weight: bold;
+.navicon:hover {
+  border-right-color: var(--logo-light-blue);
 }
 
 /* body */
+
 .belowHeader {
-    display: flex;
-    width: 100%;
+  display: flex;
+  width: 100%;
 }
 
 .rightNav {
-    width: 95%;
-    height: 90vh;
-    overflow-y: scroll;
-    z-index: 0;
-    margin-left: 75px;
+  width: 95%;
+  height: 90vh;
+  overflow-y: scroll;
+  z-index: 0;
+  margin-left: 75px;
 }
 
 .mainbody {
-    color: var(--site-text);
-    width: 100%;
-    position: relative;
-    z-index: 0;
+  color: var(--site-text);
+  width: 100%;
+  position: relative;
+  z-index: 0;
 }
 
 .mainbody h1 {
-    font-size: 30px;
-    font-weight: bold;
+  font-size: 30px;
+  font-weight: bold;
 }
 
 .mainbody h2 {
-    font-size: 25px;
-    font-weight: bold;
-    margin-top: 15px;
+  font-size: 25px;
+  font-weight: bold;
+  margin-top: 15px;
 }
 
 .mainbody p {
-    font-size: 20px;
-    margin-top: 15px;
+  font-size: 20px;
+  margin-top: 15px;
 }
 
 /* footer */
+
 .mainfooter {
-    width: 100%;
-    height: 20vh;
-    background: var(--logo-gray);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-    color: var(--logo-white);
-    padding: 25px;
+  width: 100%;
+  height: 20vh;
+  background: var(--logo-gray);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  color: var(--logo-white);
+  padding: 25px;
 }
 
 .footerlinks {
-    display: flex;
-    width: 40%;
-    justify-content: space-evenly;
+  display: flex;
+  width: 40%;
+  justify-content: space-evenly;
 }
 
 .footerlinks a {
-    color: var(--logo-white);
-    text-decoration: none;
+  color: var(--logo-white);
+  text-decoration: none;
 }
 
 .footerlinks a:hover {
-    color: lightgray;
+  color: lightgray;
 }
 
 /* home */
+
 .homebody {
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-image: url("images/home-back.png");
-    position: relative;
-    z-index: 0;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-image: url("images/home-back.png");
+  position: relative;
+  z-index: 0;
 }
 
 .homesplash {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    height: 600px;
-    padding: 125px;
-    padding-left: 200px;
-    background: rgba(0,0,0,.25);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 600px;
+  padding: 125px;
+  padding-left: 200px;
+  background: rgba(0, 0, 0, 0.25);
 }
 
 .hometitle {
-    color: var(--logo-white);
-    font-weight: bold;
-    font-size: 40px;
-    text-shadow: 2px 2px var(--logo-dark-blue);
+  color: var(--logo-white);
+  font-weight: bold;
+  font-size: 40px;
+  text-shadow: 2px 2px var(--logo-dark-blue);
 }
 
 .homesubtitle {
-    color: var(--logo-white);
-    font-size: 27px;
-    text-shadow: 2px 2px var(--logo-dark-blue);
-}
-
-.testimonialcontainer {
-    background: var(--logo-dark-blue);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-    height: 350px;
-    padding: 25px; 
-}
-
-.testimonialtitle {
-    color: white;
-    font-size: 20px;
-}
-
-.testimonialbody {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    width: 80%;
-}
-
-.testimonialcarousel {
-    background: white;
-    height: 200px;
-    width: 500px;
-    padding: 25px;
-}
-
-.testimonialtext {
-    font-size: 15px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    width: 100%;
-    height: 200px;
-}
-
-.testimonial {
-    margin-top: 20px; 
-}
-
-.testimonialauthor {
-    font-weight: bold;
-    font-size: 20px;
-}
-
-.testimonialtext h3 {
-    line-height: 20px;
+  color: var(--logo-white);
+  font-size: 27px;
+  text-shadow: 2px 2px var(--logo-dark-blue);
 }
 
 .testimonialbutton {
-    background: white;
-    color: var(--logo-dark-blue);
-    font-weight: bold;
-    padding: 15px;
-    border-radius: 25px;
-    border: none;
-    font-size: 18px;
+  background: white;
+  color: var(--logo-dark-blue);
+  font-weight: bold;
+  padding: 15px;
+  border-radius: 25px;
+  border: none;
+  font-size: 18px;
 }
 
 .homemissioncontainer {
-    height: 150px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    color: var(--site-text);
+  height: 150px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  color: var(--site-text);
 }
 
-.homemissioncontainer div{
-    font-size: 25px;
-    width: 70%;
-    text-align: center;
+.homemissioncontainer div {
+  font-size: 25px;
+  width: 70%;
+  text-align: center;
 }
 
 .homemissionaccent {
-    color: var(--logo-light-blue);
+  color: var(--logo-light-blue);
 }
 
 .howcontainer {
-    height: 350px;
-    display: flex;
-    background: var(--logo-dark-blue);
+  height: 350px;
+  display: flex;
+  background: var(--logo-dark-blue);
 }
 
 .howcontainer div {
-    width: 50%;
+  width: 50%;
 }
 
 .howimage {
-    background-image: url("images/home-mid-1.png");
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
+  background-image: url("images/home-mid-1.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .howbody {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
 }
 
-.howbody h1{
-    color: white;
+.howbody h1 {
+  color: white;
 }
 
-.howbody ul{
-    color: white;
-    width: 60%;
-    list-style-type: disc;
+.howbody ul {
+  color: white;
+  width: 60%;
+  list-style-type: disc;
 }
 
 .howbody ul li {
-    margin-top: 10px; 
+  margin-top: 10px;
 }
 
 .homebookcontainer {
-    height: 500px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
 }
 
 .homebookcontainer a {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 .homebooktitle {
-    color: var(--logo-dark-blue);
+  color: var(--logo-dark-blue);
 }
 
 .homebooksubtitle {
-    font-size: 20px;
+  font-size: 20px;
 }
 
 .homeauthorlist {
-    display: flex;
-    width: 100%;
-    flex-wrap: wrap;
-    justify-content: center;
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .homebookauthor {
-    font-size: 10px;
-    font-style: italic;
-    padding: 2px;
+  font-size: 10px;
+  font-style: italic;
+  padding: 2px;
 }
 
 .homebooks {
-    width: 70%;
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
+  width: 70%;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
 }
 
 .booktile {
-    width: 30%;
-    height: 250px;
-    transition: .2s;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-    border: solid;
-    border-width: 1px;
-    border-color: var(--logo-white);
-    border-radius: 5px;
+  width: 30%;
+  height: 250px;
+  transition: 0.2s;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  border: solid;
+  border-width: 1px;
+  border-color: var(--logo-white);
+  border-radius: 5px;
 }
 
 .booklink {
-    width: 100%;
-    height: 250px;
-    transition: .6s;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-    border: solid;
-    border-width: 1px;
-    border-color: var(--logo-white);
+  width: 100%;
+  height: 250px;
+  transition: 0.6s;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  border: solid;
+  border-width: 1px;
+  border-color: var(--logo-white);
 }
 
 .booktilebook {
-    width: 80%;
-    background-size: contain;
-    height: 60%;
-    background-repeat: no-repeat;
-    background-position: center;
+  width: 80%;
+  background-size: contain;
+  height: 60%;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .booktile:hover {
-    box-shadow: 0px 0px 10px 2px silver;
+  box-shadow: 0px 0px 10px 2px silver;
 }
 
 .booktilesubtitle {
-    font-size: 13px;
-    font-style: italic;
+  font-size: 13px;
+  font-style: italic;
 }
 
 .homebooks a {
-    text-decoration: none;
-    color: var(--site-text);
-}
-
-.homebooksbutton {
-    padding: 15px;
-    background: var(--logo-dark-blue);
-    color: white;
-    border: none;
-    border-radius: 25px;
-    font-weight: bold;
-    font-size: 18px;
+  text-decoration: none;
+  color: var(--site-text);
 }
 
 .homesplash a {
-    text-decoration: none;
-}
-
-.splashbutton {
-    padding: 15px;
-    max-width: 150px;
-    text-align: center;
+  text-decoration: none;
 }
 
 /* books */
 
 .booksbody {
-    min-height: 85vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 15px;
+  min-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 15px;
 }
 
 .booklist {
-    margin-top: 25px;
+  margin-top: 25px;
 }
 
 .booksearch {
-    display: flex;
-    width: 40%;
-    justify-content: space-around;
+  display: flex;
+  width: 40%;
+  justify-content: space-around;
 }
 
 .searchbar {
-    padding: 10px;
-    font-size: 20px;
-    border-radius: 3px;
+  padding: 10px;
+  font-size: 20px;
+  border-radius: 3px;
 }
 
 .searchbutton {
-    background: var(--logo-dark-blue);
-    border: none;
-    color: white;
-    padding: 10px;
-    font-size: 20px;
-    cursor: pointer;
-    border-radius: 3px;
+  background: var(--logo-dark-blue);
+  border: none;
+  color: white;
+  padding: 10px;
+  font-size: 20px;
+  cursor: pointer;
+  border-radius: 3px;
 }
 
 .bookrequest {
-    margin-top: 25px;
+  margin-top: 25px;
 }
 
 .supportlink {
-    text-decoration: none;
-    color: var(--site-text);
-    font-weight: bold;
-    transition: .2s;
+  text-decoration: none;
+  color: var(--site-text);
+  font-weight: bold;
+  transition: 0.2s;
 }
 
 .supportlink:hover {
-    color: var(--logo-light-blue);
+  color: var(--logo-light-blue);
 }
 
 .breadcrumbcontainer {
-    width: 100%;
-    height: 20px;
+  width: 100%;
+  height: 20px;
 }
 
 .breadcrumb {
-    background: var(--logo-dark-blue);
-    padding: 5px;
-    color: white;
-    border: none;
-    border-radius: 2px;
-    cursor: pointer;
+  background: var(--logo-dark-blue);
+  padding: 5px;
+  color: white;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
 }
 
 /* single book */
 
 .singlebookbody {
-    min-height: 65vh;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
+  min-height: 65vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .booknavcontainer {
-    width: 175px;
-    border-left: solid;
-    border-width: 1px;
-    border-color: white;
-    height: 90vh;
-    background: var(--logo-dark-blue);
-    overflow-y: scroll;
-    color: white;
-    padding: 5px;
-    position:fixed;
+  width: 175px;
+  border-left: solid;
+  border-width: 1px;
+  border-color: white;
+  height: 90vh;
+  background: var(--logo-dark-blue);
+  overflow-y: scroll;
+  color: white;
+  padding: 5px;
+  position: fixed;
 }
 
 .booknavcontainer a {
-    text-decoration: none;
-    color: white;
+  text-decoration: none;
+  color: white;
 }
 
 .singlebookcontent {
-    min-height: 65vh;
-    display: flex;
-    justify-content: center;
-    /* border-top: solid;
+  min-height: 65vh;
+  display: flex;
+  justify-content: center;
+  /* border-top: solid;
     border-width: 2px;
     border-color: var(--site-text); */
-    width: 100%;
-    background: whitesmoke;
-    padding: 20px;
-    box-shadow: inset 0px 0px 10px 2px silver;
+  width: 100%;
+  background: whitesmoke;
+  padding: 20px;
+  box-shadow: inset 0px 0px 10px 2px silver;
 }
 
 .bookoverview {
-    padding: 25px;
-    display: flex;
-    width: 60%;
-    justify-content: space-between;
+  padding: 25px;
+  display: flex;
+  width: 60%;
+  justify-content: space-between;
 }
 
 .chapterlist {
-    width: 45%;
-    border-radius: 5px;
-    box-shadow: 0px 0px 10px 1px silver;
-    background: white;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  width: 45%;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px 1px silver;
+  background: white;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .chapterlist a {
-    text-decoration: none;
-    color: var(--site-text);
-
+  text-decoration: none;
+  color: var(--site-text);
 }
 
 .chaptergrid {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  width: 100%;
 }
 
 .practicelist {
-    width: 45%;
-    border-radius: 5px;
-    box-shadow: 0px 0px 10px 1px silver;
-    background: white;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    margin-left: 20px;
-    align-items: center;
+  width: 45%;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px 1px silver;
+  background: white;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
+  align-items: center;
 }
 
 .practicegrid {
-    display: flex;
-    flex-wrap: wrap;
-    width: 90%;
+  display: flex;
+  flex-wrap: wrap;
+  width: 90%;
 }
 
 .practicetile {
-    width: 100px;
-    height: 100px;
-    background: var(--logo-dark-blue);
-    margin-left: 10px;
-    margin-top: 10px;
-    border-radius: 5px;
-    padding: 10px;
-    transition: .2s;
+  width: 100px;
+  height: 100px;
+  background: var(--logo-dark-blue);
+  margin-left: 10px;
+  margin-top: 10px;
+  border-radius: 5px;
+  padding: 10px;
+  transition: 0.2s;
 }
 
 .practicedone {
-    width: 100px;
-    height: 100px;
-    background: darkgreen;
-    margin-left: 10px;
-    margin-top: 10px;
-    border-radius: 5px;
-    padding: 10px;
-    transition: .2s;
+  width: 100px;
+  height: 100px;
+  background: darkgreen;
+  margin-left: 10px;
+  margin-top: 10px;
+  border-radius: 5px;
+  padding: 10px;
+  transition: 0.2s;
 }
 
 .practicedone a {
-    color: white;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    height: 100%;
-    width: 100%;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  width: 100%;
 }
 
 .practicetile a {
-    color: white;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    height: 100%;
-    width: 100%;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  width: 100%;
 }
 
 .practicetilecomplete {
-    font-size: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+  font-size: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 .practicetilecompletenumber {
-    font-size: 15px;
+  font-size: 15px;
 }
 
 .practicetilehead {
-    font-size: 40px;
+  font-size: 40px;
 }
 
 .practicetile:hover {
-    background: var(--logo-light-blue);
+  background: var(--logo-light-blue);
 }
 
 .practicedone:hover {
-    background: green;
+  background: green;
 }
 
 .chaptercontainer {
-    width: 100%;
+  width: 100%;
 }
 
 .chaptertile {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    border-bottom: solid;
-    border-width: 1px;
-    margin-top: 10px;
-    height: 40px;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  border-bottom: solid;
+  border-width: 1px;
+  margin-top: 10px;
+  height: 40px;
+  align-items: center;
 }
 
 .chaptertile:hover div {
-    color: var(--logo-light-blue);
+  color: var(--logo-light-blue);
 }
 
 .chapternumber {
-    font-size: 15px;
-    transition: .2s;
-    width: 30%;
-    text-align: center;
+  font-size: 15px;
+  transition: 0.2s;
+  width: 30%;
+  text-align: center;
 }
 
-.chaptertitle{
-    font-size: 15px;
-    margin-top: 0px;
-    width: 70%;
-    transition: .2s;
-    text-align: center;
-    color: var(--logo-dark-blue);
+.chaptertitle {
+  font-size: 15px;
+  margin-top: 0px;
+  width: 70%;
+  transition: 0.2s;
+  text-align: center;
+  color: var(--logo-dark-blue);
 }
 
 .singlebookimage {
-    max-width: 300px;
+  max-width: 300px;
 }
 
 .booksummary {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
 }
 
 .sectiontitle {
-    font-size: 13px;
-    cursor: pointer;
-    margin-top: 10px;
-    text-align: center;
+  font-size: 13px;
+  cursor: pointer;
+  margin-top: 10px;
+  text-align: center;
 }
 
 .videolist {
-    list-style: disc;
-    font-size: 11px;
-    padding-left: 3px;
-    border-top: solid;
-    border-bottom: solid;
-    border-width: 1px;
-    border-color: white;
-    margin-top: 10px;
+  list-style: disc;
+  font-size: 11px;
+  padding-left: 3px;
+  border-top: solid;
+  border-bottom: solid;
+  border-width: 1px;
+  border-color: white;
+  margin-top: 10px;
 }
 
 .videolist a {
-    text-decoration: none;
-    color: white;
+  text-decoration: none;
+  color: white;
 }
 
 .videolistitem {
-    text-transform: capitalize;
-    margin-top: 7px;
-    margin-bottom: 7px;
-    cursor: pointer;
-    list-style-type: disc;
+  text-transform: capitalize;
+  margin-top: 7px;
+  margin-bottom: 7px;
+  cursor: pointer;
+  list-style-type: disc;
 }
 
 .videolistitem:hover {
-    color: lightgray;
+  color: lightgray;
 }
 
 .sectiontitle:hover {
-    color: lightgray;
+  color: lightgray;
 }
 
 .singlechapterbody {
-    display: flex;
+  display: flex;
 }
 
 .singlechaptercontent {
-    width: 79vw;
-    margin-left: 175px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  width: 79vw;
+  margin-left: 175px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .sectionbodycontainer {
-    padding: 25px;
+  padding: 25px;
 }
 
 .bookcrumb {
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 15px;
-    margin-top: 10px;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 15px;
+  margin-top: 10px;
 }
 
 .bookcrumbimg {
-    height: 50px;
+  height: 50px;
 }
 
 .bookcrumb div {
-    margin-left: 10px;
+  margin-left: 10px;
 }
 
 .bookcrumb:hover {
-    color: lightgray;
+  color: lightgray;
 }
 
 .navchaptertitle {
-    font-size: 14px;
-    text-align: center;
-    margin-top: 10px; 
-    border-bottom: solid;
-    border-width: 2px;
-    border-color: white;
-    padding: 5px;
-    border-top: solid;  
+  font-size: 14px;
+  text-align: center;
+  margin-top: 10px;
+  border-bottom: solid;
+  border-width: 2px;
+  border-color: white;
+  padding: 5px;
+  border-top: solid;
 }
 
 .videotile {
-    padding: 25px;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    height: 525px;
-    justify-content: space-around
+  padding: 25px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  height: 525px;
+  justify-content: space-around;
 }
 
 .bodysectiontitle {
-    font-size: 30px;
-    text-align: center;
-    padding: 25px;
+  font-size: 30px;
+  text-align: center;
+  padding: 25px;
 }
 
 .reactplayer {
-    width: 50%;
+  width: 50%;
 }
 
 .videotitle {
-    margin-left: 10px;
+  margin-left: 10px;
 }
 
 .videobody {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .videodesc {
-    width: 50%;
-    padding: 25px;
+  width: 50%;
+  padding: 25px;
 }
 
 .sectionbodycontainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .membershipbody {
-    padding: 35px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  padding: 35px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .membershipcontainer {
-    display: flex;
-    width: 100%;
-    justify-content: space-evenly;
-    margin-top: 25px;
-    background: url('./images/chapter-back-1024x419.png');
-    height: 400px;
-    align-items: center;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+  margin-top: 25px;
+  background: url("./images/chapter-back-1024x419.png");
+  height: 400px;
+  align-items: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .membershiptile {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 300px;
-    border: solid;
-    border-width: 2px;
-    border-color: var(--logo-dark-blue);
-    width: 200px;
-    align-items: center;
-    padding: 20px;
-    background: var(--logo-white);
-    border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 300px;
+  border: solid;
+  border-width: 2px;
+  border-color: var(--logo-dark-blue);
+  width: 200px;
+  align-items: center;
+  padding: 20px;
+  background: var(--logo-white);
+  border-radius: 4px;
 }
 
 .membershipdesc {
-    font-size: 15px;
-    text-align: center;
+  font-size: 15px;
+  text-align: center;
 }
 
 .membershipdetails {
-    height: 33%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
+  height: 33%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .membershipperiod {
-    font-size: 14px;
-    color: var(--logo-light-blue);
-    font-style: italic;
+  font-size: 14px;
+  color: var(--logo-light-blue);
+  font-style: italic;
 }
 
 .allmembershipsinclude {
-    display: flex;
-    flex-direction: column;
-    height: 200px;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 25px;
+  display: flex;
+  flex-direction: column;
+  height: 200px;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 25px;
 }
 
 .includelist {
-    height: 150px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    list-style: disc;
-    width: 60%;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  list-style: disc;
+  width: 60%;
 }
 
 .closebuttoncontainer {
-    display: flex;
-    justify-content: flex-end;
-    width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
 }
 
 .closebutton {
-    background: var(--logo-white);
-    border: none;
-    color: var(--logo-dark-blue);
-    font-size: 20px;
+  background: var(--logo-white);
+  border: none;
+  color: var(--logo-dark-blue);
+  font-size: 20px;
 }
 
 .paymentoptions {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-    height: 60%;
-    margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  height: 60%;
+  margin-top: 20px;
 }
 
 .membershipbutton {
-    background: var(--logo-dark-blue);
-    border: none;
-    border-radius: 25px;
-    padding: 8px;
-    color: white;
-    font-size: 18px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  background: var(--logo-dark-blue);
+  border: none;
+  border-radius: 25px;
+  padding: 8px;
+  color: white;
+  font-size: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .selectfield {
-    display: flex;
-    justify-content: space-evenly;
-    width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
 }
 
 .selectfield div {
-    width: 24%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  width: 24%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .accountmain {
-    padding: 25px;
-    display: flex;
-    flex-wrap: wrap;
-    min-height: 500px;
-    background: whitesmoke;
+  padding: 25px;
+  display: flex;
+  flex-wrap: wrap;
+  min-height: 500px;
+  background: whitesmoke;
 }
 
 .accountleft {
-    width: 40%;
+  width: 40%;
 }
 
 .accountright {
-    margin-left: 20px;
-    width: 55%;
+  margin-left: 20px;
+  width: 55%;
 }
 
 .accountleft > div {
-    width: 100%;
-    height: 250px;
-    border-radius: 5px;
-    box-shadow: 0px 0px 10px 1px silver;
-    background: white;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
+  width: 100%;
+  height: 250px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px 1px silver;
+  background: white;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
 }
 
 .accountright > div {
-    width: 100%;
-    height: 520px;
-    border-radius: 5px;
-    box-shadow: 0px 0px 10px 1px silver;
-    background: white;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
+  width: 100%;
+  height: 520px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px 1px silver;
+  background: white;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .accountmain div > h2 {
-    margin-top: 0px;
+  margin-top: 0px;
 }
 
 .accountmembership {
-    justify-content: space-between;
+  justify-content: space-between;
 }
 
 .accountmembership > div {
-    height: 150px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
 }
 
 .accountlinks {
-   margin-top: 20px;
-   justify-content: flex-start;
+  margin-top: 20px;
+  justify-content: flex-start;
 }
 
 .accountlinks a {
-    color: var(--logo-dark-blue);
-    transition: .2s;
+  color: var(--logo-dark-blue);
+  transition: 0.2s;
 }
 
 .accountlinks div {
-    margin-top: 5px;
+  margin-top: 5px;
 }
 
 .accountlinks a:hover {
-    color: var(--logo-light-blue);
+  color: var(--logo-light-blue);
 }
 
 .homebooksbutton a {
-    color: white;
+  color: white;
 }
 
 .savedbooksmsg {
-    height: 150px;
+  height: 150px;
 }
 
 .savedbooksmsg a {
-    color: var(--logo-light-blue);
-    transition: .2s;
+  color: var(--logo-light-blue);
+  transition: 0.2s;
 }
 
 .savedbooksmsg a:hover {
-    color: var(--logo-dark-blue);
+  color: var(--logo-dark-blue);
 }
 
 .savedbookscontainer {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    align-items: center;
-    height: 460px;
-    overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  height: 460px;
+  overflow-y: auto;
 }
 
 .savedbooktile {
-    display: flex;
-    width: 90%;
-    min-height: 100px;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 10px;
+  display: flex;
+  width: 90%;
+  min-height: 100px;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 10px;
 }
 
 .savedbookimg {
-    width: 20%;
-    height: 100px;
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
+  width: 20%;
+  height: 100px;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .savedbooktitles {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    height: 100%;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  align-items: center;
 }
 
 .savedbookbuttonscontainer {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 80px;
 }
 
 .savedbookbutton {
-    background: var(--logo-dark-blue);
-    border: none;
-    padding: 10px;
-    text-align: center;
-    color: white;
-    border-radius: 25px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  background: var(--logo-dark-blue);
+  border: none;
+  padding: 10px;
+  text-align: center;
+  color: white;
+  border-radius: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .savedbookbutton a {
-    color: white;
-    width: 100%;
-    height: 100%;
+  color: white;
+  width: 100%;
+  height: 100%;
 }
 
 .practicecontent {
-    min-height: 500px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    padding: 25px;
-    background: whitesmoke;
+  min-height: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 25px;
+  background: whitesmoke;
 }
 
 .problemcompleted {
-    height: 150px;
-    display: flex;
-    flex-direction: column;
-    width: 80%;
-    box-shadow: 0px 0px 10px 1px green;
-    background: white;
-    border-radius: 5px;
-    margin-top: 20px;
-    padding: 10px;
-    justify-content: space-between;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  box-shadow: 0px 0px 10px 1px green;
+  background: white;
+  border-radius: 5px;
+  margin-top: 20px;
+  padding: 10px;
+  justify-content: space-between;
 }
 
 .problemtile {
-    height: 150px;
-    display: flex;
-    flex-direction: column;
-    width: 80%;
-    box-shadow: 0px 0px 10px 1px silver;
-    background: white;
-    border-radius: 5px;
-    margin-top: 20px;
-    padding: 10px;
-    justify-content: space-between;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  box-shadow: 0px 0px 10px 1px silver;
+  background: white;
+  border-radius: 5px;
+  margin-top: 20px;
+  padding: 10px;
+  justify-content: space-between;
 }
 
 .problemcompleted img {
-    width: 100%;
+  width: 100%;
 }
 
 .problemtile img {
-    width: 100%;
+  width: 100%;
 }
 
 .practicebuttoncontainer {
-    display: flex;
-    justify-content: flex-end;
-    width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
 }
 
 .practicebuttoncontainer button {
-    padding: 5px;
-    border: none;
-    background: var(--logo-dark-blue);
-    color: white;
-    border-radius: 5px;
-    transition: .2s;
+  padding: 5px;
+  border: none;
+  background: var(--logo-dark-blue);
+  color: white;
+  border-radius: 5px;
+  transition: 0.2s;
 }
 
 .practicebuttoncontainer button:hover {
-    background: var(--logo-light-blue);
+  background: var(--logo-light-blue);
 }
 
 .completebutton {
-    margin-left: 10px;
+  margin-left: 10px;
 }
 
 .problemplayer {
-    width: 80%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }

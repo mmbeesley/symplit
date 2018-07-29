@@ -1,0 +1,36 @@
+.getstartedbuttonblue {
+    background: var(--logo-dark-blue);
+    color: white;
+}
+
+.getstartedbuttonwhite {
+    background: white;
+    color: var(--logo-dark-blue);
+}
+
+.getstartedbuttonblue,
+.getstartedbuttonwhite {
+    padding: 15px;
+    border: none;
+    border-radius: 25px;
+    font-weight: bold;
+    font-size: 18px;
+    max-width: 150px;
+    text-align: center;
+    transition: 0.2s
+}
+
+.getstartedbuttonblue:hover,
+.getstartedbuttonwhite:hover {
+    box-shadow: 0px 0px 10px 2px var(--site-text);
+}
+
+.getstartedbuttonblue:active{
+    background: white;
+    color: var(--logo-dark-blue);
+}
+
+.getstartedbuttonwhite:active{
+    background: var(--logo-dark-blue);
+    color: white;
+}

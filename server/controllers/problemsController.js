@@ -2,31 +2,8 @@ module.exports = {
   getProblems: (req, res) => {
     const db = req.app.get("db");
     const { bookId } = req.params;
-    db.get_booksections([bookId]).then(async sections => {
-      var results = [];
-      for (var i = 0, obj = {}; i < sections.length; i++) {
-        if (sections[i].section_id && sections[i].section_id != obj.sectionId) {
-          obj = {
-            sectionId: sections[i].section_id,
-            sectionNumber: sections[i].section_number,
-            sectionTitle: sections[i].section_title,
-            memRequired: sections[i].membership_required_section,
-            memIds: sections[i].membership_ids_sections,
-            chapter: sections[i].book_chapter,
-            practiceProblems: []
-          };
-          results.push(obj);
-        }
-        if (sections[i].practice_problems_ids) {
-          let ids = sections[i].practice_problems_ids;
-          for (let x = 0; x < ids.length; x++) {
-            await db.get_problem([ids[x]]).then(problem => {
-              obj.practiceProblems.push(problem[0]);
-            });
-          }
-        }
-      }
-      res.status(200).send(results);
+    db.get_allproblems([bookId]).then(problems => {
+      res.status(200).send(problems);
     });
   },
 
@@ -82,27 +59,25 @@ module.exports = {
         section_id
       } = req.body;
 
-      db
-        .create_problem([
-          problem_title,
-          problem_image,
-          problem_solution,
-          membership_required,
-          membership_ids
-        ])
-        .then(newProblem => {
-          db.get_oneSection([section_id]).then(async section => {
-            let problemArray = [];
-            let loopArray = section[0].practice_problems_ids;
-            for (let i = 0; i < loopArray.length; i++) {
-              let problem_id = loopArray[i];
-              await db.get_sectionProblems([problem_id]).then(problem => {
-                problemArray.push(problem[0]);
-              });
-            }
-            res.status(200).send(problemArray);
-          });
+      db.create_problem([
+        problem_title,
+        problem_image,
+        problem_solution,
+        membership_required,
+        membership_ids
+      ]).then(newProblem => {
+        db.get_oneSection([section_id]).then(async section => {
+          let problemArray = [];
+          let loopArray = section[0].practice_problems_ids;
+          for (let i = 0; i < loopArray.length; i++) {
+            let problem_id = loopArray[i];
+            await db.get_sectionProblems([problem_id]).then(problem => {
+              problemArray.push(problem[0]);
+            });
+          }
+          res.status(200).send(problemArray);
         });
+      });
     } else {
       res.status(403).send("No admin");
     }
@@ -121,28 +96,26 @@ module.exports = {
       } = req.body;
       const { problemId } = req.params;
 
-      db
-        .update_problem([
-          problemId,
-          problem_title,
-          problem_image,
-          problem_solution,
-          membership_required,
-          membership_ids
-        ])
-        .then(updated => {
-          db.get_oneSection([section_id]).then(async section => {
-            let problemArray = [];
-            let loopArray = section[0].practice_problems_ids;
-            for (let i = 0; i < loopArray.length; i++) {
-              let problem_id = loopArray[i];
-              await db.get_sectionProblems([problem_id]).then(problem => {
-                problemArray.push(problem[0]);
-              });
-            }
-            res.status(200).send(problemArray);
-          });
+      db.update_problem([
+        problemId,
+        problem_title,
+        problem_image,
+        problem_solution,
+        membership_required,
+        membership_ids
+      ]).then(updated => {
+        db.get_oneSection([section_id]).then(async section => {
+          let problemArray = [];
+          let loopArray = section[0].practice_problems_ids;
+          for (let i = 0; i < loopArray.length; i++) {
+            let problem_id = loopArray[i];
+            await db.get_sectionProblems([problem_id]).then(problem => {
+              problemArray.push(problem[0]);
+            });
+          }
+          res.status(200).send(problemArray);
         });
+      });
     } else {
       res.status(403).send("No admin");
     }

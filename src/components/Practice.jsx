@@ -14,7 +14,7 @@ const videoStyle = {
   borderRadius: "2px"
 };
 
-const videoModal = {
+const videoModalStyle = {
   content: {
     width: "60%",
     height: "450px",
@@ -66,15 +66,16 @@ class Practice extends Component {
   }
 
   componentDidMount() {
-    this.props.getPath(this.props.location.pathname);
-    this.props.getUserInfo();
+    const { location, match, getPath, getUserInfo } = this.props;
+    getPath(location.pathname);
+    getUserInfo();
     let practiceProblems = axios.get(
-      "/api/sectionproblems/" + this.props.match.params.section
+      "/api/sectionproblems/" + match.params.section
     );
     let completedProblems = axios.get(
-      "/api/sectioncompletedproblems/" + this.props.match.params.section
+      "/api/sectioncompletedproblems/" + match.params.section
     );
-    // let section = 
+    // let section =
     axios.all([practiceProblems, completedProblems]).then(res => {
       this.setState({
         practiceProblems: res[0].data,
@@ -99,10 +100,11 @@ class Practice extends Component {
   }
 
   completeProblem(e) {
+    const { match } = this.props;
     axios
       .post("/api/completeproblem", {
         problemId: e,
-        sectionId: this.props.match.params.section
+        sectionId: match.params.section
       })
       .then(res => {
         this.setState({
@@ -112,10 +114,9 @@ class Practice extends Component {
   }
 
   undoCompleteProblem(e) {
+    const { match } = this.props;
     axios
-      .delete(
-        "/api/uncompleteproblem/" + e + "/" + this.props.match.params.section
-      )
+      .delete("/api/uncompleteproblem/" + e + "/" + match.params.section)
       .then(res => {
         this.setState({
           completedProblems: res.data
@@ -238,15 +239,13 @@ class Practice extends Component {
   deleteProblem() {
     const { deleting } = this.state;
     const { section } = this.props.match.params;
-    axios
-      .delete("/api/problems/" + this.state.deleting + "/" + section)
-      .then(res => {
-        this.setState({
-          practiceProblems: res.data,
-          deleting: null,
-          deleteModal: false
-        });
+    axios.delete("/api/problems/" + deleting + "/" + section).then(res => {
+      this.setState({
+        practiceProblems: res.data,
+        deleting: null,
+        deleteModal: false
       });
+    });
   }
 
   handleTitle(e) {
@@ -281,37 +280,50 @@ class Practice extends Component {
 
   openSelectModal() {
     this.setState({
-        selectModal: true
-    })
+      selectModal: true
+    });
   }
 
-  handleSelect(e) {
-
-  }
+  handleSelect(e) {}
 
   closeSelectModal() {
     this.setState({
-        selectModal: false
-    })
+      selectModal: false
+    });
   }
 
   render() {
+    const { match } = this.props;
+    const {
+      practiceProblems,
+      editModal,
+      deleteModal,
+      completedProblems,
+      addModal,
+      videoModal,
+      videoUrl,
+      title,
+      image,
+      mem_ids,
+      mem_required,
+      solution
+    } = this.state;
     let pageTitle =
       "Section " +
-      this.props.match.params.chapter +
+      match.params.chapter +
       "." +
-      this.props.match.params.section +
+      match.params.section +
       " Practice";
     let problemsMap =
-      this.state.practiceProblems.length > 0
-        ? this.state.practiceProblems.map((e, i) => {
+      practiceProblems.length > 0
+        ? practiceProblems.map((e, i) => {
             let image =
               "http://res.cloudinary.com/symplit/image/upload/" +
               e.problem_image;
             let completed =
-              typeof this.state.completedProblems === "object" &&
-              this.state.completedProblems.length > 0
-                ? this.state.completedProblems.map((x, y) => {
+              typeof completedProblems === "object" &&
+              completedProblems.length > 0
+                ? completedProblems.map((x, y) => {
                     return x.problem_id;
                   })
                 : null;
@@ -359,9 +371,9 @@ class Practice extends Component {
         </div>
         <Footer />
         <Modal
-          isOpen={this.state.videoModal}
+          isOpen={videoModal}
           onRequestClose={this.closeVideoModal}
-          style={videoModal}
+          style={videoModalStyle}
         >
           <div className="closebuttoncontainer">
             <button onClick={this.closeVideoModal} className="closebutton">
@@ -369,21 +381,21 @@ class Practice extends Component {
             </button>
           </div>
           <div className="problemplayer">
-            <ReactPlayer url={this.state.videoUrl} style={videoStyle} />
+            <ReactPlayer url={videoUrl} style={videoStyle} />
           </div>
         </Modal>
 
         <Modal
-          isOpen={this.state.addModal}
+          isOpen={addModal}
           onRequestClose={this.closeAddProblemModal}
-          style={videoModal}
+          style={videoModalStyle}
         >
           <button onClick={this.closeAddProblemModal}>Close</button>
           <div className="checkboxfield">
             Problem Title:{" "}
             <input
               placeholder="Problem Title"
-              value={this.state.title}
+              value={title}
               onChange={e => this.handleTitle(e.target.value)}
             />
           </div>
@@ -391,7 +403,7 @@ class Practice extends Component {
             Problem Image:{" "}
             <input
               placeholder="Problem Image"
-              value={this.state.image}
+              value={image}
               onChange={e => this.handleImage(e.target.value)}
             />
           </div>
@@ -399,14 +411,14 @@ class Practice extends Component {
             Problem Solution:{" "}
             <input
               placeholder="Problem Solution"
-              value={this.state.solution}
+              value={solution}
               onChange={e => this.handleSolution(e.target.value)}
             />
           </div>
           <div className="checkboxfield">
             Membership Required?{" "}
             <input
-              value={this.state.mem_required}
+              value={mem_required}
               onChange={e => this.handleMemRequired(e.target.checked)}
               type="checkbox"
             />
@@ -415,7 +427,7 @@ class Practice extends Component {
             Membership Ids:{" "}
             <input
               placeholder="Membership Ids"
-              value={this.state.mem_ids}
+              value={mem_ids}
               onChange={e => this.handleMemIds(e.target.value)}
             />
           </div>
@@ -423,16 +435,16 @@ class Practice extends Component {
         </Modal>
 
         <Modal
-          isOpen={this.state.editModal}
+          isOpen={editModal}
           onRequestClose={this.closeEditModal}
-          style={videoModal}
+          style={videoModalStyle}
         >
           <button onClick={this.closeEditModal}>Close</button>
           <div className="checkboxfield">
             Problem Title:{" "}
             <input
               placeholder="Problem Title"
-              value={this.state.title}
+              value={title}
               onChange={e => this.handleTitle(e.target.value)}
             />
           </div>
@@ -440,7 +452,7 @@ class Practice extends Component {
             Problem Image:{" "}
             <input
               placeholder="Problem Image"
-              value={this.state.image}
+              value={image}
               onChange={e => this.handleImage(e.target.value)}
             />
           </div>
@@ -448,14 +460,14 @@ class Practice extends Component {
             Problem Solution:{" "}
             <input
               placeholder="Problem Solution"
-              value={this.state.solution}
+              value={solution}
               onChange={e => this.handleSolution(e.target.value)}
             />
           </div>
           <div className="checkboxfield">
             Membership Required?{" "}
             <input
-              value={this.state.mem_required}
+              value={mem_required}
               onChange={e => this.handleMemRequired(e.target.checked)}
               type="checkbox"
             />
@@ -464,7 +476,7 @@ class Practice extends Component {
             Membership Ids:{" "}
             <input
               placeholder="Membership Ids"
-              value={this.state.mem_ids}
+              value={mem_ids}
               onChange={e => this.handleMemIds(e.target.value)}
             />
           </div>
@@ -472,7 +484,7 @@ class Practice extends Component {
         </Modal>
 
         <Modal
-          isOpen={this.state.deleteModal}
+          isOpen={deleteModal}
           onRequestClose={this.closeDeleteModal}
           style={videoModal}
         >
@@ -491,4 +503,7 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { getUserInfo, getPath })(Practice);
+export default connect(
+  mapStateToProps,
+  { getUserInfo, getPath }
+)(Practice);

@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import './App.css';
-import './reset.css';
-import routes from './routes';
-import Header from './components/Header';
-import NavBar from './components/NavBar';
+import React, { Component } from "react";
+import "./App.css";
+import "./reset.css";
+import routes from "./routes";
+import Header from "./components/Header";
+import NavBar from "./components/Molecules/NavBar/NavBar";
 import "../node_modules/video-react/dist/video-react.css";
 
 class App extends Component {
@@ -14,9 +14,7 @@ class App extends Component {
         <div className="belowHeader">
           <NavBar />
           <div className="rightNav">
-            <div className='mainbody'>
-              {routes}
-            </div>
+            <div className="mainbody">{routes}</div>
           </div>
         </div>
       </div>

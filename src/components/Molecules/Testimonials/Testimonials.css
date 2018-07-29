@@ -1,0 +1,28 @@
+.testimonialcontainer {
+  background: var(--logo-dark-blue);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  height: 350px;
+  padding: 25px;
+}
+
+.testimonialtitle {
+  color: white;
+  font-size: 30px;
+}
+
+.testimonialbody {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+}
+
+.testimonialcarousel {
+  background: white;
+  height: 200px;
+  width: 500px;
+  padding: 25px;
+}
