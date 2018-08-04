@@ -34,6 +34,7 @@ module.exports = {
       for (var i = 0, obj = {}; i < sections.length; i++) {
         if (sections[i].section_title != obj.sectionTitle) {
           obj = {
+            sectionId: sections[i].section_id,
             sectionNumber: sections[i].section_number,
             sectionTitle: sections[i].section_title,
             sectionText: sections[i].section_text,

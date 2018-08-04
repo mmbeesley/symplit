@@ -10,7 +10,7 @@ import Home from "./components/Organisms/Home/Home";
 // import FAQ from "./components/About/FAQ";
 import Books from "./components/Organisms/Books/Books";
 import SingleBook from "./components/Organisms/SingleBook/SingleBook";
-// import SingleChapter from "./components/SingleChapter";
+import SingleChapter from "./components/Organisms/SingleChapter/SingleChapter";
 // import Account from "./components/Account";
 import Practice from "./components/Organisms/Practice/Practice";
 // import Membership from "./components/Membership";
@@ -25,12 +25,12 @@ export default (
     <Route path="/about/FAQ" component={FAQ} /> */}
     <Route path="/books" component={Books} />
     <Route exact distinct path="/book/:book/" component={SingleBook} />
-    {/* <Route
+    <Route
       exact
       distinct
       path="/book/:book/:chapter/"
       component={SingleChapter}
-    /> */}
+    />
     <Route
       exact
       distinct

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./App.css";
 import "./reset.css";
 import routes from "./routes";
-import Header from "./components/Header";
+import Header from "./components/Molecules/Header/Header";
 import NavBar from "./components/Molecules/NavBar/NavBar";
 import "../node_modules/video-react/dist/video-react.css";
 

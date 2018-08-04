@@ -13,6 +13,11 @@ import problemReducer from "./problemReducer";
 import problemsReducer from "./problemsReducer";
 import completedProblemsReducer from "./completedProblemsReducer";
 import bookSectionsReducer from "./bookSectionsReducer";
+import sectionReducer from "./sectionReducer";
+import sectionsReducer from "./sectionsReducer";
+import sectionVideoReducer from "./sectionVideoReducer";
+import videoReducer from "./videoReducer";
+import videosReducer from "./videosReducer";
 
 const appReducer = combineReducers({
   app: reducer,
@@ -27,7 +32,12 @@ const appReducer = combineReducers({
   problem: problemReducer,
   problems: problemsReducer,
   completedProblems: completedProblemsReducer,
-  bookSections: bookSectionsReducer
+  bookSections: bookSectionsReducer,
+  section: sectionReducer,
+  sections: sectionsReducer,
+  sectionVideo: sectionVideoReducer,
+  videos: videosReducer,
+  video: videoReducer
 });
 
 export default appReducer;
@@ -44,3 +54,8 @@ export * from "./problemReducer";
 export * from "./problemsReducer";
 export * from "./completedProblemsReducer";
 export * from "./bookSectionsReducer";
+export * from "./sectionReducer";
+export * from "./sectionsReducer";
+export * from "./sectionVideoReducer";
+export * from "./videosReducer";
+export * from "./videoReducer";

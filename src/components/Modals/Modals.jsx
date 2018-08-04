@@ -23,7 +23,9 @@ export default function Modals(props) {
   const { closeModal, children, active } = props;
   return (
     <Modal isOpen={active} onRequestClose={closeModal} style={styles}>
-      <CloseModalButton closeModal={closeModal} />
+      <div className="closebuttoncontainer">
+        <CloseModalButton closeModal={closeModal} />
+      </div>
       {children}
     </Modal>
   );

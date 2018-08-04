@@ -819,6 +819,15 @@
   border: none;
   color: var(--logo-dark-blue);
   font-size: 20px;
+  border-radius: 50%;
+  transition: 0.3s;
+  border: solid;
+  border-width: 1px;
+  border-color: var(--logo-white);
+}
+
+.closebutton:hover {
+  border-color: var(--site-text);
 }
 
 .paymentoptions {

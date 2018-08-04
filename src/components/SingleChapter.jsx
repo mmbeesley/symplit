@@ -713,38 +713,6 @@ class SingleChapter extends Component {
   }
 
   render() {
-    let adminAddSection = !this.props.user.is_admin ? null : (
-      <button
-        className="adminbutton"
-        onClick={() => this.openAddSectionModal()}
-      >
-        Add Section
-      </button>
-    );
-    let book =
-      this.state.book.length > 0 ? (
-        <div>
-          <Link
-            to={`/book/${this.state.book[0].book_id}`}
-            className="bookcrumb"
-          >
-            <img
-              src={`http://res.cloudinary.com/symplit/image/upload/${
-                this.state.book[0].book_image
-              }`}
-              alt="Back to Book"
-              className="bookcrumbimg"
-            />
-            <div>{this.state.book[0].book_title}</div>
-          </Link>
-          <div className="navchaptertitle">
-            {this.state.chapter[0].book_chapter}.{" "}
-            {this.state.chapter[0].chapter_title}
-          </div>
-          {adminAddSection}
-        </div>
-      ) : null;
-
     let videosMap =
       this.state.videos.length > 0
         ? this.state.videos.map((e, i) => {
@@ -758,30 +726,6 @@ class SingleChapter extends Component {
                   Delete
                 </button>
                 <button onClick={() => this.selectVideo(e)}>Select</button>
-              </div>
-            );
-          })
-        : null;
-
-    let navMap =
-      this.state.sections.length > 0
-        ? this.state.sections.map((e, i) => {
-            let videoMap = e.sectionVideos.map((x, y) => {
-              return (
-                <a href={`#${x.sectionVideoTitle}`} key={x.sectionVideoId}>
-                  <li className="videolistitem">{x.sectionVideoTitle}</li>
-                </a>
-              );
-            });
-            return (
-              <div key={e.sectionTitle}>
-                <a href={`#${e.sectionTitle}`}>
-                  <div className="sectiontitle">
-                    {this.props.match.params.chapter}.{e.sectionNumber}{" "}
-                    {e.sectionTitle}
-                  </div>
-                </a>
-                <ul className="videolist">{videoMap}</ul>
               </div>
             );
           })
@@ -1255,6 +1199,7 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { getUserInfo, getPath })(
-  SingleChapter
-);
+export default connect(
+  mapStateToProps,
+  { getUserInfo, getPath }
+)(SingleChapter);

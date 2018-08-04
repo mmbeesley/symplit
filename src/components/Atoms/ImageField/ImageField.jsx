@@ -6,7 +6,7 @@ export default function ImageField(props) {
     <div>
       <div className="checkboxfield">
         Upload New Image:{" "}
-        <button onClick={handleImage} className="upload=button">
+        <button onClick={handleImage} className="upload-button">
           Add Image
         </button>
       </div>
