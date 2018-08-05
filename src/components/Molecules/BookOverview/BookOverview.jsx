@@ -22,7 +22,18 @@ class BookOverview extends Component {
   constructor() {
     super();
 
-    this.state = {};
+    this.state = {
+      bookTitle: "",
+      bookSubtitle: "",
+      bookImage: "",
+      bookSubject: "",
+      bookAuthor: "",
+      memRequired: false,
+      memIds: "",
+      bookVisible: false,
+      editModal: false,
+      deleteModal: false
+    };
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.handleInputUpdate = this.handleInputUpdate.bind(this);

@@ -13,13 +13,21 @@ export default function VideoSelectModal(props) {
         return (
           <div>
             <h1>{e.video_title}</h1>
-            <AdminButton onClick={() => openModal("videoEdit", e.video_id)}>
+            <AdminButton
+              onClick={() => openModal("videoEdit", e.video_id)}
+              color="blue"
+            >
               Edit
             </AdminButton>
-            <AdminButton onClick={() => openModal("videoDelete", e.video_id)}>
+            <AdminButton
+              onClick={() => openModal("videoDelete", e.video_id)}
+              color="blue"
+            >
               Delete
             </AdminButton>
-            <AdminButton onClick={() => selectVideo(e)}>Select</AdminButton>
+            <AdminButton onClick={() => selectVideo(e)} color="blue">
+              Select
+            </AdminButton>
           </div>
         );
       })

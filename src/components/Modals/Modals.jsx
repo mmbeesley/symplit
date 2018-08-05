@@ -8,13 +8,12 @@ import CloseModalButton from "../Atoms/CloseModalButton/CloseModalButton";
 const styles = {
   content: {
     width: "50%",
-    height: "300px",
     background: "white",
     margin: "auto",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "space-around",
-    padding: "25px"
+    marginTop: "100px",
+    padding: "15px",
+    borderRadius: "10px",
+    overflow: "hidden"
   }
 };
 
@@ -26,7 +25,7 @@ export default function Modals(props) {
       <div className="closebuttoncontainer">
         <CloseModalButton closeModal={closeModal} />
       </div>
-      {children}
+      <div className="modalcontainer">{children}</div>
     </Modal>
   );
 }

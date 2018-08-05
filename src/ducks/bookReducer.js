@@ -14,6 +14,13 @@ export const getBook = id => {
   };
 };
 
+export const clearBook = () => {
+  return {
+    type: GET_BOOK,
+    payload: {}
+  };
+};
+
 export default function(state = initialState, action) {
   switch (action.type) {
     case GET_BOOK + "_FULFILLED":

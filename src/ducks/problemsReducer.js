@@ -1,4 +1,5 @@
 import axios from "axios";
+import { clearProblem } from "./";
 
 const initialState = [];
 
@@ -29,6 +30,7 @@ export const createProblem = body => {
 
 export const updateProblem = (id, body) => {
   let problemsData = axios.put(`/api/problems/${id}`, body).then(problems => {
+    clearProblem();
     return problems.data;
   });
   return {
@@ -41,6 +43,7 @@ export const deleteProblem = (id, sectionId) => {
   let problemsData = axios
     .delete(`/api/problems/${id}/${sectionId}`)
     .then(problems => {
+      clearProblem();
       return problems.data;
     });
   return {

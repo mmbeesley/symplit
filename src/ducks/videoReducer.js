@@ -14,6 +14,13 @@ export const getVideo = id => {
   };
 };
 
+export const clearVideo = () => {
+  return {
+    type: GET_VIDEO,
+    payload: {}
+  };
+};
+
 export default function(state = initialState, action) {
   switch (action.type) {
     case GET_VIDEO + "_FULFILLED":

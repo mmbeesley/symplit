@@ -22,7 +22,19 @@ class BookGrid extends Component {
   constructor() {
     super();
 
-    this.state = {};
+    this.state = {
+      addModal: false,
+      editModal: false,
+      deleteModal: false,
+      bookTitle: "",
+      bookSubTitle: "",
+      bookImage: "",
+      bookSubject: "",
+      bookAuthor: "",
+      memRequired: false,
+      memIds: "",
+      bookVisible: false
+    };
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.handleInputUpdate = this.handleInputUpdate.bind(this);

@@ -6,7 +6,10 @@ export default function HandoutField(props) {
     <div>
       <div className="checkboxfield">
         Add a Video:{" "}
-        <button onClick={openModal} className="upload-button">
+        <button
+          onClick={() => openModal("videoSelect")}
+          className="submitButton"
+        >
           Add
         </button>
       </div>

@@ -27,10 +27,34 @@ class ChapterSection extends Component {
   constructor() {
     super();
 
-    this.state = {};
+    this.state = {
+      addModal: false,
+      editModal: false,
+      deleteModal: false,
+      videoSelectModal: false,
+      videoAddModal: false,
+      videoEditModal: false,
+      videoDeleteModal: false,
+      sectionVideoTitle: "",
+      sectionVideoText: "",
+      memRequired: false,
+      memIds: "",
+      videoHandout: "",
+      selectedVideo: {},
+      vimeoVideoTitle: "",
+      vimeoVideoUrl: ""
+    };
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.handleInputUpdate = this.handleInputUpdate.bind(this);
+    this.handleHandout = this.handleHandout.bind(this);
+    this.addSectionVideo = this.addSectionVideo.bind(this);
+    this.updateSectionVideo = this.updateSectionVideo.bind(this);
+    this.deleteSectionVideo = this.deleteSectionVideo.bind(this);
+    this.handleVideoSelect = this.handleVideoSelect.bind(this);
+    this.addVideo = this.addVideo.bind(this);
+    this.updateVideo = this.updateVideo.bind(this);
+    this.deleteVideo = this.deleteVideo.bind(this);
   }
 
   /** Interaction Methods **/
@@ -78,7 +102,7 @@ class ChapterSection extends Component {
   }
 
   addSectionVideo() {
-    const { createSectionVideo, section } = this.props;
+    const { createSectionVideo, section, match } = this.props;
     const {
       selectedVideo,
       sectionVideoTitle,
@@ -94,14 +118,15 @@ class ChapterSection extends Component {
       sectionvideo_text: sectionVideoText,
       membership_required_video: memRequired,
       membership_ids: memIds,
-      sectionvideo_handout: videoHandout
+      sectionvideo_handout: videoHandout,
+      chapterId: +match.params.chapter
     };
 
     createSectionVideo(body);
   }
 
   updateSectionVideo() {
-    const { updateSectionVideo, section, sectionVideo } = this.props;
+    const { updateSectionVideo, section, sectionVideo, match } = this.props;
     const {
       selectedVideo,
       sectionVideoTitle,
@@ -113,11 +138,12 @@ class ChapterSection extends Component {
     const body = {
       section_id: section.sectionId,
       video_id: selectedVideo.video_id,
-      sectionvideo_title: sectionVideoTitle,
-      sectionvideo_text: sectionVideoText,
+      sectionvideo_title: sectionVideoTitle || section.section_video_title,
+      sectionvideo_text: sectionVideoText || section.section_video_text,
       membership_required_video: memRequired,
       membership_ids: memIds,
-      sectionvideo_handout: videoHandout
+      sectionvideo_handout: videoHandout,
+      chapterId: +match.params.chapter
     };
     const id = sectionVideo.section_video_id;
 
@@ -125,10 +151,10 @@ class ChapterSection extends Component {
   }
 
   deleteSectionVideo() {
-    const { deleteSectionVideo, sectionVideo } = this.props;
+    const { deleteSectionVideo, sectionVideo, match } = this.props;
     const id = sectionVideo.section_video_id;
 
-    deleteSectionVideo(id);
+    deleteSectionVideo(id, match.params.chapter);
   }
 
   handleVideoSelect(e) {
@@ -205,7 +231,7 @@ class ChapterSection extends Component {
       memRequired,
       memIds,
       videoHandout,
-      videoTitle,
+      selectedVideo,
       vimeoVideoTitle,
       vimeoVideoUrl
     } = this.state;
@@ -253,7 +279,7 @@ class ChapterSection extends Component {
           sectionVideoTitle={sectionVideoTitle}
           sectionVideoText={sectionVideoText}
           openModal={this.openModal}
-          videoTitle={videoTitle}
+          videoTitle={selectedVideo && selectedVideo.video_title}
           memRequired={memRequired}
           memIds={memIds}
           handleHandout={this.handleHandout}

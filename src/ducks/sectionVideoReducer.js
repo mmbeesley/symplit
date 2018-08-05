@@ -16,6 +16,13 @@ export const getSectionVideo = id => {
   };
 };
 
+export const clearSectionVideo = () => {
+  return {
+    type: GET_SECTION_VIDEO,
+    payload: {}
+  };
+};
+
 export default function(state = initialState, action) {
   switch (action.type) {
     case GET_SECTION_VIDEO + "_FULFILLED":

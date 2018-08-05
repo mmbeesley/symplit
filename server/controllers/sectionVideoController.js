@@ -1,3 +1,5 @@
+const content = require("./contentController");
+
 module.exports = {
   getOneSectionVideo: (req, res) => {
     const db = req.app.get("db");
@@ -18,13 +20,11 @@ module.exports = {
         sectionvideo_text,
         membership_required_video,
         membership_ids,
-        sectionvideo_handout
+        sectionvideo_handout,
+        chapterId
       } = req.body;
 
-      if (membership_ids == "") {
-        membership_ids = null;
-      }
-      const memIdsFormat = `{${membership_ids}}`;
+      const memIdsFormat = `{${membership_ids || null}}`;
 
       db.create_sectionvideo([
         section_id,
@@ -35,7 +35,40 @@ module.exports = {
         memIdsFormat,
         sectionvideo_handout
       ]).then(newVideo => {
-        res.status(200).send(newVideo);
+        db.get_allsections([chapterId]).then(sections => {
+          var results = [];
+          for (var i = 0, obj = {}; i < sections.length; i++) {
+            if (sections[i].section_title != obj.sectionTitle) {
+              obj = {
+                sectionId: sections[i].section_id,
+                sectionNumber: sections[i].section_number,
+                sectionTitle: sections[i].section_title,
+                sectionText: sections[i].section_text,
+                memRequired: sections[i].membership_required_section,
+                memIds: sections[i].membership_ids_section,
+                practiceProblemsIds: sections[i].practice_problems_ids,
+                sectionHandout: sections[i].section_handout,
+                sectionVideos: []
+              };
+              results.push(obj);
+            }
+
+            obj.sectionVideos.push({
+              sectionVideoId: sections[i].section_video_id,
+              videoId: sections[i].video_id,
+              sectionVideoTitle: sections[i].section_video_title,
+              sectionVideoText: sections[i].section_video_text,
+              memRequired: sections[i].membership_required_video,
+              memIds: sections[i].membership_ids,
+              sectionVideoHandout: sections[i].section_video_handout,
+              videoTitle: sections[i].video_title,
+              videoUrl: sections[i].video_url,
+              videoProblems: sections[i].video_problems,
+              videoThumbnail: sections[i].video_thumbnail
+            });
+          }
+          res.status(200).send(results);
+        });
       });
     } else {
       res.status(403).send("Unauthorized");
@@ -51,14 +84,12 @@ module.exports = {
         sectionvideo_text,
         membership_required_video,
         membership_ids,
-        sectionvideo_handout
+        sectionvideo_handout,
+        chapterId
       } = req.body;
       const { sectionvideoId } = req.params;
 
-      if (membership_ids == "") {
-        membership_ids = null;
-      }
-      const memIdsFormat = `{${membership_ids}}`;
+      const memIdsFormat = `{${membership_ids || null}}`;
 
       db.update_sectionvideo([
         sectionvideoId,
@@ -69,7 +100,40 @@ module.exports = {
         memIdsFormat,
         sectionvideo_handout
       ]).then(updated => {
-        res.status(200).send(updated);
+        db.get_allsections([chapterId]).then(sections => {
+          var results = [];
+          for (var i = 0, obj = {}; i < sections.length; i++) {
+            if (sections[i].section_title != obj.sectionTitle) {
+              obj = {
+                sectionId: sections[i].section_id,
+                sectionNumber: sections[i].section_number,
+                sectionTitle: sections[i].section_title,
+                sectionText: sections[i].section_text,
+                memRequired: sections[i].membership_required_section,
+                memIds: sections[i].membership_ids_section,
+                practiceProblemsIds: sections[i].practice_problems_ids,
+                sectionHandout: sections[i].section_handout,
+                sectionVideos: []
+              };
+              results.push(obj);
+            }
+
+            obj.sectionVideos.push({
+              sectionVideoId: sections[i].section_video_id,
+              videoId: sections[i].video_id,
+              sectionVideoTitle: sections[i].section_video_title,
+              sectionVideoText: sections[i].section_video_text,
+              memRequired: sections[i].membership_required_video,
+              memIds: sections[i].membership_ids,
+              sectionVideoHandout: sections[i].section_video_handout,
+              videoTitle: sections[i].video_title,
+              videoUrl: sections[i].video_url,
+              videoProblems: sections[i].video_problems,
+              videoThumbnail: sections[i].video_thumbnail
+            });
+          }
+          res.status(200).send(results);
+        });
       });
     } else {
       res.status(403).send("Unauthorized");
@@ -79,10 +143,43 @@ module.exports = {
   deleteSectionVideo: (req, res) => {
     if (req.user.is_admin) {
       const db = req.app.get("db");
-      const { sectionvideoId } = req.params;
+      const { sectionvideoId, chapterId } = req.params;
 
       db.delete_sectionvideo([sectionvideoId]).then(deleted => {
-        res.status(200).send("deleted");
+        db.get_allsections([chapterId]).then(sections => {
+          var results = [];
+          for (var i = 0, obj = {}; i < sections.length; i++) {
+            if (sections[i].section_title != obj.sectionTitle) {
+              obj = {
+                sectionId: sections[i].section_id,
+                sectionNumber: sections[i].section_number,
+                sectionTitle: sections[i].section_title,
+                sectionText: sections[i].section_text,
+                memRequired: sections[i].membership_required_section,
+                memIds: sections[i].membership_ids_section,
+                practiceProblemsIds: sections[i].practice_problems_ids,
+                sectionHandout: sections[i].section_handout,
+                sectionVideos: []
+              };
+              results.push(obj);
+            }
+
+            obj.sectionVideos.push({
+              sectionVideoId: sections[i].section_video_id,
+              videoId: sections[i].video_id,
+              sectionVideoTitle: sections[i].section_video_title,
+              sectionVideoText: sections[i].section_video_text,
+              memRequired: sections[i].membership_required_video,
+              memIds: sections[i].membership_ids,
+              sectionVideoHandout: sections[i].section_video_handout,
+              videoTitle: sections[i].video_title,
+              videoUrl: sections[i].video_url,
+              videoProblems: sections[i].video_problems,
+              videoThumbnail: sections[i].video_thumbnail
+            });
+          }
+          res.status(200).send(results);
+        });
       });
     } else {
       res.status(403).send("Unauthorized");

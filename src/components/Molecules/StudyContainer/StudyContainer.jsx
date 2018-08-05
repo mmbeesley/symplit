@@ -22,7 +22,15 @@ class StudyContainer extends Component {
   constructor() {
     super();
 
-    this.state = {};
+    this.state = {
+      addModal: false,
+      editModal: false,
+      deleteModal: false,
+      bookChapter: null,
+      chapterTitle: "",
+      chapterMemRequired: false,
+      chapterMemIds: ""
+    };
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.handleInputUpdate = this.handleInputUpdate.bind(this);

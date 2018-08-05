@@ -1,4 +1,5 @@
 import axios from "axios";
+import { clearBook } from "./";
 
 const initialState = [];
 
@@ -40,6 +41,7 @@ export const createBook = body => {
 
 export const updateBook = (id, body) => {
   let booksData = axios.put(`/api/books/${id}`, body).then(books => {
+    clearBook();
     return books.data;
   });
   return {
@@ -50,6 +52,7 @@ export const updateBook = (id, body) => {
 
 export const deleteBook = id => {
   let booksData = axios.delete(`/api/books/${id}`).then(books => {
+    clearBook();
     return books.data;
   });
   return {

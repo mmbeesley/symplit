@@ -14,6 +14,13 @@ export const getSection = (id, chapter) => {
   };
 };
 
+export const clearSection = () => {
+  return {
+    type: GET_SECTION,
+    payload: {}
+  };
+};
+
 export default function(state = initialState, action) {
   switch (action.type) {
     case GET_SECTION + "_FULFILLED":

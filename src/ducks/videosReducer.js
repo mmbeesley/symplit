@@ -1,4 +1,5 @@
 import axios from "axios";
+import { clearVideo } from "./";
 
 const initialState = [];
 
@@ -7,8 +8,8 @@ const CREATE_VIDEO = "CREATE_VIDEO";
 const UPDATE_VIDEO = "UPDATE_VIDEO";
 const DELETE_VIDEO = "DELETE_VIDEO";
 
-export const getVideos = id => {
-  let videosData = axios.get(`/api/videos/${id}`).then(videos => {
+export const getVideos = () => {
+  let videosData = axios.get(`/api/videos`).then(videos => {
     return videos.data;
   });
   return {
@@ -29,6 +30,7 @@ export const createVideo = body => {
 
 export const updateVideo = (id, body) => {
   let videosData = axios.put(`/api/videos/${id}`, body).then(videos => {
+    clearVideo();
     return videos.data;
   });
   return {
@@ -39,6 +41,7 @@ export const updateVideo = (id, body) => {
 
 export const deleteVideo = (id, bookId) => {
   let videosData = axios.delete(`/api/videos/${id}`).then(videos => {
+    clearVideo();
     return videos.data;
   });
   return {

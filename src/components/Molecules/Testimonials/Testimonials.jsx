@@ -27,7 +27,10 @@ class Testimonials extends Component {
     super();
     this.state = {
       nameInput: "",
-      bodyInput: ""
+      bodyInput: "",
+      addModal: false,
+      editModal: false,
+      deleteModal: false
     };
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
@@ -45,8 +48,7 @@ class Testimonials extends Component {
 
   /** Interaction Methods **/
   openModal(type, id) {
-    const key = `${type}
-        Modal`;
+    const key = `${type}Modal`;
     const { getTestimonial } = this.props;
     if (id) {
       getTestimonial(id);
@@ -57,8 +59,7 @@ class Testimonials extends Component {
   }
 
   closeModal(type) {
-    const key = `${type}
-        Modal`;
+    const key = `${type}Modal`;
     this.setState({
       [key]: false
     });

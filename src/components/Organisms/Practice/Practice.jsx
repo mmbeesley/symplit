@@ -27,7 +27,18 @@ class Practice extends Component {
   constructor() {
     super();
 
-    this.state = {};
+    this.state = {
+      addModal: false,
+      editModal: false,
+      deleteModal: false,
+      problemTitle: "",
+      problemImage: "",
+      problemSolution: "",
+      memRequired: false,
+      memIds: "",
+      videoUrl: "",
+      solutionModal: false
+    };
     this.openModal = this.openModal.bind(this);
     this.handleInputUpdate = this.handleInputUpdate.bind(this);
     this.closeModal = this.closeModal.bind(this);

@@ -16,6 +16,13 @@ export const getTestimonial = id => {
   };
 };
 
+export const clearTestimonial = () => {
+  return {
+    type: GET_TESTIMONIAL,
+    payload: {}
+  };
+};
+
 export default function(state = initialState, action) {
   switch (action.type) {
     case GET_TESTIMONIAL + "_FULFILLED":

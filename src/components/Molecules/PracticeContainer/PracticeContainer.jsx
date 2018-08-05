@@ -14,12 +14,6 @@ import PracticeTile from "../../Atoms/PracticeTile/PracticeTile";
 
 /** Exported Component **/
 class PracticeContainer extends Component {
-  constructor() {
-    super();
-
-    this.state = {};
-  }
-
   /**LifeCycle Methods **/
   componentDidMount() {
     const {

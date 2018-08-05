@@ -1,4 +1,5 @@
 import axios from "axios";
+import { clearTestimonial } from "./";
 
 const initialState = [];
 
@@ -33,6 +34,7 @@ export const updateTestimonial = (id, body) => {
   let testimonialsData = axios
     .put(`/api/testimonials/${id}`, body)
     .then(testimonials => {
+      clearTestimonial();
       return testimonials.data;
     });
   return {
@@ -45,6 +47,7 @@ export const deleteTestimonial = id => {
   let testimonialsData = axios
     .delete(`/api/testimonials/${id}`)
     .then(testimonials => {
+      clearTestimonial();
       return testimonials.data;
     });
   return {

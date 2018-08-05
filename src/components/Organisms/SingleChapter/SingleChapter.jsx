@@ -29,12 +29,25 @@ class SingleChapter extends Component {
   constructor() {
     super();
 
-    this.state = {};
+    this.state = {
+      sectionNumber: null,
+      sectionTitle: "",
+      sectionText: "",
+      memRequired: false,
+      memIds: "",
+      problemIds: "",
+      sectionHandout: "",
+      addModal: false,
+      editModal: false,
+      deleteModal: false
+    };
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.handleInputUpdate = this.handleInputUpdate.bind(this);
     this.handleHandout = this.handleHandout.bind(this);
     this.addSection = this.addSection.bind(this);
+    this.updateSection = this.updateSection.bind(this);
+    this.deleteSection = this.deleteSection.bind(this);
   }
   /** LifeCycle Methods */
   componentDidMount() {
@@ -45,6 +58,7 @@ class SingleChapter extends Component {
       getBook,
       getChapter,
       getSections,
+      getVideos,
       match
     } = this.props;
 

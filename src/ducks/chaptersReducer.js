@@ -1,4 +1,5 @@
 import axios from "axios";
+import { clearChapter } from "./";
 
 const initialState = [];
 
@@ -29,6 +30,7 @@ export const createChapter = body => {
 
 export const updateChapter = (id, body) => {
   let chaptersData = axios.put(`/api/chapters/${id}`, body).then(chapters => {
+    clearChapter();
     return chapters.data;
   });
   return {
@@ -41,6 +43,7 @@ export const deleteChapter = (id, bookId) => {
   let chaptersData = axios
     .delete(`/api/chapters/${id}/${bookId}`)
     .then(chapters => {
+      clearChapter();
       return chapters.data;
     });
   return {

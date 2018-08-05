@@ -1,4 +1,5 @@
 import axios from "axios";
+import { clearSection, clearSectionVideo } from "./";
 
 const initialState = [];
 
@@ -32,6 +33,7 @@ export const createSection = body => {
 
 export const updateSection = (id, body) => {
   let sectionsData = axios.put(`/api/sections/${id}`, body).then(sections => {
+    clearSection();
     return sections.data;
   });
   return {
@@ -44,6 +46,7 @@ export const deleteSection = (id, bookId) => {
   let sectionsData = axios
     .delete(`/api/sections/${id}/${bookId}`)
     .then(sections => {
+      clearSection();
       return sections.data;
     });
   return {
@@ -66,6 +69,7 @@ export const updateSectionVideo = (id, body) => {
   let sectionsData = axios
     .put(`/api/sectionvideos/${id}`, body)
     .then(sections => {
+      clearSectionVideo();
       return sections.data;
     });
   return {
@@ -74,10 +78,13 @@ export const updateSectionVideo = (id, body) => {
   };
 };
 
-export const deleteSectionVideo = id => {
-  let sectionsData = axios.delete(`/api/sectionvideos/${id}`).then(sections => {
-    return sections.data;
-  });
+export const deleteSectionVideo = (id, chapterId) => {
+  let sectionsData = axios
+    .delete(`/api/sectionvideos/${id}/${chapterId}`)
+    .then(sections => {
+      clearSectionVideo();
+      return sections.data;
+    });
   return {
     type: DELETE_SECTION_VIDEO,
     payload: sectionsData

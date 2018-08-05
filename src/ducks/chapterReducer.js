@@ -14,6 +14,13 @@ export const getChapter = id => {
   };
 };
 
+export const clearChapter = () => {
+  return {
+    type: GET_CHAPTER,
+    payload: {}
+  };
+};
+
 export default function(state = initialState, action) {
   switch (action.type) {
     case GET_CHAPTER + "_FULFILLED":

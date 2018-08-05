@@ -14,6 +14,13 @@ export const getProblem = id => {
   };
 };
 
+export const clearProblem = () => {
+  return {
+    type: GET_PROBLEM,
+    payload: {}
+  };
+};
+
 export default function(state = initialState, action) {
   switch (action.type) {
     case GET_PROBLEM + "_FULFILLED":

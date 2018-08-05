@@ -173,7 +173,7 @@ app.put(
   sectionVideoController.updateSectionVideo
 ); //Update sectionvideo details based on sectionvideo id
 app.delete(
-  "/api/sectionvideos/:sectionvideoId",
+  "/api/sectionvideos/:sectionvideoId/:chapterId",
   sectionVideoController.deleteSectionVideo
 ); //Delete sectionvideo based on sectionvideo id
 
