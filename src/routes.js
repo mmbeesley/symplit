@@ -11,7 +11,7 @@ import Home from "./components/Organisms/Home/Home";
 import Books from "./components/Organisms/Books/Books";
 import SingleBook from "./components/Organisms/SingleBook/SingleBook";
 import SingleChapter from "./components/Organisms/SingleChapter/SingleChapter";
-// import Account from "./components/Account";
+import Account from "./components/Organisms/Account/Account";
 import Practice from "./components/Organisms/Practice/Practice";
 // import Membership from "./components/Membership";
 
@@ -37,7 +37,7 @@ export default (
       path="/practice/:book/:chapter/:section"
       component={Practice}
     />
-    {/* <Route path="/memberships" component={Membership} />
-    <Route path="/account" component={Account} /> */}
+    {/* <Route path="/memberships" component={Membership} /> */}
+    <Route path="/account" component={Account} />
   </Switch>
 );

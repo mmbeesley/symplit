@@ -1,5 +1,7 @@
 import axios from "axios";
 
+import { getMembership } from "./";
+
 const initialState = {};
 
 const GET_USER_INFO = "GET_USER_INFO";

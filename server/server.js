@@ -5,10 +5,8 @@ const bodyParser = require("body-parser");
 const massive = require("massive");
 const session = require("express-session");
 const app = express();
-const cors = require("cors");
 const passport = require("passport");
 const Auth0Strategy = require("passport-auth0");
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const port = process.env.SERVER_PORT || 3500;
 const cloudinary = require("cloudinary");
 
@@ -46,7 +44,6 @@ app.use(bodyParser.json());
 massive(process.env.CONNECTION_STRING).then(db => {
   app.set("db", db);
 });
-app.use(cors());
 
 cloudinary.config({
   cloud_name: "symplit",
@@ -232,7 +229,7 @@ app.delete(
 app.get("/api/memberships", membershipController.getMemberships); //Gets list of memberships available for purchase
 
 //Admin Memberships Endpoints
-app.get("/api/membership/:membershipId", membershipController.getOneMembership); //Gets one membership based on membership id for admin view
+app.get("/api/membership", membershipController.getOneMembership); //Gets one membership based on membership id for admin view
 app.post("/api/memberships", membershipController.createMembership); //Req.body sends membership_title, membership_description, membership_price, membership_recurring, membership_period. Adds membership to memberships table
 app.put(
   "/api/memberships/:membershipId",
