@@ -37,6 +37,7 @@
     "react-vimeo": "^2.0.0",
     "redux": "^3.7.2",
     "redux-promise-middleware": "^5.0.0",
+    "redux-thunk": "^2.3.0",
     "slick-carousel": "^1.8.1",
     "stripe": "^5.5.0",
     "video-react": "^0.10.4"
