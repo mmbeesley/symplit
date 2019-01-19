@@ -127,7 +127,7 @@ class StudyContainer extends Component {
   }
 
   renderChapterLink(e, i) {
-    const { user, match, id } = this.props;
+    const { user, id } = this.props;
     return (
       <ChapterLink
         chapter={e}

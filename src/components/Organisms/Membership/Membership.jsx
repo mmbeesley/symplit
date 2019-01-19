@@ -166,8 +166,8 @@ class Membership extends Component {
       membershipRecurring,
       editModal,
       deleteModal,
-      selectModal,
-      paymentModal
+      selectModal
+      // paymentModal
     } = this.state;
 
     return (

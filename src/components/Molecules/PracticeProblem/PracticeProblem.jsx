@@ -6,7 +6,7 @@ import { completeProblem, undoCompleteProblem } from "../../../ducks";
 import { connect } from "react-redux";
 
 /** Import Components **/
-import AdminButton from "../../Atoms/AdminButton/AdminButton";
+// import AdminButton from "../../Atoms/AdminButton/AdminButton";
 import PracticeCompleteButton from "../../Atoms/PracticeCompleteButton/PracticeCompleteButton";
 
 /** Exported Component **/
@@ -28,7 +28,7 @@ class PracticeProblem extends Component {
   }
 
   render() {
-    const { problem, openModal, user, completed } = this.props;
+    const { problem, openModal, completed } = this.props;
 
     let image =
       "http://res.cloudinary.com/symplit/image/upload/" + problem.problem_image;

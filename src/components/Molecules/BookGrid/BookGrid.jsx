@@ -193,6 +193,7 @@ class BookGrid extends Component {
                 if (!limiter || i < limiter) {
                   return this.renderBookTile(e, i);
                 }
+                return null;
               })
             : null}
         </div>

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { clearChapter } from "./";
+// import { clearChapter } from "./";
 
 const initialState = [];
 

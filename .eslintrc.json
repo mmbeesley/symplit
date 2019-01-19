@@ -1,8 +1,5 @@
 {
   "parser": "babel-eslint",
   "extends": ["react", "airbnb"],
-  "plugins": ["react", "jsx-ally", "import"],
-  "rules": {
-    "jsx-ally/href-no-hash": "off"
-  }
+  "plugins": ["react", "jsx-ally", "import"]
 }
