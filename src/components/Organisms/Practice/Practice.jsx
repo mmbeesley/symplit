@@ -3,7 +3,6 @@ import React, { Component } from "react";
 
 /** Redux **/
 import {
-  getUserInfo,
   getPath,
   getProblem,
   getProblems,
@@ -49,9 +48,8 @@ class Practice extends Component {
 
   /** LifeCycle Methods **/
   componentDidMount() {
-    const { getPath, location, getUserInfo, getProblems, match } = this.props;
+    const { getPath, location, getProblems, match } = this.props;
     getPath(location.pathname);
-    getUserInfo();
     getProblems(match.params.book);
     getCompletedProblems();
   }
@@ -246,7 +244,6 @@ function mapStateToProps(state) {
 export default connect(
   mapStateToProps,
   {
-    getUserInfo,
     getPath,
     getProblem,
     getProblems,

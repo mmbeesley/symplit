@@ -8,6 +8,7 @@ const GET_USER_INFO = "GET_USER_INFO";
 
 export function getUserInfo() {
   let userData = axios.get("/auth/me").then(user => {
+    if (user.data === "User not found.") return {};
     return user.data;
   });
   return {

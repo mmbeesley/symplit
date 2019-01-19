@@ -4,7 +4,6 @@ import React, { Component } from "react";
 /** Redux **/
 import {
   getPath,
-  getUserInfo,
   getBook,
   getChapter,
   getSections,
@@ -54,7 +53,6 @@ class SingleChapter extends Component {
     const {
       getPath,
       location,
-      getUserInfo,
       getBook,
       getChapter,
       getSections,
@@ -62,7 +60,6 @@ class SingleChapter extends Component {
       match
     } = this.props;
 
-    getUserInfo();
     getPath(location.pathname);
     getBook(match.params.book);
     getChapter(match.params.chapter);
@@ -275,7 +272,6 @@ export default connect(
   mapStateToProps,
   {
     getPath,
-    getUserInfo,
     getBook,
     getChapter,
     getSections,

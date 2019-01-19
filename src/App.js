@@ -1,11 +1,19 @@
+/** NPM Modules **/
 import React, { Component } from "react";
-import "./App.css";
+
+/** Import CSS **/
 import "./reset.css";
-import routes from "./routes";
-import Header from "./components/Molecules/Header/Header";
-import NavBar from "./components/Molecules/NavBar/NavBar";
+import "./App.css";
 import "../node_modules/video-react/dist/video-react.css";
 
+/** Import Helpers **/
+import routes from "./routes";
+
+/** Import Components **/
+import Header from "./components/Molecules/Header/Header";
+import NavBar from "./components/Molecules/NavBar/NavBar";
+
+/** Exported Component **/
 class App extends Component {
   render() {
     return (

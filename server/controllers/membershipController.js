@@ -120,7 +120,6 @@ module.exports = {
     if (req.user.is_admin) {
       const db = req.app.get("db");
       const { membershipId } = req.params;
-
       db.delete_membership([membershipId]).then(deleted => {
         db.get_allmemberships().then(memberships => {
           res.status(200).send(memberships);

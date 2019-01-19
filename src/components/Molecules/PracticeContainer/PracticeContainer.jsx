@@ -58,7 +58,7 @@ class PracticeContainer extends Component {
     return (
       <div className="practicelist">
         <h1>PRACTICE</h1>
-        <div className="pracicegrid">
+        <div className="practicegrid">
           {bookSections && bookSections.length > 0
             ? bookSections.map((e, i) => {
                 return this.renderPracticeTile(e, i);

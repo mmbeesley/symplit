@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 
 /** Redux **/
-import { getUserInfo, getPath } from "../../../ducks";
+import { getPath } from "../../../ducks";
 import { connect } from "react-redux";
 
 /** Import Components **/
@@ -21,9 +21,8 @@ class Home extends Component {
 
   /** Lifecycle Methods **/
   componentDidMount() {
-    const { getPath, location, getUserInfo } = this.props;
+    const { getPath, location } = this.props;
     getPath(location.pathname);
-    getUserInfo();
   }
 
   /** Render Methods **/
@@ -75,7 +74,6 @@ function mapStateToProps(state) {
 export default connect(
   mapStateToProps,
   {
-    getUserInfo,
     getPath
   }
 )(Home);

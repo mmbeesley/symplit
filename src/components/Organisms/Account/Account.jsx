@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 
 /** Redux **/
-import { getUserInfo, getPath, getMembership } from "../../../ducks";
+import { getPath, getMembership } from "../../../ducks";
 import { connect } from "react-redux";
 
 /** Import Components **/
@@ -15,9 +15,8 @@ import Footer from "../../Molecules/Footer/Footer";
 class Account extends Component {
   /** LifeCycle Methods **/
   componentDidMount() {
-    const { getPath, location, getUserInfo, getMembership } = this.props;
+    const { getPath, location, getMembership } = this.props;
     getPath(location.pathname);
-    getUserInfo();
     getMembership();
   }
 
@@ -48,5 +47,5 @@ function mapStateToProps(state) {
 
 export default connect(
   mapStateToProps,
-  { getPath, getUserInfo, getMembership }
+  { getPath, getMembership }
 )(Account);

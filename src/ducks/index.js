@@ -19,6 +19,7 @@ import sectionVideoReducer from "./sectionVideoReducer";
 import videoReducer from "./videoReducer";
 import videosReducer from "./videosReducer";
 import membershipReducer from "./membershipReducer";
+import membershipsReducer from "./membershipsReducer";
 
 const appReducer = combineReducers({
   app: reducer,
@@ -39,7 +40,8 @@ const appReducer = combineReducers({
   sectionVideo: sectionVideoReducer,
   videos: videosReducer,
   video: videoReducer,
-  membership: membershipReducer
+  membership: membershipReducer,
+  memberships: membershipsReducer
 });
 
 export default appReducer;
@@ -62,3 +64,4 @@ export * from "./sectionVideoReducer";
 export * from "./videosReducer";
 export * from "./videoReducer";
 export * from "./membershipReducer";
+export * from "./membershipsReducer";
