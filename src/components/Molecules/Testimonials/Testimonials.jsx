@@ -8,7 +8,7 @@ import {
   createTestimonial,
   updateTestimonial,
   deleteTestimonial
-} from "../../../ducks";
+} from "../../../ducks/reducers";
 import { connect } from "react-redux";
 
 /** Import Components **/

@@ -36,6 +36,7 @@
     "react-stripe-checkout": "^2.6.3",
     "react-vimeo": "^2.0.0",
     "redux": "^3.7.2",
+    "redux-devtools-extension": "^2.13.7",
     "redux-promise-middleware": "^5.0.0",
     "redux-thunk": "^2.3.0",
     "slick-carousel": "^1.8.1",

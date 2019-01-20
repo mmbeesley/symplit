@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 
 /** Redux **/
-import { searchBooks, getBooks } from "../../../ducks";
+import { searchBooks, getBooks } from "../../../ducks/reducers";
 import { connect } from "react-redux";
 
 /** Exported Component **/

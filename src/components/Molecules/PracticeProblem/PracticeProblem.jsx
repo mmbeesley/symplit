@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 
 /** Redux **/
-import { completeProblem, undoCompleteProblem } from "../../../ducks";
+import { completeProblem, undoCompleteProblem } from "../../../ducks/reducers";
 import { connect } from "react-redux";
 
 /** Import Components **/

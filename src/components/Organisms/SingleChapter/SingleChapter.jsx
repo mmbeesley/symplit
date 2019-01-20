@@ -12,7 +12,7 @@ import {
   updateSection,
   deleteSection,
   getVideos
-} from "../../../ducks";
+} from "../../../ducks/reducers";
 import { connect } from "react-redux";
 
 /** Imported Components **/

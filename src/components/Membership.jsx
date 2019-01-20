@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Footer from "./Footer";
 import axios from "axios";
 import { connect } from "react-redux";
-import { getUserInfo, getPath } from "../ducks/reducer";
+import { getUserInfo, getPath } from "../ducks/reducers/reducer";
 import stripe from "../stripeKey";
 import StripeCheckout from "react-stripe-checkout";
 import Modal from "react-modal";

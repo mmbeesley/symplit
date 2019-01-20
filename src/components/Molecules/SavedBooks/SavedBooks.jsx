@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 /** Redux **/
 import { connect } from "react-redux";
-import { getSavedBooks, removeSavedBook } from "../../../ducks";
+import { getSavedBooks, removeSavedBook } from "../../../ducks/reducers";
 import SavedBookTile from "../../Atoms/SavedBookTile/SavedBookTile";
 
 /** Import Components **/

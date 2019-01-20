@@ -3,7 +3,7 @@ import React, { Component } from "react";
 
 /** Redux **/
 import { connect } from "react-redux";
-import { getUserInfo } from "../../../ducks";
+import { getUserInfo } from "../../../ducks/reducers";
 
 /** Imported Components **/
 import NavBarLink from "../../Atoms/NavBarLink/NavBarLink";

@@ -12,7 +12,7 @@ import {
   createVideo,
   updateVideo,
   deleteVideo
-} from "../../../ducks";
+} from "../../../ducks/reducers";
 
 /** Imported Components **/
 import AdminButton from "../../Atoms/AdminButton/AdminButton";
