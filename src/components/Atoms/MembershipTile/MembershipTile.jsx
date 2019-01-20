@@ -51,7 +51,7 @@ export default function MembershipTile(props) {
         <div className="membershipperiod">{months}</div>
         <button
           className="membershipbutton"
-          onClick={() => openModal("pay", membership)}
+          onClick={() => openModal("payment", undefined, membership)}
         >
           Select
         </button>

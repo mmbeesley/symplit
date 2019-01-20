@@ -1,7 +1,6 @@
-// TODO: payment, get one membership with edit, and progress modals
-
 /** NPM Modules **/
 import React, { Component } from "react";
+import axios from "axios";
 
 /** Redux **/
 import {
@@ -18,6 +17,10 @@ import { connect } from "react-redux";
 /** Import Components **/
 import AdminButton from "../../Atoms/AdminButton/AdminButton";
 import MembershipTile from "../../Atoms/MembershipTile/MembershipTile";
+import PaymentModal from "../../Modals/PaymentModal";
+import ProgressModal from "../../Modals/ProgressModal";
+import SuccessModal from "../../Modals/SuccessModal";
+import FailureModal from "../../Modals/FailureModal";
 import MembershipSelectModal from "../../Modals/MembershipSelectModal";
 import MembershipModal from "../../Modals/MembershipModal";
 import DeleteModal from "../../Modals/DeleteModal";
@@ -33,7 +36,8 @@ class Membership extends Component {
       editModal: false,
       deleteModal: false,
       selectModal: false,
-      paymentModal: false
+      paymentModal: false,
+      selected: {}
     };
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
@@ -42,6 +46,8 @@ class Membership extends Component {
     this.updateMembership = this.updateMembership.bind(this);
     this.deleteMembership = this.deleteMembership.bind(this);
     this.membershipAvailability = this.membershipAvailability.bind(this);
+    this.onToken = this.onToken.bind(this);
+    this.selectMembership = this.selectMembership.bind(this);
   }
 
   /** LifeCycle Methods **/
@@ -60,11 +66,14 @@ class Membership extends Component {
   }
 
   /** Interaction Methods **/
-  openModal(type, id) {
+  openModal(type, id, membership) {
     const key = `${type}Modal`;
     const { getMembership } = this.props;
     if (id) {
       getMembership(id);
+    }
+    if (type === "payment") {
+      this.selectMembership(membership);
     }
     this.setState({
       [key]: true,
@@ -83,6 +92,40 @@ class Membership extends Component {
     this.setState({
       [key]: value
     });
+  }
+
+  selectMembership(selected) {
+    this.setState({
+      selected
+    });
+  }
+
+  onToken(token) {
+    const { selected } = this.state;
+    this.setState({
+      progressModal: true
+    });
+    token.card = void 0;
+    axios
+      .post("/api/payment", {
+        token,
+        amount: selected.membership_price,
+        membership: selected
+      })
+      .then(response => {
+        if (response.status === 200) {
+          this.setState({
+            paymentModal: false,
+            progressModal: false,
+            successModal: true
+          });
+        } else {
+          this.setState({
+            progressModal: false,
+            failureModal: true
+          });
+        }
+      });
   }
 
   addMembership() {
@@ -176,8 +219,12 @@ class Membership extends Component {
       membership_recurring,
       editModal,
       deleteModal,
-      selectModal
-      // paymentModal
+      selectModal,
+      paymentModal,
+      progressModal,
+      successModal,
+      failureModal,
+      selected
     } = this.state;
 
     return (
@@ -212,60 +259,27 @@ class Membership extends Component {
           </div>
         </div>
 
-        {/* <Modal
-          isOpen={this.state.payModal}
-          onRequestClose={this.closePayModal}
-          style={addStyle}
-        >
-          <div className="closebuttoncontainer">
-            <button onClick={this.closePayModal} className="closebutton">
-              X
-            </button>
-          </div>
-          <div className="paymentoptions">
-            <h3>
-              You have selected the {this.state.selected.membership_title} Plan
-            </h3>
-            <StripeCheckout
-              name={"Your Membership"}
-              description={"Please enter your card information:"}
-              token={this.onToken}
-              stripeKey={stripe.pub_key}
-              amount={this.state.selected.membership_price * 100}
-            />
-          </div>
-        </Modal> */}
+        <PaymentModal
+          active={paymentModal}
+          closeModal={() => this.closeModal("payment")}
+          onToken={this.onToken}
+          membership={selected}
+        />
 
-        {/* <Modal isOpen={this.state.progressModal} style={addStyle}>
-          <div>Please wait while your order is processed...</div>
-        </Modal>
+        <ProgressModal
+          active={progressModal}
+          closeModal={() => this.closeModal("progress")}
+        />
 
-        <Modal
-          isOpen={this.state.successModal}
-          onRequestClose={this.closeSuccessModal}
-          style={addStyle}
-        >
-          <div className="closebuttoncontainer">
-            <button onClick={this.closeSuccessModal}>X</button>
-          </div>
-          <div>Thank you for your payment. Now go and enjoy the Maths!</div>
-        </Modal>
+        <SuccessModal
+          active={successModal}
+          closeModal={() => this.closeModal("success")}
+        />
 
-        <Modal
-          isOpen={this.state.failureModal}
-          onRequestClose={this.closeFailureModal}
-          style={addStyle}
-        >
-          <div className="closebuttoncontainer">
-            <button onClick={this.closeFailureModal}>X</button>
-          </div>
-          <div>
-            It appears that there was an error with your payment, please try
-            again or with a different card. If this problem persists, please{" "}
-            <a href="mailto:support@symplit.com">Contact Us</a>. Thank you for
-            your patience.
-          </div>
-        </Modal> */}
+        <FailureModal
+          active={failureModal}
+          closeModal={() => this.closeModal("failure")}
+        />
 
         <MembershipSelectModal
           active={selectModal}

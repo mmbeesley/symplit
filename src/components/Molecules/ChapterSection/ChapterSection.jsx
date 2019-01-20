@@ -209,15 +209,7 @@ class ChapterSection extends Component {
   }
 
   render() {
-    const {
-      section,
-      match,
-      user,
-      openModal,
-      sectionVideo,
-      videos,
-      video
-    } = this.props;
+    const { section, match, user, openModal, videos } = this.props;
     const { section_title, section_number, section_videos } = section;
     const {
       addModal,
