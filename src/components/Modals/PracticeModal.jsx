@@ -28,7 +28,7 @@ export default function PraciceModal(props) {
         value={problemTitle}
         onChange={e => onChange("problemTitle", e.target.value)}
       />
-      <ImageField handleImage={handleImage} bookImage={problemImage} />
+      <ImageField handleImage={handleImage} book_image={problemImage} />
       <TextField
         placeholder="Problem Solution"
         value={problemSolution}

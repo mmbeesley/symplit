@@ -1,7 +1,7 @@
 import React from "react";
 
 export default function HandoutField(props) {
-  const { openModal, videoTitle } = props;
+  const { openModal, video_title } = props;
   return (
     <div>
       <div className="checkboxfield">
@@ -13,7 +13,7 @@ export default function HandoutField(props) {
           Add
         </button>
       </div>
-      <p>Current Video: {videoTitle}</p>
+      <p>Current Video: {video_title}</p>
     </div>
   );
 }

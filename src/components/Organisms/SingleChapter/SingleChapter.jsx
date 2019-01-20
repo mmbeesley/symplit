@@ -29,13 +29,13 @@ class SingleChapter extends Component {
     super();
 
     this.state = {
-      sectionNumber: null,
-      sectionTitle: "",
-      sectionText: "",
-      memRequired: false,
-      memIds: "",
-      problemIds: "",
-      sectionHandout: "",
+      section_number: null,
+      section_title: "",
+      section_text: "",
+      membership_required_section: false,
+      membership_ids: "",
+      problem_ids: "",
+      section_handout: "",
       addModal: false,
       editModal: false,
       deleteModal: false
@@ -65,6 +65,14 @@ class SingleChapter extends Component {
     getChapter(match.params.chapter);
     getSections(match.params.chapter);
     getVideos();
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    const { section } = props;
+    if (section.section_id !== state.section_id) {
+      return { ...section };
+    }
+    return null;
   }
 
   /** Interaction Methods **/
@@ -102,7 +110,7 @@ class SingleChapter extends Component {
             break;
           }
           _this.setState({
-            sectionHandout: result[0].path.slice(i)
+            section_handout: result[0].path.slice(i)
           });
         }
       }
@@ -111,24 +119,24 @@ class SingleChapter extends Component {
 
   addSection() {
     const {
-      sectionNumber,
-      sectionTitle,
-      sectionText,
-      memRequired,
-      memIds,
-      problemIds,
-      sectionHandout
+      section_number,
+      section_title,
+      section_text,
+      membership_required_section,
+      membership_ids,
+      problem_ids,
+      section_handout
     } = this.state;
     const { match, createSection } = this.props;
     let body = {
-      section_number: sectionNumber,
-      section_title: sectionTitle,
+      section_number,
+      section_title,
       chapter_id: match.params.chapter,
-      section_text: sectionText,
-      membership_required_section: memRequired,
-      membership_ids: memIds,
-      problem_ids: problemIds,
-      section_handout: sectionHandout
+      section_text,
+      membership_required_section,
+      membership_ids,
+      problem_ids,
+      section_handout
     };
 
     createSection(body);
@@ -136,33 +144,33 @@ class SingleChapter extends Component {
 
   updateSection() {
     const {
-      sectionNumber,
-      sectionTitle,
-      sectionText,
-      memRequired,
-      memIds,
-      problemIds,
-      sectionHandout
+      section_number,
+      section_title,
+      section_text,
+      membership_required_section,
+      membership_ids,
+      problem_ids,
+      section_handout
     } = this.state;
     const { match, updateSection, section } = this.props;
     let body = {
-      section_number: sectionNumber,
-      section_title: sectionTitle,
+      section_number,
+      section_title,
       chapter_id: match.params.chapter,
-      section_text: sectionText,
-      membership_required_section: memRequired,
-      membership_ids: memIds,
-      problem_ids: problemIds,
-      section_handout: sectionHandout
+      section_text,
+      membership_required_section,
+      membership_ids,
+      problem_ids,
+      section_handout
     };
-    const id = section.sectionNumber;
+    const id = section.section_number;
 
     updateSection(id, body);
   }
 
   deleteSection() {
     const { section, deleteSection } = this.props;
-    const id = section.sectionNumber;
+    const id = section.section_number;
 
     deleteSection(id);
   }
@@ -173,7 +181,7 @@ class SingleChapter extends Component {
     return (
       <ChapterSection
         section={e}
-        key={e.sectionTitle}
+        key={e.section_title}
         match={match}
         openModal={this.openModal}
       />
@@ -181,15 +189,15 @@ class SingleChapter extends Component {
   }
 
   render() {
-    const { sections, book, chapter, user, match, section } = this.props;
+    const { sections, book, chapter, user, match } = this.props;
     const {
-      sectionNumber,
-      sectionTitle,
-      sectionText,
-      memRequired,
-      memIds,
-      problemIds,
-      sectionHandout,
+      section_number,
+      section_title,
+      section_text,
+      membership_required_section,
+      membership_ids,
+      problem_ids,
+      section_handout,
       addModal,
       editModal,
       deleteModal
@@ -223,13 +231,13 @@ class SingleChapter extends Component {
           closeModal={() => this.closeModal("add")}
           handleHandout={this.handleHandout}
           onChange={this.handleInputUpdate}
-          sectionTitle={sectionTitle}
-          sectionNumber={sectionNumber}
-          sectionSummary={sectionText}
-          memRequired={memRequired}
-          memIds={memIds}
-          problemIds={problemIds}
-          sectionHandout={sectionHandout}
+          section_title={section_title}
+          section_number={section_number}
+          sectionSummary={section_text}
+          membership_required_section={membership_required_section}
+          membership_ids={membership_ids}
+          problem_ids={problem_ids}
+          section_handout={section_handout}
           submit={this.addSection}
         />
 
@@ -238,13 +246,13 @@ class SingleChapter extends Component {
           closeModal={() => this.closeModal("edit")}
           handleHandout={this.handleHandout}
           onChange={this.handleInputUpdate}
-          sectionTitle={section && section.section_title}
-          sectionNumber={section && section.section_number}
-          sectionSummary={section && section.section_text}
-          memRequired={section && section.mem_required_section}
-          memIds={section && section.mem_ids_section}
-          problemIds={section && section.practice_problem_ids}
-          sectionHandout={section && section.section_handout}
+          section_title={section_title}
+          section_number={section_number}
+          sectionSummary={section_text}
+          membership_required_section={membership_required_section}
+          membership_ids={membership_ids}
+          problem_ids={problem_ids}
+          section_handout={section_handout}
           submit={this.updateSection}
         />
 

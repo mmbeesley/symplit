@@ -9,11 +9,20 @@ module.exports = {
     });
   },
 
-  getOneMembership: (req, res) => {
+  getUserMembership: (req, res) => {
     const db = req.app.get("db");
     const { membership_id } = req.user;
 
     db.get_membership([membership_id]).then(membership => {
+      res.status(200).send(membership);
+    });
+  },
+
+  getOneMembership: (req, res) => {
+    const db = req.app.get("db");
+    const { membershipId } = req.params;
+
+    db.get_membership([membershipId]).then(membership => {
       res.status(200).send(membership);
     });
   },

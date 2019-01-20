@@ -4,8 +4,8 @@ const initialState = {};
 
 const GET_MEMBERSHIP = "GET_MEMBERSHIP";
 
-export function getMembership() {
-  let membershipData = axios.get(`/api/membership`).then(membership => {
+export function getMembership(id) {
+  let membershipData = axios.get(`/api/membership/${id}`).then(membership => {
     return membership.data[0];
   });
   return {

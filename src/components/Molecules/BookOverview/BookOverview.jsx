@@ -23,14 +23,14 @@ class BookOverview extends Component {
     super();
 
     this.state = {
-      bookTitle: "",
-      bookSubtitle: "",
-      bookImage: "",
-      bookSubject: "",
-      bookAuthor: "",
-      memRequired: false,
-      memIds: "",
-      bookVisible: false,
+      book_title: "",
+      book_subtitle: "",
+      book_image: "",
+      book_subject: "",
+      author: "",
+      membership_required_book: false,
+      membership_ids_book: "",
+      visible: false,
       editModal: false,
       deleteModal: false
     };
@@ -48,6 +48,14 @@ class BookOverview extends Component {
     const { getBook, id } = this.props;
     getBook(id);
     getSavedBooks();
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    const { book } = props;
+    if (book.book_id !== state.book_id) {
+      return { ...book };
+    }
+    return null;
   }
 
   /** Interaction Methods **/
@@ -81,7 +89,7 @@ class BookOverview extends Component {
             break;
           }
           _this.setState({
-            bookImage: result[0].path.slice(i)
+            book_image: result[0].path.slice(i)
           });
         }
       }
@@ -90,25 +98,25 @@ class BookOverview extends Component {
 
   updateBook() {
     const {
-      bookTitle,
-      bookSubtitle,
-      bookImage,
-      bookSubject,
-      bookAuthor,
-      memRequired,
-      memIds,
-      bookVisible
+      book_title,
+      book_subtitle,
+      book_image,
+      book_subject,
+      author,
+      membership_required_book,
+      membership_ids_book,
+      visible
     } = this.state;
     const { book, updateBook } = this.props;
     const body = {
-      book_title: bookTitle,
-      book_subtitle: bookSubtitle,
-      book_image: bookImage,
-      book_subject: bookSubject,
-      author: bookAuthor,
-      membership_required_book: memRequired,
-      membership_ids_book: memIds,
-      visible: bookVisible
+      book_title,
+      book_subtitle,
+      book_image,
+      book_subject,
+      author,
+      membership_required_book,
+      membership_ids_book,
+      visible
     };
     const id = book.book_id;
 
@@ -135,7 +143,18 @@ class BookOverview extends Component {
   /** Render Methods **/
   render() {
     const { book, user, savedBooks } = this.props;
-    const { editModal, deleteModal } = this.state;
+    const {
+      editModal,
+      deleteModal,
+      book_title,
+      book_subtitle,
+      book_image,
+      book_subject,
+      author,
+      membership_required_book,
+      membership_ids_book,
+      visible
+    } = this.state;
 
     let isSaved =
       savedBooks &&
@@ -146,13 +165,11 @@ class BookOverview extends Component {
         ? true
         : false;
 
-    let imageUrl = `http://res.cloudinary.com/symplit/image/upload/${
-      book.book_image
-    }`;
+    let imageUrl = `http://res.cloudinary.com/symplit/image/upload/${book_image}`;
 
     let authorMap =
-      book.author && book.author.length > 0
-        ? book.author.map((e, i) => {
+      author && author.length > 0
+        ? author.map((e, i) => {
             return <div key={i}>{e}</div>;
           })
         : null;
@@ -171,8 +188,8 @@ class BookOverview extends Component {
       <div className="bookoverview">
         <img src={imageUrl} alt="Book" className="singlebookimage" />
         <div className="booksummary">
-          <h1>{book.book_title}</h1>
-          <h2>{book.book_subtitle}</h2>
+          <h1>{book_title}</h1>
+          <h2>{book_subtitle}</h2>
           <h3>{authorMap}</h3>
           {addRemoveButton}
           <div className="adminbuttoncontainer">
@@ -200,14 +217,14 @@ class BookOverview extends Component {
           closeModal={() => this.closeModal("edit")}
           onChange={this.handleInputUpdate}
           handleImage={this.handleImage}
-          bookTitle={book && book.book_title}
-          bookSubTitle={book && book.book_subtitle}
-          bookImage={book && book.book_image}
-          bookSubject={book && book.book_subject}
-          bookAuthor={book && book.author}
-          memRequired={book && book.membership_required_book}
-          memIds={book && book.membership_ids_book}
-          bookVisible={book && book.visible}
+          book_title={book_title}
+          book_subtitle={book_subtitle}
+          book_image={book_image}
+          book_subject={book_subject}
+          author={author}
+          membership_required_book={membership_required_book}
+          membership_ids_book={membership_ids_book}
+          visible={visible}
           submit={this.updateBook}
         />
 

@@ -6,7 +6,7 @@ const GET_SECTION_VIDEO = "GET_SECTION_VIDEO";
 
 export const getSectionVideo = id => {
   let sectionVideoData = axios
-    .get(`/api/sectionvideo/${id}`)
+    .get(`/api/section_video/${id}`)
     .then(sectionVideo => {
       return sectionVideo.data[0];
     });

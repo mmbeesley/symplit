@@ -56,7 +56,7 @@ export const deleteSection = (id, bookId) => {
 };
 
 export const createSectionVideo = body => {
-  let sectionsData = axios.post("/api/sectionvideos", body).then(sections => {
+  let sectionsData = axios.post("/api/section_videos", body).then(sections => {
     return sections.data;
   });
   return {
@@ -67,7 +67,7 @@ export const createSectionVideo = body => {
 
 export const updateSectionVideo = (id, body) => {
   let sectionsData = axios
-    .put(`/api/sectionvideos/${id}`, body)
+    .put(`/api/section_videos/${id}`, body)
     .then(sections => {
       clearSectionVideo();
       return sections.data;
@@ -80,7 +80,7 @@ export const updateSectionVideo = (id, body) => {
 
 export const deleteSectionVideo = (id, chapterId) => {
   let sectionsData = axios
-    .delete(`/api/sectionvideos/${id}/${chapterId}`)
+    .delete(`/api/section_videos/${id}/${chapterId}`)
     .then(sections => {
       clearSectionVideo();
       return sections.data;

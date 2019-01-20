@@ -11,7 +11,7 @@ export default function VideoSelectModal(props) {
   let videosMap = videos.length
     ? videos.map((e, i) => {
         return (
-          <div>
+          <div key={e.video_id}>
             <h1>{e.video_title}</h1>
             <AdminButton
               onClick={() => openModal("videoEdit", e.video_id)}

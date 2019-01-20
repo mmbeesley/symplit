@@ -30,7 +30,7 @@ export default function PracticeTile(props) {
     completed.length === problems.length ? "practicedone" : "practicetile";
 
   return (
-    <div className={tileClass} key={problems.sectionTitle}>
+    <div className={tileClass} key={problems.section_title}>
       <Link to={`/practice/${bookId}/${chapter}/${section}`}>
         <div className="practicetilehead">
           {chapter}.{section}

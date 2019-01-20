@@ -12,39 +12,39 @@ export default function MembershipModal(props) {
     active,
     closeModal,
     onChange,
-    membershipTitle,
-    membershipDescription,
-    membershipPrice,
-    membershipRecurring,
-    membershipPeriod,
+    membership_title,
+    membership_desc,
+    membership_price,
+    membership_recurring,
+    membership_period,
     submit
   } = props;
   return (
     <Modals active={active} closeModal={closeModal}>
       <TextField
         placeholder="Membership Title"
-        value={membershipTitle}
-        onChange={e => onChange("membershipTitle", e.target.value)}
+        value={membership_title}
+        onChange={e => onChange("membership_title", e.target.value)}
       />
       <TextField
         placeholder="Membership Description"
-        value={membershipDescription}
-        onChange={e => onChange("membershipDescription", e.target.value)}
+        value={membership_desc}
+        onChange={e => onChange("membership_desc", e.target.value)}
       />
       <TextField
         placeholder="Membership Price"
-        value={membershipPrice}
-        onChange={e => onChange("membershipPrice", e.target.value)}
+        value={membership_price}
+        onChange={e => onChange("membership_price", e.target.value)}
       />
       <CheckBoxField
         title="Is this Recurring?"
-        checked={membershipRecurring}
-        onChange={e => onChange("membershipRecurring", e.target.checked)}
+        checked={membership_recurring}
+        onChange={e => onChange("membership_recurring", e.target.checked)}
       />
       <TextField
         placeholder="Membership Period"
-        value={membershipPeriod}
-        onChange={e => onChange("membershipPeriod", e.target.value)}
+        value={membership_period}
+        onChange={e => onChange("membership_period", e.target.value)}
       />
       <SubmitButton submit={submit} />
     </Modals>

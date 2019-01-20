@@ -9,10 +9,10 @@ import AdminButton from "../../Atoms/AdminButton/AdminButton";
 export default function SectionVideo(props) {
   const { video, user, openModal } = props;
   const {
-    sectionVideoTitle,
-    sectionVideoId,
-    videoUrl,
-    sectionVideoText
+    section_video_title,
+    section_video_id,
+    video_url,
+    section_video_text
   } = video;
   const style = {
     border: "solid",
@@ -23,13 +23,13 @@ export default function SectionVideo(props) {
   };
 
   return (
-    <a name={sectionVideoTitle}>
+    <a name={section_video_title}>
       <div className="videotile">
-        <div className="videotitle">{sectionVideoTitle}</div>
+        <div className="videotitle">{section_video_title}</div>
         {!user.is_admin ? null : (
           <AdminButton
             color="blue"
-            onClick={() => openModal("edit", sectionVideoId)}
+            onClick={() => openModal("edit", section_video_id)}
           >
             Edit Video
           </AdminButton>
@@ -37,15 +37,15 @@ export default function SectionVideo(props) {
         {!user.is_admin ? null : (
           <AdminButton
             color="blue"
-            onClick={() => openModal("delete", sectionVideoId)}
+            onClick={() => openModal("delete", section_video_id)}
           >
             Delete Video
           </AdminButton>
         )}
         <div className="videobody">
-          <ReactPlayer url={videoUrl} style={style} className="reactplayer" />
+          <ReactPlayer url={video_url} style={style} className="reactplayer" />
           <div className="videodesc">
-            <div>{sectionVideoText}</div>
+            <div>{section_video_text}</div>
           </div>
         </div>
       </div>

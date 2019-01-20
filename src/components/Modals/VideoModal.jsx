@@ -11,8 +11,8 @@ export default function VideoModal(props) {
     active,
     closeModal,
     onChange,
-    vimeoVideoTitle,
-    vimeoVideoUrl,
+    video_title,
+    video_url,
     submit
   } = props;
 
@@ -20,13 +20,13 @@ export default function VideoModal(props) {
     <Modals active={active} closeModal={closeModal}>
       <TextField
         placeholder="Vimeo Video Title"
-        value={vimeoVideoTitle}
-        onChange={e => onChange("vimeoVideoTitle", e.target.value)}
+        value={video_title}
+        onChange={e => onChange("video_title", e.target.value)}
       />
       <TextField
         placeholder="Vimeo Video URL"
-        value={vimeoVideoUrl}
-        onChange={e => onChange("vimeoVideoUrl", e.target.value)}
+        value={video_url}
+        onChange={e => onChange("video_url", e.target.value)}
       />
       <SubmitButton submit={submit} />
     </Modals>

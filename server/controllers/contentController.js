@@ -32,33 +32,34 @@ module.exports = {
     db.get_allsections([chapterId]).then(sections => {
       var results = [];
       for (var i = 0, obj = {}; i < sections.length; i++) {
-        if (sections[i].section_title != obj.sectionTitle) {
+        if (sections[i].section_title != obj.section_title) {
           obj = {
-            sectionId: sections[i].section_id,
-            sectionNumber: sections[i].section_number,
-            sectionTitle: sections[i].section_title,
-            sectionText: sections[i].section_text,
-            memRequired: sections[i].membership_required_section,
-            memIds: sections[i].membership_ids_section,
-            practiceProblemsIds: sections[i].practice_problems_ids,
-            sectionHandout: sections[i].section_handout,
-            sectionVideos: []
+            section_id: sections[i].section_id,
+            section_number: sections[i].section_number,
+            section_title: sections[i].section_title,
+            section_text: sections[i].section_text,
+            membership_required_section:
+              sections[i].membership_required_section,
+            membership_ids_section: sections[i].membership_ids_section,
+            practice_problems_ids: sections[i].practice_problems_ids,
+            section_handout: sections[i].section_handout,
+            section_videos: []
           };
           results.push(obj);
         }
 
-        obj.sectionVideos.push({
-          sectionVideoId: sections[i].section_video_id,
-          videoId: sections[i].video_id,
-          sectionVideoTitle: sections[i].section_video_title,
-          sectionVideoText: sections[i].section_video_text,
-          memRequired: sections[i].membership_required_video,
-          memIds: sections[i].membership_ids,
-          sectionVideoHandout: sections[i].section_video_handout,
-          videoTitle: sections[i].video_title,
-          videoUrl: sections[i].video_url,
-          videoProblems: sections[i].video_problems,
-          videoThumbnail: sections[i].video_thumbnail
+        obj.section_videos.push({
+          section_video_id: sections[i].section_video_id,
+          video_id: sections[i].video_id,
+          section_video_title: sections[i].section_video_title,
+          section_video_text: sections[i].section_video_text,
+          membership_required_video: sections[i].membership_required_video,
+          membership_ids: sections[i].membership_ids,
+          section_video_handout: sections[i].section_video_handout,
+          video_title: sections[i].video_title,
+          video_url: sections[i].video_url,
+          video_problems: sections[i].video_problems,
+          video_thumbnail: sections[i].video_thumbnail
         });
       }
       res.status(200).send(results);

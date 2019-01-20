@@ -13,14 +13,14 @@ export default function SectionModal(props) {
     active,
     closeModal,
     onChange,
-    sectionTitle,
-    sectionNumber,
-    sectionSummary,
-    memRequired,
-    memIds,
-    problemIds,
+    section_title,
+    section_number,
+    section_text,
+    membership_required_section,
+    membership_ids,
+    problem_ids,
     handleHandout,
-    sectionHandout,
+    section_handout,
     submit
   } = props;
 
@@ -28,37 +28,39 @@ export default function SectionModal(props) {
     <Modals active={active} closeModal={closeModal}>
       <TextField
         placeholder="Section Title"
-        value={sectionTitle}
-        onChange={e => onChange("sectionTitle", e.target.value)}
+        value={section_title}
+        onChange={e => onChange("section_title", e.target.value)}
       />
       <TextField
         placeholder="Section Number"
-        value={sectionNumber}
-        onChange={e => onChange("sectionNumber", e.target.value)}
+        value={section_number}
+        onChange={e => onChange("section_number", e.target.value)}
       />
       <TextField
         placeholder="Section Summary"
-        value={sectionSummary}
-        onChange={e => onChange("sectionSummary", e.target.value)}
+        value={section_text}
+        onChange={e => onChange("section_text", e.target.value)}
       />
       <CheckBoxField
         title="Is Membership Required"
-        checked={memRequired}
-        onChange={e => onChange("memRequired", e.target.checked)}
+        checked={membership_required_section}
+        onChange={e =>
+          onChange("membership_required_section", e.target.checked)
+        }
       />
       <TextField
         placeholder="Section Membership IDs"
-        value={memIds}
-        onChange={e => onChange("memIds", e.target.value)}
+        value={membership_ids}
+        onChange={e => onChange("membership_ids", e.target.value)}
       />
       <TextField
         placeholder="Practice Problem IDs"
-        value={problemIds}
-        onChange={e => onChange("problemIds", e.target.value)}
+        value={problem_ids}
+        onChange={e => onChange("problem_ids", e.target.value)}
       />
       <HandoutField
         handleHandout={handleHandout}
-        sectionHandout={sectionHandout}
+        section_handout={section_handout}
       />
       <SubmitButton submit={submit} />
     </Modals>

@@ -13,14 +13,14 @@ export default function BookModal(props) {
     active,
     closeModal,
     onChange,
-    bookTitle,
-    bookSubTitle,
-    bookImage,
-    bookSubject,
-    bookAuthor,
-    memRequired,
-    memIds,
-    bookVisible,
+    book_title,
+    book_subtitle,
+    book_image,
+    book_subject,
+    author,
+    membership_required_book,
+    membership_ids_book,
+    visible,
     submit,
     handleImage
   } = props;
@@ -28,39 +28,39 @@ export default function BookModal(props) {
     <Modals active={active} closeModal={closeModal}>
       <TextField
         placeholder="Book Title"
-        value={bookTitle}
-        onChange={e => onChange("bookTitle", e.target.value)}
+        value={book_title}
+        onChange={e => onChange("book_title", e.target.value)}
       />
       <TextField
         placeholder="Book Subtitle"
-        value={bookSubTitle}
-        onChange={e => onChange("bookSubTitle", e.target.value)}
+        value={book_subtitle}
+        onChange={e => onChange("book_subtitle", e.target.value)}
       />
-      <ImageField handleImage={handleImage} bookImage={bookImage} />
+      <ImageField handleImage={handleImage} book_image={book_image} />
       <TextField
         placeholder="Book Subject"
-        value={bookSubject}
-        onChange={e => onChange("bookSubject", e.target.value)}
+        value={book_subject}
+        onChange={e => onChange("book_subject", e.target.value)}
       />
       <TextField
         placeholder="Book Author(s)"
-        value={bookAuthor}
-        onChange={e => onChange("bookAuthor", e.target.value)}
+        value={author}
+        onChange={e => onChange("author", e.target.value)}
       />
       <CheckBoxField
         title="Is Membership Required"
-        checked={memRequired}
-        onChange={e => onChange("memRequired", e.target.checked)}
+        checked={membership_required_book}
+        onChange={e => onChange("membership_required_book", e.target.checked)}
       />
       <TextField
         placeholder="Membership IDs"
-        value={memIds}
-        onChange={e => onChange("memIds", e.target.value)}
+        value={membership_ids_book}
+        onChange={e => onChange("membership_ids_book", e.target.value)}
       />
       <CheckBoxField
         title="Is this book visible yet"
-        checked={bookVisible}
-        onChange={e => onChange("bookVisible", e.target.checked)}
+        checked={visible}
+        onChange={e => onChange("visible", e.target.checked)}
       />
       <SubmitButton submit={submit} />
     </Modals>

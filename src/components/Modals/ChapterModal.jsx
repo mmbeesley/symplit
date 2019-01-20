@@ -12,33 +12,35 @@ export default function ChapterModal(props) {
     active,
     closeModal,
     onChange,
-    chapterTitle,
-    bookChapter,
-    memRequired,
-    memIds,
+    chapter_title,
+    book_chapter,
+    membership_required_chapter,
+    membership_ids,
     submit
   } = props;
   return (
     <Modals active={active} closeModal={closeModal}>
       <TextField
         placeholder="Chapter Title"
-        value={chapterTitle}
-        onChange={e => onChange("chapterTitle", e.target.value)}
+        value={chapter_title}
+        onChange={e => onChange("chapter_title", e.target.value)}
       />
       <TextField
         placeholder="Chapter Number"
-        value={bookChapter}
-        onChange={e => onChange("bookChapter", e.target.value)}
+        value={book_chapter}
+        onChange={e => onChange("book_chapter", e.target.value)}
       />
       <CheckBoxField
         title="Is Membership Required"
-        checked={memRequired}
-        onChange={e => onChange("memRequired", e.target.checked)}
+        checked={membership_required_chapter}
+        onChange={e =>
+          onChange("membership_required_chapter", e.target.checked)
+        }
       />
       <TextField
         placeholder="Chapter Membership IDs"
-        value={memIds}
-        onChange={e => onChange("memIds", e.target.value)}
+        value={membership_ids}
+        onChange={e => onChange("membership_ids", e.target.value)}
       />
       <SubmitButton submit={submit} />
     </Modals>

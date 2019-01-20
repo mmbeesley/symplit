@@ -161,18 +161,18 @@ app.delete(
 
 //Admin Section Video Endpoints
 app.get(
-  "/api/sectionvideo/:sectionvideoId",
+  "/api/section_video/:sectionVideoId",
   sectionVideoController.getOneSectionVideo
-); //Get single sectionvideo based on sectionvideo id
-app.post("/api/sectionvideos", sectionVideoController.createSectionVideo); //Req.body will send section_id, video_id, sectionvideo_title, sectionvideo_text, membership_required, membership_ids. Adds new sectionvideo to sectionvideos table.
+); //Get single section_video based on section_video id
+app.post("/api/section_videos", sectionVideoController.createSectionVideo); //Req.body will send section_id, video_id, section_video_title, section_video_text, membership_required, membership_ids. Adds new section_video to section_videos table.
 app.put(
-  "/api/sectionvideos/:sectionvideoId",
+  "/api/section_videos/:sectionVideoId",
   sectionVideoController.updateSectionVideo
-); //Update sectionvideo details based on sectionvideo id
+); //Update section_video details based on section_video id
 app.delete(
-  "/api/sectionvideos/:sectionvideoId/:chapterId",
+  "/api/section_videos/:sectionVideoId/:chapterId",
   sectionVideoController.deleteSectionVideo
-); //Delete sectionvideo based on sectionvideo id
+); //Delete section_video based on section_video id
 
 //Admin Video Endpoints
 app.get("/api/videos", videoController.getVideos); //Get all videos for selection to add to sections
@@ -229,7 +229,8 @@ app.delete(
 app.get("/api/memberships", membershipController.getMemberships); //Gets list of memberships available for purchase
 
 //Admin Memberships Endpoints
-app.get("/api/membership", membershipController.getOneMembership); //Gets one membership based on membership id for admin view
+app.get("/api/membership/user", membershipController.getUserMembership); //Gets one membership based on req user's membership
+app.get("/api/membership/:membershipId", membershipController.getOneMembership); //Gets one membership based on req param id for admin view
 app.post("/api/memberships", membershipController.createMembership); //Req.body sends membership_title, membership_description, membership_price, membership_recurring, membership_period. Adds membership to memberships table
 app.put(
   "/api/memberships/:membershipId",

@@ -14,14 +14,14 @@ export default function SectionVideoModal(props) {
     active,
     closeModal,
     onChange,
-    sectionVideoTitle,
-    sectionVideoText,
+    section_video_title,
+    section_video_text,
     openModal,
-    videoTitle,
-    memRequired,
-    memIds,
+    video_title,
+    membership_required_video,
+    membership_ids,
     handleHandout,
-    videoHandout,
+    section_video_handout,
     submit
   } = props;
 
@@ -29,28 +29,28 @@ export default function SectionVideoModal(props) {
     <Modals active={active} closeModal={closeModal}>
       <TextField
         placeholder="Section Video Title"
-        value={sectionVideoTitle}
-        onChange={e => onChange("sectionVideoTitle", e.target.value)}
+        value={section_video_title}
+        onChange={e => onChange("section_video_title", e.target.value)}
       />
       <TextField
         placeholder="Section Video Text"
-        value={sectionVideoText}
-        onChange={e => onChange("sectionVideoText", e.target.value)}
+        value={section_video_text}
+        onChange={e => onChange("section_video_text", e.target.value)}
       />
-      <VideoField openModal={openModal} videoTitle={videoTitle} />
+      <VideoField openModal={openModal} video_title={video_title} />
       <CheckBoxField
         title="Is Membership Required"
-        checked={memRequired}
-        onChange={e => onChange("memRequired", e.target.checked)}
+        checked={membership_required_video}
+        onChange={e => onChange("membership_required_video", e.target.checked)}
       />
       <TextField
         placeholder="Section Video Membership IDs"
-        value={memIds}
-        onChange={e => onChange("memIds", e.target.value)}
+        value={membership_ids}
+        onChange={e => onChange("membership_ids", e.target.value)}
       />
       <HandoutField
         handleHandout={handleHandout}
-        sectionHandout={videoHandout}
+        sectionHandout={section_video_handout}
       />
       <SubmitButton submit={submit} />
     </Modals>

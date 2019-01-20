@@ -26,10 +26,10 @@ class StudyContainer extends Component {
       addModal: false,
       editModal: false,
       deleteModal: false,
-      bookChapter: null,
-      chapterTitle: "",
-      chapterMemRequired: false,
-      chapterMemIds: ""
+      book_chapter: null,
+      chapter_title: "",
+      membership_required_chapter: false,
+      membership_ids: ""
     };
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
@@ -43,6 +43,14 @@ class StudyContainer extends Component {
   componentDidMount() {
     const { getChapters, id } = this.props;
     getChapters(id);
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    const { chapter } = props;
+    if (chapter.chapter_id !== state.chapter_id) {
+      return { ...chapter };
+    }
+    return null;
   }
 
   /** Interaction Methods **/
@@ -73,17 +81,17 @@ class StudyContainer extends Component {
   addChapter() {
     const { id, createChapter } = this.props;
     const {
-      bookChapter,
-      chapterTitle,
-      chapterMemRequired,
-      chapterMemIds
+      book_chapter,
+      chapter_title,
+      membership_required_chapter,
+      membership_ids
     } = this.state;
     const body = {
       book_id: id,
-      book_chapter: bookChapter,
-      chapter_title: chapterTitle,
-      membership_required_chapter: chapterMemRequired,
-      membership_ids: chapterMemIds
+      book_chapter,
+      chapter_title,
+      membership_required_chapter,
+      membership_ids
     };
 
     createChapter(body);
@@ -92,18 +100,17 @@ class StudyContainer extends Component {
   updateChapter() {
     const { id, updateChapter, chapter } = this.props;
     const {
-      bookChapter,
-      chapterTitle,
-      chapterMemRequired,
-      chapterMemIds
+      book_chapter,
+      chapter_title,
+      membership_required_chapter,
+      membership_ids
     } = this.state;
     const body = {
       book_id: id,
-      book_chapter: bookChapter || chapter.book_chapter,
-      chapter_title: chapterTitle || chapter.chapter_title,
-      membership_required_chapter:
-        chapterMemRequired || chapter.membership_required_chapter,
-      membership_ids: chapterMemIds || chapter.membership_ids
+      book_chapter,
+      chapter_title,
+      membership_required_chapter,
+      membership_ids
     };
     const chapId = chapter.chapter_id;
 
@@ -140,15 +147,15 @@ class StudyContainer extends Component {
   }
 
   render() {
-    const { chapters, user, chapter } = this.props;
+    const { chapters, user } = this.props;
     const {
       addModal,
       editModal,
       deleteModal,
-      bookChapter,
-      chapterTitle,
-      chapterMemRequired,
-      chapterMemIds
+      book_chapter,
+      chapter_title,
+      membership_required_chapter,
+      membership_ids
     } = this.state;
 
     return (
@@ -167,10 +174,10 @@ class StudyContainer extends Component {
           active={addModal}
           closeModal={() => this.closeModal("add")}
           onChange={this.handleInputUpdate}
-          chapterTitle={chapterTitle}
-          bookChapter={bookChapter}
-          memRequired={chapterMemRequired}
-          memIds={chapterMemIds}
+          chapter_title={chapter_title}
+          book_chapter={book_chapter}
+          memRequired={membership_required_chapter}
+          memIds={membership_ids}
           submit={this.addChapter}
         />
 
@@ -178,10 +185,10 @@ class StudyContainer extends Component {
           active={editModal}
           closeModal={() => this.closeModal("edit")}
           onChange={this.handleInputUpdate}
-          chapterTitle={chapter && chapter.chapter_title}
-          bookChapter={chapter && chapter.book_chapter}
-          memRequired={chapter && chapter.membership_required_chapter}
-          memIds={chapter && chapter.membership_ids}
+          chapter_title={chapter_title}
+          book_chapter={book_chapter}
+          memRequired={membership_required_chapter}
+          memIds={membership_ids}
           submit={this.updateChapter}
         />
 

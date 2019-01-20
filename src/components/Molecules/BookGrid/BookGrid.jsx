@@ -26,14 +26,14 @@ class BookGrid extends Component {
       addModal: false,
       editModal: false,
       deleteModal: false,
-      bookTitle: "",
-      bookSubTitle: "",
-      bookImage: "",
-      bookSubject: "",
-      bookAuthor: "",
-      memRequired: false,
-      memIds: "",
-      bookVisible: false
+      book_title: "",
+      book_subtitle: "",
+      book_image: "",
+      book_subject: "",
+      author: "",
+      membership_required_book: false,
+      membership_ids_book: "",
+      visible: false
     };
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
@@ -47,6 +47,14 @@ class BookGrid extends Component {
   componentDidMount() {
     const { getBooks } = this.props;
     getBooks();
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    const { book } = props;
+    if (book.book_id !== state.book_id) {
+      return { ...book };
+    }
+    return null;
   }
 
   /** Interaction Methods **/
@@ -84,7 +92,7 @@ class BookGrid extends Component {
             break;
           }
           _this.setState({
-            bookImage: result[0].path.slice(i)
+            book_image: result[0].path.slice(i)
           });
         }
       }
@@ -93,50 +101,50 @@ class BookGrid extends Component {
 
   addBook() {
     const {
-      bookTitle,
-      bookSubtitle,
-      bookImage,
-      bookSubject,
-      bookAuthor,
-      memRequired,
-      memIds,
-      bookVisible
+      book_title,
+      book_subtitle,
+      book_image,
+      book_subject,
+      author,
+      membership_required_book,
+      membership_ids_book,
+      visible
     } = this.state;
     const { createBook } = this.props;
     const body = {
-      book_title: bookTitle,
-      book_subtitle: bookSubtitle,
-      book_image: bookImage,
-      book_subject: bookSubject,
-      author: bookAuthor,
-      membership_required_book: memRequired,
-      membership_ids_book: memIds,
-      visible: bookVisible
+      book_title,
+      book_subtitle,
+      book_image,
+      book_subject,
+      author,
+      membership_required_book,
+      membership_ids_book,
+      visible
     };
     createBook(body);
   }
 
   updateBook() {
     const {
-      bookTitle,
-      bookSubtitle,
-      bookImage,
-      bookSubject,
-      bookAuthor,
-      memRequired,
-      memIds,
-      bookVisible
+      book_title,
+      book_subtitle,
+      book_image,
+      book_subject,
+      author,
+      membership_required_book,
+      membership_ids_book,
+      visible
     } = this.state;
     const { book, updateBook } = this.props;
     const body = {
-      book_title: bookTitle,
-      book_subtitle: bookSubtitle,
-      book_image: bookImage,
-      book_subject: bookSubject,
-      author: bookAuthor,
-      membership_required_book: memRequired,
-      membership_ids_book: memIds,
-      visible: bookVisible
+      book_title,
+      book_subtitle,
+      book_image,
+      book_subject,
+      author,
+      membership_required_book,
+      membership_ids_book,
+      visible
     };
     const id = book.book_id;
 
@@ -165,19 +173,19 @@ class BookGrid extends Component {
   }
 
   render() {
-    const { books, user, book, limiter } = this.props;
+    const { books, user, limiter } = this.props;
     const {
       addModal,
       editModal,
       deleteModal,
-      bookTitle,
-      bookSubTitle,
-      bookImage,
-      bookSubject,
-      bookAuthor,
-      memRequired,
-      memIds,
-      bookVisible
+      book_title,
+      book_subtitle,
+      book_image,
+      book_subject,
+      author,
+      membership_required_book,
+      membership_ids_book,
+      visible
     } = this.state;
 
     return (
@@ -203,14 +211,14 @@ class BookGrid extends Component {
           closeModal={() => this.closeModal("add")}
           handleImage={this.handleImage}
           onChange={this.handleInputUpdate}
-          bookTitle={bookTitle}
-          bookSubTitle={bookSubTitle}
-          bookImage={bookImage}
-          bookSubject={bookSubject}
-          bookAuthor={bookAuthor}
-          memRequired={memRequired}
-          memIds={memIds}
-          bookVisible={bookVisible}
+          book_title={book_title}
+          book_subtitle={book_subtitle}
+          book_image={book_image}
+          book_subject={book_subject}
+          author={author}
+          membership_required_book={membership_required_book}
+          membership_ids_book={membership_ids_book}
+          visible={visible}
           submit={this.addBook}
         />
 
@@ -219,14 +227,14 @@ class BookGrid extends Component {
           closeModal={() => this.closeModal("edit")}
           onChange={this.handleInputUpdate}
           handleImage={this.handleImage}
-          bookTitle={book && book.book_title}
-          bookSubTitle={book && book.book_subtitle}
-          bookImage={book && book.book_image}
-          bookSubject={book && book.book_subject}
-          bookAuthor={book && book.author}
-          memRequired={book && book.membership_required_book}
-          memIds={book && book.membership_ids_book}
-          bookVisible={book && book.visible}
+          book_title={book_title}
+          book_subtitle={book_subtitle}
+          book_image={book_image}
+          book_subject={book_subject}
+          author={author}
+          membership_required_book={membership_required_book}
+          membership_ids_book={membership_ids_book}
+          visible={visible}
           submit={this.updateBook}
         />
 

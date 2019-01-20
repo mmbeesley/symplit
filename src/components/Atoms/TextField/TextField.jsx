@@ -8,7 +8,7 @@ export default function TextField(props) {
       <input
         type="text"
         placeholder={placeholder}
-        value={value}
+        value={value || ""}
         onChange={onChange}
       />
     </div>

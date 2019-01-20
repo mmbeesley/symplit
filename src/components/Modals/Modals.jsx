@@ -18,14 +18,20 @@ const styles = {
 };
 
 /** Exported Component **/
-export default function Modals(props) {
-  const { closeModal, children, active } = props;
-  return (
-    <Modal isOpen={active} onRequestClose={closeModal} style={styles}>
-      <div className="closebuttoncontainer">
-        <CloseModalButton closeModal={closeModal} />
-      </div>
-      <div className="modalcontainer">{children}</div>
-    </Modal>
-  );
+export default class Modals extends React.Component {
+  componentDidMount() {
+    Modal.setAppElement("#root");
+  }
+
+  render() {
+    const { closeModal, children, active } = this.props;
+    return (
+      <Modal isOpen={active} onRequestClose={closeModal} style={styles}>
+        <div className="closebuttoncontainer">
+          <CloseModalButton closeModal={closeModal} />
+        </div>
+        <div className="modalcontainer">{children}</div>
+      </Modal>
+    );
+  }
 }

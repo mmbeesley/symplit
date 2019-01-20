@@ -1,3 +1,5 @@
+// TODO: payment, get one membership with edit, and progress modals
+
 /** NPM Modules **/
 import React, { Component } from "react";
 
@@ -49,6 +51,14 @@ class Membership extends Component {
     getMemberships();
   }
 
+  static getDerivedStateFromProps(props, state) {
+    const { membership } = props;
+    if (membership.membership_id !== state.membership_id) {
+      return { ...membership };
+    }
+    return null;
+  }
+
   /** Interaction Methods **/
   openModal(type, id) {
     const key = `${type}Modal`;
@@ -77,20 +87,20 @@ class Membership extends Component {
 
   addMembership() {
     const {
-      membershipTitle,
-      membershipDescription,
-      membershipPrice,
-      membershipPeriod,
-      membershipRecurring
+      membership_title,
+      membership_desc,
+      membership_price,
+      membership_period,
+      membership_recurring
     } = this.state;
     const { createMembership } = this.props;
 
     const body = {
-      membership_title: membershipTitle,
-      membership_desc: membershipDescription,
-      membership_price: membershipPrice,
-      membership_period: membershipPeriod,
-      membership_recurring: membershipRecurring
+      membership_title,
+      membership_desc,
+      membership_price,
+      membership_period,
+      membership_recurring
     };
 
     createMembership(body);
@@ -98,20 +108,20 @@ class Membership extends Component {
 
   updateMembership() {
     const {
-      membershipTitle,
-      membershipDescription,
-      membershipPrice,
-      membershipPeriod,
-      membershipRecurring
+      membership_title,
+      membership_desc,
+      membership_price,
+      membership_period,
+      membership_recurring
     } = this.state;
     const { updateMembership, membership } = this.props;
 
     const body = {
-      membership_title: membershipTitle,
-      membership_desc: membershipDescription,
-      membership_price: membershipPrice,
-      membership_period: membershipPeriod,
-      membership_recurring: membershipRecurring
+      membership_title,
+      membership_desc,
+      membership_price,
+      membership_period,
+      membership_recurring
     };
 
     updateMembership(membership.membership_id, body);
@@ -156,14 +166,14 @@ class Membership extends Component {
   }
 
   render() {
-    const { user, memberships, membership } = this.props;
+    const { user, memberships } = this.props;
     const {
       addModal,
-      membershipTitle,
-      membershipDescription,
-      membershipPrice,
-      membershipPeriod,
-      membershipRecurring,
+      membership_title,
+      membership_desc,
+      membership_price,
+      membership_period,
+      membership_recurring,
       editModal,
       deleteModal,
       selectModal
@@ -202,6 +212,61 @@ class Membership extends Component {
           </div>
         </div>
 
+        {/* <Modal
+          isOpen={this.state.payModal}
+          onRequestClose={this.closePayModal}
+          style={addStyle}
+        >
+          <div className="closebuttoncontainer">
+            <button onClick={this.closePayModal} className="closebutton">
+              X
+            </button>
+          </div>
+          <div className="paymentoptions">
+            <h3>
+              You have selected the {this.state.selected.membership_title} Plan
+            </h3>
+            <StripeCheckout
+              name={"Your Membership"}
+              description={"Please enter your card information:"}
+              token={this.onToken}
+              stripeKey={stripe.pub_key}
+              amount={this.state.selected.membership_price * 100}
+            />
+          </div>
+        </Modal> */}
+
+        {/* <Modal isOpen={this.state.progressModal} style={addStyle}>
+          <div>Please wait while your order is processed...</div>
+        </Modal>
+
+        <Modal
+          isOpen={this.state.successModal}
+          onRequestClose={this.closeSuccessModal}
+          style={addStyle}
+        >
+          <div className="closebuttoncontainer">
+            <button onClick={this.closeSuccessModal}>X</button>
+          </div>
+          <div>Thank you for your payment. Now go and enjoy the Maths!</div>
+        </Modal>
+
+        <Modal
+          isOpen={this.state.failureModal}
+          onRequestClose={this.closeFailureModal}
+          style={addStyle}
+        >
+          <div className="closebuttoncontainer">
+            <button onClick={this.closeFailureModal}>X</button>
+          </div>
+          <div>
+            It appears that there was an error with your payment, please try
+            again or with a different card. If this problem persists, please{" "}
+            <a href="mailto:support@symplit.com">Contact Us</a>. Thank you for
+            your patience.
+          </div>
+        </Modal> */}
+
         <MembershipSelectModal
           active={selectModal}
           closeModal={() => this.closeModal("select")}
@@ -213,11 +278,11 @@ class Membership extends Component {
           active={addModal}
           closeModal={() => this.closeModal("add")}
           onChange={this.handleInputUpdate}
-          membershipTitle={membershipTitle}
-          membershipDescription={membershipDescription}
-          membershipPrice={membershipPrice}
-          membershipRecurring={membershipRecurring}
-          membershipPeriod={membershipPeriod}
+          membership_title={membership_title}
+          membership_desc={membership_desc}
+          membership_price={membership_price}
+          membership_recurring={membership_recurring}
+          membership_period={membership_period}
           submit={this.addMembership}
         />
 
@@ -225,11 +290,11 @@ class Membership extends Component {
           active={editModal}
           closeModal={() => this.closeModal("edit")}
           onChange={this.handleInputUpdate}
-          membershipTitle={membership && membership.membership_title}
-          membershipDescription={membership && membership.membership_desc}
-          membershipPrice={membership && membership.membership_price}
-          membershipRecurring={membership && membership.membership_recurring}
-          membershipPeriod={membership && membership.membership_period}
+          membership_title={membership_title}
+          membership_desc={membership_desc}
+          membership_price={membership_price}
+          membership_recurring={membership_recurring}
+          membership_period={membership_period}
           submit={this.updateMembership}
         />
 

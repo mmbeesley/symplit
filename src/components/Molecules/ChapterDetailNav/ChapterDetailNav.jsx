@@ -16,18 +16,18 @@ class ChapterDetailNav extends Component {
     let navMap =
       sections && sections.length > 0
         ? sections.map((e, i) => {
-            let videoMap = e.sectionVideos.map((x, y) => {
+            let videoMap = e.section_videos.map((x, y) => {
               return (
-                <a href={`#${x.sectionVideoTitle}`} key={x.sectionVideoId}>
-                  <li className="videolistitem">{x.sectionVideoTitle}</li>
+                <a href={`#${x.section_video_title}`} key={x.section_video_id}>
+                  <li className="videolistitem">{x.section_video_title}</li>
                 </a>
               );
             });
             return (
-              <div key={e.sectionTitle}>
-                <a href={`#${e.sectionTitle}`}>
+              <div key={e.section_title}>
+                <a href={`#${e.section_title}`}>
                   <div className="sectiontitle">
-                    {chapter}.{e.sectionNumber} {e.sectionTitle}
+                    {chapter}.{e.section_number} {e.section_title}
                   </div>
                 </a>
                 <ul className="videolist">{videoMap}</ul>

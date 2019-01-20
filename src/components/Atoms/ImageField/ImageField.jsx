@@ -1,7 +1,7 @@
 import React from "react";
 
 export default function ImageField(props) {
-  const { handleImage, bookImage } = props;
+  const { handleImage, book_image } = props;
   return (
     <div>
       <div className="checkboxfield">
@@ -10,7 +10,7 @@ export default function ImageField(props) {
           Add Image
         </button>
       </div>
-      <p>Current Image: {bookImage}</p>
+      <p>Current Image: {book_image}</p>
     </div>
   );
 }

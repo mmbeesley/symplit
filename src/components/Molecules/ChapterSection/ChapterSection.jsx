@@ -35,14 +35,14 @@ class ChapterSection extends Component {
       videoAddModal: false,
       videoEditModal: false,
       videoDeleteModal: false,
-      sectionVideoTitle: "",
-      sectionVideoText: "",
-      memRequired: false,
-      memIds: "",
-      videoHandout: "",
+      section_video_title: "",
+      section_video_text: "",
+      membership_required_video: false,
+      membership_ids: "",
+      section_video_handout: "",
       selectedVideo: {},
-      vimeoVideoTitle: "",
-      vimeoVideoUrl: ""
+      video_title: "",
+      video_url: ""
     };
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
@@ -105,20 +105,20 @@ class ChapterSection extends Component {
     const { createSectionVideo, section, match } = this.props;
     const {
       selectedVideo,
-      sectionVideoTitle,
-      sectionVideoText,
-      memRequired,
-      memIds,
-      videoHandout
+      section_video_title,
+      section_video_text,
+      membership_required_video,
+      membership_ids,
+      section_video_handout
     } = this.state;
     const body = {
       section_id: section.sectionId,
       video_id: selectedVideo.video_id,
-      sectionvideo_title: sectionVideoTitle,
-      sectionvideo_text: sectionVideoText,
-      membership_required_video: memRequired,
-      membership_ids: memIds,
-      sectionvideo_handout: videoHandout,
+      section_video_title,
+      section_video_text,
+      membership_required_video,
+      membership_ids,
+      section_video_handout,
       chapterId: +match.params.chapter
     };
 
@@ -129,20 +129,20 @@ class ChapterSection extends Component {
     const { updateSectionVideo, section, sectionVideo, match } = this.props;
     const {
       selectedVideo,
-      sectionVideoTitle,
-      sectionVideoText,
-      memRequired,
-      memIds,
-      videoHandout
+      section_video_title,
+      section_video_text,
+      membership_required_video,
+      membership_ids,
+      section_video_handout
     } = this.state;
     const body = {
       section_id: section.sectionId,
       video_id: selectedVideo.video_id,
-      sectionvideo_title: sectionVideoTitle || section.section_video_title,
-      sectionvideo_text: sectionVideoText || section.section_video_text,
-      membership_required_video: memRequired,
-      membership_ids: memIds,
-      sectionvideo_handout: videoHandout,
+      section_video_title,
+      section_video_text,
+      membership_required_video,
+      membership_ids,
+      section_video_handout,
       chapterId: +match.params.chapter
     };
     const id = sectionVideo.section_video_id;
@@ -166,9 +166,9 @@ class ChapterSection extends Component {
 
   addVideo() {
     const { createVideo } = this.props;
-    const { videoTitle, videoUrl } = this.state;
+    const { video_title, videoUrl } = this.state;
     const body = {
-      video_title: videoTitle,
+      video_title: video_title,
       video_url: videoUrl
     };
 
@@ -177,9 +177,9 @@ class ChapterSection extends Component {
 
   updateVideo() {
     const { updateVideo, video } = this.props;
-    const { videoTitle, videoUrl } = this.state;
+    const { video_title, videoUrl } = this.state;
     const body = {
-      video_title: videoTitle,
+      video_title: video_title,
       video_url: videoUrl
     };
     const id = video.video_id;
@@ -197,9 +197,10 @@ class ChapterSection extends Component {
   /** Render Methods **/
   renderSectionVideo(e, i) {
     const { user } = this.props;
+    console.log(e);
     return (
       <SectionVideo
-        key={e.sectionVideoTitle}
+        key={e.section_video_title}
         video={e}
         openModal={this.openModal}
         user={user}
@@ -217,7 +218,7 @@ class ChapterSection extends Component {
       videos,
       video
     } = this.props;
-    const { sectionTitle, sectionNumber, sectionVideos } = section;
+    const { section_title, section_number, section_videos } = section;
     const {
       addModal,
       editModal,
@@ -226,20 +227,20 @@ class ChapterSection extends Component {
       videoAddModal,
       videoEditModal,
       videoDeleteModal,
-      sectionVideoTitle,
-      sectionVideoText,
-      memRequired,
-      memIds,
-      videoHandout,
+      section_video_title,
+      section_video_text,
+      membership_required_video,
+      membership_ids,
+      section_video_handout,
       selectedVideo,
-      vimeoVideoTitle,
-      vimeoVideoUrl
+      video_title,
+      video_url
     } = this.state;
 
     return (
-      <a name={sectionTitle} className="sectionbodycontainer">
+      <a name={section_title} className="sectionbodycontainer">
         <div className="bodysectiontitle">
-          {match.params.chapter}.{sectionNumber} {sectionTitle}
+          {match.params.chapter}.{section_number} {section_title}
         </div>
         <div className="adminbuttoncontainer">
           {!user.is_admin ? null : (
@@ -249,7 +250,7 @@ class ChapterSection extends Component {
           )}
           {!user.is_admin ? null : (
             <AdminButton
-              onClick={() => openModal("edit", sectionNumber)}
+              onClick={() => openModal("edit", section_number)}
               color="blue"
             >
               Edit Section
@@ -257,7 +258,7 @@ class ChapterSection extends Component {
           )}
           {!user.is_admin ? null : (
             <AdminButton
-              onClick={() => openModal("delete", sectionNumber)}
+              onClick={() => openModal("delete", section_number)}
               color="blue"
             >
               Delete Section
@@ -265,8 +266,8 @@ class ChapterSection extends Component {
           )}
         </div>
         <div className="bodyvideocontainer">
-          {sectionVideos && sectionVideos.length
-            ? sectionVideos.map((e, i) => {
+          {section_videos && section_videos.length
+            ? section_videos.map((e, i) => {
                 return this.renderSectionVideo(e, i);
               })
             : null}
@@ -276,14 +277,14 @@ class ChapterSection extends Component {
           active={addModal}
           closeModal={() => this.closeModal("add")}
           onChange={this.handleInputUpdate}
-          sectionVideoTitle={sectionVideoTitle}
-          sectionVideoText={sectionVideoText}
+          section_video_title={section_video_title}
+          section_video_text={section_video_text}
           openModal={this.openModal}
-          videoTitle={selectedVideo && selectedVideo.video_title}
-          memRequired={memRequired}
-          memIds={memIds}
+          video_title={selectedVideo && selectedVideo.video_title}
+          membership_required_video={membership_required_video}
+          membership_ids={membership_ids}
           handleHandout={this.handleHandout}
-          videoHandout={videoHandout}
+          section_video_handout={section_video_handout}
           submit={this.addSectionVideo}
         />
 
@@ -291,14 +292,14 @@ class ChapterSection extends Component {
           active={editModal}
           closeModal={() => this.closeModal("edit")}
           onChange={this.handleInputUpdate}
-          sectionVideoTitle={sectionVideo && sectionVideo.section_video_title}
-          sectionVideoText={sectionVideo && sectionVideo.section_video_text}
+          section_video_title={section_video_title}
+          section_video_text={section_video_text}
           openModal={this.openModal}
-          videoTitle={sectionVideo && sectionVideo.video_title}
-          memRequired={sectionVideo && sectionVideo.membership_required_video}
-          memIds={sectionVideo && sectionVideo.membership_ds}
+          video_title={video_title}
+          membership_required_video={membership_required_video}
+          membership_ids={membership_ids}
           handleHandout={this.handleHandout}
-          videoHandout={sectionVideo && sectionVideo.section_video_handout}
+          section_video_handout={section_video_handout}
           submit={this.updateSectionVideo}
         />
 
@@ -320,16 +321,16 @@ class ChapterSection extends Component {
           active={videoAddModal}
           closeModal={() => this.closeModal("videoAdd")}
           onChange={this.handleInputUpdate}
-          vimeoVideoTitle={vimeoVideoTitle}
-          vimeoVideoUrl={vimeoVideoUrl}
+          video_title={video_title}
+          video_url={video_url}
           submit={this.addVideo}
         />
 
         <VideoModal
           active={videoEditModal}
           closeModal={() => this.closeModal("videoEdit")}
-          vimeoVideoTitle={video && video.video_title}
-          vimeoVideoUrl={video && video.video_url}
+          video_title={video_title}
+          video_url={video_url}
           submit={this.updateVideo}
         />
 
